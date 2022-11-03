@@ -1,5 +1,5 @@
 import { Button } from 'react-bootstrap';
-import { MenuBar } from '../seller/MenuBar';
+import { MenuBar } from '../pages/seller/MenuBar';
 
 const Home = () => {
     return (
