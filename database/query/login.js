@@ -15,7 +15,7 @@ async function renameUser(user_id){
 }
 
 //유저 가게 추가
-async function renameUser(user_id,store_id){
+async function enrollStore(user_id,store_id){
     var db_query = "UPDATE user SET store_id = ?,is_admin = 1 WHERE user_id = ?"
     const result = await sql.execute(db_query,[store_id,user_id])
     return 
@@ -63,6 +63,7 @@ async function delToken(user_id){
 
 module.exports.insertUser = insertUser
 module.exports.renameUser = renameUser
+module.exports.enrollStore = enrollStore
 module.exports.getUser = getUser
 module.exports.getUserId = getUserId
 module.exports.getUserName = getUserName
