@@ -10,7 +10,7 @@ const sql = require('../exe_sql')
 
 //가게 리스트 가져오기 + 평점순으로 정렬
 async function storeList(){
-    var db_query = 'SELECT *,AVG(rating) FROM store NATURAL JOIN review GROUP BY rating ORDER BY AVG(rating)'
+    var db_query = 'SELECT s.name,s.content,s.phone,s.address, ifnull(round(avg(r.rating),1), 0) as store_rating FROM store as s JOIN review as r where s.store_id = r.store_id group by s.store_id;'
     const result = await sql.execute(db_query,Null)
     return result
 }

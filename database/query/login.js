@@ -42,21 +42,15 @@ async function getUserName(user_id){
 }
 
 //TOKEN 갱신 
-async function insertAccToken(user_id, token){
-    var db_query = "UPDATE user SET access_token = ? WHERE user_id = ?"
-    const result = await sql.execute(db_query,[token,user_id])
-    return result
-}
-
-async function insertRefToken(user_id, token){
-    var db_query = "UPDATE user SET refresh_token = ? WHERE user_id = ?"
+async function insertToken(user_id, token){
+    var db_query = "UPDATE user SET token = ? WHERE user_id = ?"
     const result = await sql.execute(db_query,[token,user_id])
     return result
 }
 
 //TOKEN 삭제 
 async function delToken(user_id){
-    var token =''
+    var token =null
     putToken(user_id,token)
     return;
 }
@@ -67,6 +61,5 @@ module.exports.enrollStore = enrollStore
 module.exports.getUser = getUser
 module.exports.getUserId = getUserId
 module.exports.getUserName = getUserName
-module.exports.insertAccToken = insertAccToken
-module.exports.insertRefToken = insertRefToken
+module.exports.insertToken = insertToken
 module.exports.delToken = delToken

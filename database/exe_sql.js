@@ -9,7 +9,7 @@ const db = require('./db_connect')
     
       if(opt!=null){
         connection.query(
-          db_query,[opt],
+          db_query,opt,
           (err, result) => {
             return err ? reject(err) : resolve(result)
           }

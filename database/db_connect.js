@@ -30,6 +30,10 @@ function end(con) {
   con.end();
 }
 
+function commit(){
+  con.commit();
+}
+
 module.exports.init = init;
 module.exports.getConnection = getConnection;
 module.exports.end = end;
