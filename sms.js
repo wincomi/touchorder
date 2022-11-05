@@ -29,14 +29,6 @@ function validate_verificationCode(phoneNumber, verificationCode) {
       return true 
     }
   };
-  
-  var testCode = create_verificationCode();
-  //var testCode = '0000';
-  SMS_Cache.put('00000000000', testCode);
-  
-  
-  console.log(validate_verificationCode('00000000000', '012345'));
-  console.log(validate_verificationCode('00000000000', testCode));
 
 
   module.exports = {
