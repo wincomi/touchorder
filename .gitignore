@@ -1,5 +1,5 @@
 # DB 접속 정보 파일 제외
-database/db_config.js
+src/database/db_config.js
 
 # Logs
 logs
@@ -112,4 +112,4 @@ next-env.d.ts
 
 .DS_Store
 
-models/.env
+src/models/.env
