@@ -33,7 +33,7 @@ app.get('/authent', (req, res) => {
 const path = require('path');
 
 // 문자 관련
-const SMS = require('./sms');
+const SMS = require('./models/sms');
 
 // DB
 const db = require('./database/db_connect');
