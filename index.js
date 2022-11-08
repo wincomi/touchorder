@@ -34,10 +34,6 @@ const path = require('path');
 
 // 문자 관련
 const SMS = require('./sms');
-// post 사용시 req.body 분석을 위해 추가
-const bodyParser = require('body-parser');
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: true})); // https://new93helloworld.tistory.com/42
 
 // DB
 const db = require('./database/db_connect');
