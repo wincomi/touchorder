@@ -106,6 +106,10 @@ dist
 # TernJS port file
 .tern-port
 
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
 .DS_Store
 
 models/.env
