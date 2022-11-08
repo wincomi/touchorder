@@ -32,13 +32,13 @@ async function getUser(user_id){
 async function getUserId(phone_number){
     var db_query = "SELECT user_id FROM user WHERE phone_number = ?"
     const result = await sql.execute(db_query,[phone_number])
-    return result
+    return result[0].user_id
 }
 
 async function getUserName(user_id){
     var db_query = "SELECT user_name FROM user WHERE user_id = ?"
     const result = await sql.execute(db_query,[user_id])
-    return result
+    return result[0].user_name
 }
 
 //TOKEN 갱신 
