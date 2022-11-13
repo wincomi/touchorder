@@ -33,11 +33,7 @@ app.get('/authent', (req, res) => {
 const path = require('path');
 
 // 문자 관련
-<<<<<<< HEAD
-const SMS = require('./models/sms');
-=======
-const SMS = require('./src/sms');
->>>>>>> nextjs
+const SMS = require('./src/models/sms');
 
 // DB
 const db = require('./src/database/db_connect');

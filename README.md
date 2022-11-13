@@ -4,3 +4,4 @@
 1. .env 파일 생성
 2. `npm install`
 3. `npx prisma db push`
+4. `npm run dev`
