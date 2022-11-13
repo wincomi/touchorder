@@ -3,15 +3,15 @@ const bodyParser = require('body-parser')
 const cookieParser = require('cookie-parser')
 const app = express();
 const port = 8080;
-const dblog = require('./database/query/login');
+const dblog = require('./src/database/query/login');
 //application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({extended: true}));
 //application/json
 app.use(bodyParser.json());
 app.use(cookieParser());
-const {Token} = require("./models/tokenmaker")
-const {auth} = require("./models/auth")
-require('dotenv').config({path:"./models/.env"});
+const {Token} = require("./src/models/tokenmaker")
+const {auth} = require("./src/models/auth")
+require('dotenv').config({path:"./src/models/.env"});
 //bcrypt 필요없음
 
 
@@ -33,10 +33,14 @@ app.get('/authent', (req, res) => {
 const path = require('path');
 
 // 문자 관련
+<<<<<<< HEAD
 const SMS = require('./models/sms');
+=======
+const SMS = require('./src/sms');
+>>>>>>> nextjs
 
 // DB
-const db = require('./database/db_connect');
+const db = require('./src/database/db_connect');
 
 
 app.listen(port, function() {

@@ -1,7 +1,7 @@
 const SMS_Cache = require('memory-cache');  // 인증번호 임시 저장용
 const send = require('./naver_sms');
 
-//인증번호 생성
+// 인증번호 생성
 function create_verificationCode() {
   const verificationCode = Math.floor(Math.random() * (999999 - 100000)) + 100000;
   console.log("인증 번호 생성 : ", verificationCode);

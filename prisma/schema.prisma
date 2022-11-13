@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model menu {
+  menu_id   Int     @id
+  store_id  Int
+  name      String  @db.VarChar(55)
+  content   String? @db.VarChar(255)
+  price     Int
+  category  String  @db.VarChar(55)
+  image_url String? @db.VarChar(255)
+  status    Int     @default(0)
+}
+
+model request {
+  request_id Int    @id @default(autoincrement())
+  message    String @db.VarChar(255)
+  order_id   Int
+}
+
+model reserve {
+  reserve_id     Int      @id @default(autoincrement())
+  store_id       Int
+  store_table_id Int
+  user_id        Int
+  reserve_date   DateTime @db.Timestamp(0)
+  num_of_people  Int
+}
+
+model review {
+  review_id  Int      @id
+  regdate    DateTime @default(now()) @db.Timestamp(0)
+  user_id    Int      
+  store_id   Int
+  menu_id    Int
+  rating     Int
+  content    String?  @db.VarChar(255)
+  image_url1 String?  @db.VarChar(255)
+  image_url2 String?  @db.VarChar(255)
+  image_url3 String?  @db.VarChar(255)
+}
+
+model store {
+  store_id      Int     @id @default(autoincrement())
+  name          String  @db.VarChar(20)
+  address       String  @db.VarChar(55)
+  phone         String  @db.VarChar(55)
+  content       String? @db.VarChar(255)
+  deposit       Int?    @default(0)
+  primary_color String? @db.VarChar(6)
+}
+
+model store_order {
+  order_id     Int  @id @default(autoincrement())
+  user_id      Int
+  store_id     Int
+  payment      Int
+  waiting_time Int?
+}
+
+model store_table {
+  table_id    Int     @id
+  store_id    Int
+  max_people  Int
+  description String? @db.VarChar(255)
+  status      Int     @default(0)
+}
+
+model user {
+  user_id      Int     @id @default(autoincrement())
+  store_id     String? @db.VarChar(55)
+  phone_number String  @db.VarChar(30)
+  email_addr   String? @db.VarChar(55)
+  is_admin     Int?    @default(0) @db.TinyInt
+  token        String? @db.VarChar(255)
+  user_name    String  @default("뉴비") @db.VarChar(15)
+}
+
+model user_order {
+  order_id Int
+  menu_id  Int
+  price    Int
+  selected Int @default(0)
+
+  @@id([order_id, menu_id])
+}
