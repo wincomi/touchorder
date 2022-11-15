@@ -5,6 +5,7 @@
 
 // 공식 api 설명
 // https://api.ncloud-docs.com/docs/ai-application-service-sens-smsv2
+require("dotenv").config();
 
 const axios = require('axios');
 const request = require('request');
@@ -12,10 +13,10 @@ const CryptoJS = require('crypto-js');
 const finErrCode = 404;
 
 // naver sms 인증 관련 api 키
-const NCP_serviceID = 'ncp:sms:kr:293045050388:yeorilgop_dev';
-const NCP_accessKey = '7n9Q7qArkw7fJatQKaYX';
-const NCP_secretKey = 'ewtvHVYGy5rvaf44sdfLECIED7F7QQQFHEhDAQuH';
-const senderNumber  = '01072882642';
+const NCP_serviceID = process.env.NCP_SERVICE_ID;
+const NCP_accessKey = process.env.NCP_ACCESS_KEY;
+const NCP_secretKey = process.env.NCP_SECRET_KEY;
+const senderNumber  = process.env.SENDER_NUMBER;
 
 const date = Date.now().toString();
 const secretKey = NCP_secretKey;
