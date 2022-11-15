@@ -8,7 +8,7 @@ datasource db {
 }
 
 model menu {
-  menu_id   Int     @id
+  menu_id   Int     @id @default(autoincrement())
   store_id  Int
   name      String  @db.VarChar(55)
   content   String? @db.VarChar(255)
@@ -34,9 +34,9 @@ model reserve {
 }
 
 model review {
-  review_id  Int      @id
+  review_id  Int      @id @default(autoincrement())
   regdate    DateTime @default(now()) @db.Timestamp(0)
-  user_id    Int      
+  user_id    Int
   store_id   Int
   menu_id    Int
   rating     Int
@@ -57,11 +57,11 @@ model store {
 }
 
 model store_order {
-  order_id     Int  @id @default(autoincrement())
-  user_id      Int
-  store_id     Int
-  payment      Int
-  waiting_time Int?
+  user_id        Int
+  store_id       Int
+  payment        Int
+  waiting_time   Int?
+  store_order_id Int  @id @default(autoincrement())
 }
 
 model store_table {
@@ -83,10 +83,9 @@ model user {
 }
 
 model user_order {
-  order_id Int
-  menu_id  Int
-  price    Int
-  selected Int @default(0)
-
-  @@id([order_id, menu_id])
+  menu_id        Int
+  price          Int
+  selected       Int @default(0)
+  store_order_id Int
+  user_order_id  Int @id @default(autoincrement())
 }
