@@ -3,7 +3,7 @@ const SMS = require('src/models/sms');
 
 export default (req, res) => {
     if (req.method == 'POST') {
-        let phoneNnumber = req.body.phoneNumber.toString();
+        let phoneNumber = req.body.phoneNumber.toString();
         let verificationCode = req.body.verificationCode;
         let result = SMS.validate_verificationCode(phoneNumber, verificationCode);
 
