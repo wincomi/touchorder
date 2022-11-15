@@ -1,12 +1,16 @@
-name: Build and Deploy
+name: Build and Deploy Next.js to aws
 
 on:
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch: {}
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ["develop"]
 
 env:
-  applicationfolder: spring-boot-hello-world-example
-  AWS_REGION: ##region##
-  S3BUCKET: ##s3-bucket## 
+  #applicationfolder: spring-boot-hello-world-example
+  AWS_REGION: us-east-1
+  S3BUCKET: codedeploystack-test-webappdeploymentbucket-8la3u0mzx2u3 
 
 
 jobs:
@@ -19,7 +23,46 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         name: Checkout Repository
-
+        #from nextjs.yml
+      - name: Detect package manager
+        id: detect-package-manager
+        run: |
+          if [ -f "${{ github.workspace }}/yarn.lock" ]; then
+            echo "::set-output name=manager::yarn"
+            echo "::set-output name=command::install"
+            echo "::set-output name=runner::yarn"
+            exit 0
+          elif [ -f "${{ github.workspace }}/package.json" ]; then
+            echo "::set-output name=manager::npm"
+            echo "::set-output name=command::ci"
+            echo "::set-output name=runner::npx --no-install"
+            exit 0
+          else
+            echo "Unable to determine packager manager"
+            exit 1
+          fi
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+          cache: ${{ steps.detect-package-manager.outputs.manager }}
+      - name: Restore cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            .next/cache
+          # Generate a new cache whenever packages or source files change.
+          key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
+          # If source files changed but packages didn't, rebuild from a prior cache.
+          restore-keys: |
+            ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json', '**/yarn.lock') }}-
+      - name: Install dependencies
+        run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Build with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next build
+      - name: Static HTML export with Next.js
+        run: ${{ steps.detect-package-manager.outputs.runner }} next export
+        #until here
       - uses: aws-actions/configure-aws-credentials@v1
         with:
           role-to-assume: ${{ secrets.IAMROLE_GITHUB }}
@@ -36,11 +79,11 @@ jobs:
 
       - name: Build and Package Maven
         id: package
-        working-directory: ${{ env.applicationfolder }}
+#        working-directory: ${{ env.applicationfolder }}
         run: $GITHUB_WORKSPACE/.github/scripts/build.sh
 
       - name: Upload Artifact to s3
-        working-directory: ${{ env.applicationfolder }}/target
+#        working-directory: ${{ env.applicationfolder }}/target
         run: aws s3 cp *.war s3://${{ env.S3BUCKET }}/
         
   deploy:
