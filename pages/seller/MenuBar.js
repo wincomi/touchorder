@@ -1,5 +1,23 @@
-import {Link} from 'react-router-dom';
-export function MenuBar(){
+
+
+const MenuBar = () => {
+    return(
+        <>
+            <Link href="/"></Link>
+
+            {/* <MenuBar></MenuBar> */}
+        </>
+    );
+};
+
+
+export default MenuBar;
+
+{/* <Link href="/Login"> 
+<Button variant="outline-primary" size="lg">시작하기</Button>
+</Link> */}
+
+/*export function MenuBar(){
     return(
         <>
             <div className="NavBar">
@@ -14,4 +32,4 @@ export function MenuBar(){
         </>
     );
 }
-
+*/

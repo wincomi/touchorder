@@ -1,0 +1,39 @@
+@font-face {
+    font-family: JUA;
+    src: url(../pages/seller/images/BMJUA_ttf.ttf);
+}
+
+@font-face {
+    font-family: DOHYUN;
+    src: url(../pages/seller/images/BMDOHYEON_ttf.ttf);
+}
+
+.title{
+    color:#0072E1;
+    text-align: center;
+    font-size: 50px;
+    margin-top: 1.8%;
+    padding: 20px;
+    align-content: left;
+    font-family: "DOHYUN";
+}
+
+.Button{
+    
+    padding:100px;
+    text-align: center;
+    font-family:"JUA";
+}
+
+
+.Footer{
+    background-color: rgb(220, 220, 220);
+    width: 100%;
+    height: 100px;
+    text-align: left;
+    padding-top: 20px;
+    line-height: 2;
+    position: absolute;  
+    bottom: 0;
+    font-family:"JUA";
+}

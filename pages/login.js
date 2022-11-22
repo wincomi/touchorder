@@ -1,24 +1,55 @@
+import Link from 'next/link'
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Form } from 'react-bootstrap';
+import styles from '../styles/Login.module.css';
+import {Form , Button } from 'react-bootstrap';
+
+
 
 const Login = () => {
-    return (
-        <>
-            <h1>휴대폰 번호를 입력해주세요</h1>
-            <p>터치오더 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
-            <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="tel" placeholder="010-1234-5678"></Form.Control>
-                    <Form.Text className="text-muted">
-                        입력한 휴대폰 번호로 인증 코드가 발송됩니다.
-                    </Form.Text>
-                </Form.Group>
-                <div className="d-grid">
-                    <Button type="submit" variant="primary" size="lg">확인</Button>
-                </div>
-            </Form>
-        </>
-    );
-};
+  return (
+<>
+  <Form>
+  <div className={styles.Auth_form_container}> 
+      <form className={styles.Auth_form}>
+        <div className={styles.Auth_form_content}> 
+          <h3 className={styles.Auth_form_title}>login to touchorder</h3>
+
+          <div className={styles.form_group}>
+            <input
+              type="text"
+              className="form-control mt-3"
+              placeholder="Phone Number"
+            ></input>
+            </div>
+            <Button className={styles.outline_success}>인증</Button>
+
+          <div className="form-group mt-3">
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Pin Number"
+            ></input>
+          </div>
+
+          <br/>
+
+          <div className="login-button">
+          <Link href="/MyPage">  
+            <Button type="submit" className={styles.btn_success}>
+              Login
+            </Button>
+          </Link>
+          </div>
+
+          <br/>
+        </div>
+      </form>
+    </div>
+    
+    </Form>
+
+  </>
+  );
+}
 
 export default Login;
