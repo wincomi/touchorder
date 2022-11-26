@@ -25,3 +25,10 @@
     position: absolute;  
     bottom: 0;
 }
+
+.navbar-brand {
+    padding-top: .75rem;
+    padding-bottom: .75rem;
+    background-color: rgba(165, 83, 35, 0.596);
+    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
+  }
