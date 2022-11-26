@@ -71,13 +71,15 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
 
     // 메뉴 수정
-    if (req.method == "POST") { 
-        const name:string               = String(req.body.name);
-        const content :string | null    = req.body.content === undefined ? null : req.body.content;
-        const price: number             = Number(req.body.price);
-        const category:string           = String(req.body.category);
-        const image_url:string | null   = req.body.image_url === undefined ? null : req.body.image_url;
-        const status: number            = Number(req.body.status);
+    if (req.method == "POST") {
+        const oldData:any = await prisma.menu.findUnique({where:{menu_id}});
+
+        const name:string               = req.body.name ?? oldData.name;
+        const content :string | null    = req.body.content ?? oldData.content;
+        const price: number             = Number(req.body.price ?? oldData.number);
+        const category:string           = req.body.category ?? oldData.category;
+        const image_url:string | null   = req.body.image_url ?? oldData.image_url;
+        const status: number            = Number(req.body.status ?? oldData.status);
 
         // body 값 유효성 확인
         if (!validateRequestBody(req)){
