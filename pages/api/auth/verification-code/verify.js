@@ -17,7 +17,6 @@ export default (req, res) => {
         }
     }
     else {
-        console.log("잘못된 양식");
-        res.status(400).json({text:"잘못된 양식"});
+        res.status(400).json({message:"잘못된 요청"});
     }
 }
