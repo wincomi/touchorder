@@ -6,23 +6,15 @@ const prisma = new PrismaClient();
 // 200 no result
 
 const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
-  const user_id : Number = Number(req.query.user_id)
+  const userId : Number = Number(req.query.user_id)
 
 
   switch (req.method) {
     
   // user_id로 내 리뷰 찾기
   case "GET":
-    if(!isNaN(user_id)){
-      const MyView = await prisma.review.findMany({
-        where: {
-          user_id: user_id
-        },
-        orderBy: [
-          {regdate: 'desc'},
-          {rating: 'desc'} // 최근 등록일 + 평점순 정렬
-          ],
-        });
+    if(!isNaN(userId)){
+      const MyView = await prisma.$queryRaw`SELECT r.review_id, r.regdate, u.user_name, s.name as store_name, m.name as menu_name, r.rating, r.content FROM review as r LEFT JOIN store as s ON s.store_id = r.store_id LEFT JOIN menu as m on m.menu_id = r.menu_id LEFT JOIN user as u ON u.user_id = r.user_id where r.user_id = ${userId} order by regdate desc, rating desc`
         if (MyView != null) {
           res.status(200).send(MyView)
         } else {
@@ -43,7 +35,7 @@ const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
   case "POST":
     const createReview = await prisma.review.create({
       data: {
-        user_id: Number(user_id),
+        user_id: Number(userId),
         store_id: Number(req.body.store_id),
         menu_id: Number(req.body.menu_id),
         rating: Number(req.body.rating),

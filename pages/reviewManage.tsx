@@ -5,6 +5,13 @@ import Link from 'next/link'
 
 
 export default ( {view} ) => {
+  const reviewId = 0;
+
+  const getReviewId = (e) => {
+    var d = document.getElementById("reviewId")?.innerHTML
+    alert(d + "-" )
+  }
+
     return (
         <SellerLayout>
             <Table striped>
@@ -20,11 +27,11 @@ export default ( {view} ) => {
                   <th>사진</th> 
                 </tr>
               </thead>
-              <tbody>
+              <tbody id = 'reviewBox'>
                 {view.map((item) =>( 
                     <>
-                    <tr>
-                        <th> {item.review_id} </th>
+                    <tr id = 'reviewContent' onClick={getReviewId}>
+                        <th id = "reviewId"> {item.review_id} </th>
                         <th> {item.regdate} </th>
                         <th> {item.user_name} </th>
                         <th> {item.store_name} </th>
@@ -38,13 +45,21 @@ export default ( {view} ) => {
               </tbody>
             </Table>
         
+        <style jsx>{`
+          #reviewContent:hover{background-color : gray;}
+        `}</style>
+
         <div>
             <Link href="reveiewCreate">
-                <Button variant="primary" size="lg">리뷰 생성</Button>
+                <Button variant="primary" size="lg">리뷰 수정</Button>
             </Link>
             &nbsp;&nbsp;
             <Link href="reviewManage">
-                <Button variant="primary" size="lg">리뷰 관리</Button>
+                <Button id = "reviewDelete" variant="primary" size="lg">리뷰 삭제</Button>
+            </Link>
+            &nbsp;&nbsp;
+            <Link href="reviewHome">
+                <Button variant="primary" size="lg">리뷰 홈</Button>
             </Link>
         </div>
           </SellerLayout>
@@ -52,8 +67,9 @@ export default ( {view} ) => {
 }
 
 export async function getStaticProps() {
-    //모든 리뷰 리스트 
-    const res = await fetch('http://localhost:3000/api/reviews/allReviewList')
+    //내 리뷰 리스트 관리 
+    const user_id = 1 //이부분이 문제네... 
+    const res = await fetch(`http://localhost:3000/api/reviews/${user_id}`,{method : 'GET'})
     const view = await res.json()
   
     return {
