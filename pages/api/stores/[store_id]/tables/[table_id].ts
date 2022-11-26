@@ -15,10 +15,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     }
     
     // 테이블 수정
-    if (req.method == "POST") {  
-        const description:string = String(req.body.description);
-        const max_people: number = Number(req.body.max_people);
-        const status: number = Number(req.body.status);
+    if (req.method == "POST") {
+        const oldData : any = await prisma.store_table.findFirst({where:{table_id}});
+
+        const description:string = req.body.description ?? oldData.description;
+        const max_people: number = Number(req.body.max_people ?? oldData.max_people);
+        const status: number = Number(req.body.status ?? oldData.status);
 
         if (isNaN(max_people) || isNaN(status)) {
             res.status(400).json({message:"요청이 올바르지 않습니다."});
