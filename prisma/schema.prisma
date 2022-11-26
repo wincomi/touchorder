@@ -65,7 +65,7 @@ model store_order {
 }
 
 model store_table {
-  table_id    Int     @id
+  table_id    Int     @id @default(autoincrement())
   store_id    Int
   max_people  Int
   description String? @db.VarChar(255)
