@@ -48,7 +48,7 @@ model menu {
   status    Int     @default(0)
 }
 */ 
-
+/*
 export async function getServerSideProps() {
   const prisma = new PrismaClient()
   const menus = await prisma.menu.findMany({
@@ -62,7 +62,7 @@ export async function getServerSideProps() {
     props: { menus }
   }
 }
-
+*/
 
 
 

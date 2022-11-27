@@ -2,11 +2,12 @@ import Container from 'react-bootstrap/Container';
 import DefaultLayout from './defaultLayout';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import ListGroup from 'react-bootstrap/ListGroup';
-
+import styles from '../styles/SellerLayout.module.css'
 export default ({children}) => {
    return (
     <>
         <DefaultLayout></DefaultLayout>
+        {/* <div style={{display:'flex',justifyContent:'left'}}> */}
         <div style={{display:'flex',justifyContent:'left'}}>
             <ListGroup as="ul">
                 <ListGroup.Item as="li" active>

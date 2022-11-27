@@ -2,16 +2,15 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import styles from '../styles/Choice.module.css';
+import styles from '../styles/defaultLayout.module.css';
 
 function defaultLayout() {
   return (
     <div>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg">
         <Container fluid>
-            <div>
-                <Navbar.Brand href="#home" >터치오더-갈색으로 바꿔야하는데 잘 모르겠음 일단 메뉴바나 만듬</Navbar.Brand>
-            </div>
+
+            <Navbar.Brand href="#home" >터치오더</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
