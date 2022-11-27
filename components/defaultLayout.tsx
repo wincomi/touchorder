@@ -2,7 +2,6 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import NavDropdown from 'react-bootstrap/NavDropdown';
-import styles from '../styles/Choice.module.css';
 
 function defaultLayout() {
   return (
@@ -38,10 +37,6 @@ function defaultLayout() {
             </Navbar.Collapse>
         </Container>
         </Navbar>
-        <div className={styles.Footer}>
-        &nbsp;&nbsp;Presented by team Yeolilgop<br />
-        &nbsp;&nbsp;Copyright 2022 Yeolilgop, Keimyung.- All rights Reserved.
-        </div>
     </div>
   );
 }
