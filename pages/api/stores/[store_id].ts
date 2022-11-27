@@ -34,6 +34,9 @@ export default async (req:NextApiRequest, res:NextApiResponse) => {
         }})
         res.status(200).json(result);
 
+    } else if(req.method == "DELETE"){
+        const result = await prisma.store.delete({where:{store_id}});
+        res.status(200).json({result});
     } else {
         res.status(400).json({message:"잘못된 요청입니다."});
     }
