@@ -4,6 +4,7 @@ import { PrismaClient } from "@prisma/client";
 
 export default ({menus}) => {
     return (
+      <div>
         <SellerLayout>
 <pre>
 -메뉴관리 - menus.tsx
@@ -11,8 +12,7 @@ export default ({menus}) => {
    \메뉴정보
  \재고관리
  </pre>
- {/* 메뉴 추가 및 관리-메뉴이름, 메뉴 가격, 메뉴 설명, 메뉴 사진 */}
-            <Table>
+            <Table striped>
               <thead>
                 <tr>
                   <th>메뉴번호</th>
@@ -24,15 +24,16 @@ export default ({menus}) => {
               </thead>
 
               <tbody>
-              <tr>
-                <th>1.컴포넌트 정의</th>
-                <th>2.컴포넌트 상태값에 db테이블 다 넣기</th>
-                <th>3.컴포넌트 상태값을 map함수로 테이블에 띄우기</th>
-                <th>4.profit!!!</th>
-              </tr>
+                <tr>
+                  <th>1.컴포넌트 정의</th>
+                  <th>2.컴포넌트 상태값에 db테이블 다 넣기</th>
+                  <th>3.컴포넌트 상태값을 map함수로 테이블에 띄우기</th>
+                  <th>4.profit!!!</th>
+                </tr>
               </tbody>
             </Table>
-          </SellerLayout>
+        </SellerLayout>
+        </div>
     )
 }
 /*

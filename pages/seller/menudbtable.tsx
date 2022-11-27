@@ -12,7 +12,7 @@ export default () => {
         status: '' //품절or 판매가능
       }])
     const [index, setindex] = useState(0)
-    useEffect(async() => {
+    useEffect(() => {
         
     },[])
     return (
