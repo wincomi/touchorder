@@ -39,7 +39,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                         phone: req.body.phone,
                         content: req.body.content,
                         deposit: !isNaN(Number(req.body.deposit)) ? Number(req.body.deposit) : undefined,
-                        primary_color: req.body.primary_color
+                        primary_color: req.body.primary_color,
+                        image_url: req.body.image_url
                     }
                 })
 

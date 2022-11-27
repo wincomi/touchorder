@@ -20,6 +20,7 @@ export default async (req:NextApiRequest, res:NextApiResponse) => {
         let phone:string    = req.body.phone ?? oldData.phone;
         let content:string  = req.body.content ?? oldData.content;
         let deposit:number  = Number(req.body.deposit ?? oldData.deposit);
+        let image_url:string = req.body.image_url ?? oldData.image_url;
         
         const result = await prisma.store.update({
             where:{store_id}, 
@@ -28,7 +29,8 @@ export default async (req:NextApiRequest, res:NextApiResponse) => {
                 address,
                 phone,
                 content,
-                deposit
+                deposit,
+                image_url
         }})
         res.status(200).json(result);
 
