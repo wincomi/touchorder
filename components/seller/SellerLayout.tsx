@@ -1,9 +1,13 @@
+import { ReactNode } from "react";
 import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '@components/seller/Sidebar'
 
-export default ({ children }) => {
+interface LayoutProps {
+    children: ReactNode
+}
+
+export default ({ children }: LayoutProps) => {
    return (
-    <>
         <Container>
             <Row>
                 <Col sm={3}>
@@ -16,6 +20,5 @@ export default ({ children }) => {
                 </Col>
             </Row>
         </Container>
-    </>
    ) 
 }

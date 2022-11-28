@@ -1,10 +1,11 @@
 import SellerLayout from "@components/seller/SellerLayout"
+import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap';
 
 export default ({ menus }) => {
     return (
       <SellerLayout>
-        <h1 className="my-4">메뉴관리 <small className="h5 text-muted">메뉴정보</small></h1>
+        <HeaderTitle title="메뉴 관리" subtitle="메뉴 정보" />
         <Table striped>
           <thead>
               <tr>
