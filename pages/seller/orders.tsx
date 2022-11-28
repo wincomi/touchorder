@@ -6,11 +6,6 @@ export default ({orders}) => {
     return (
         <div>
         <SellerLayout>
-  <pre>
-  \주문조회 
-  \변경/취소 
-  \알림
-  </pre> 
 
           <Table striped>
              <thead>
@@ -35,3 +30,4 @@ export default ({orders}) => {
           </div>
     )
 }
+

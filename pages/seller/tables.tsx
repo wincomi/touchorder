@@ -1,15 +1,14 @@
 import SellerLayout from "@components/seller/SellerLayout";
-import 'bootstrap/dist/css/bootstrap.min.css';
 import {Table} from 'react-bootstrap';
-import styles from '../../styles/tables.module.css';
 
 
-export default (Tables) => {
+
+export default () => {
     return (
 <>
         <SellerLayout>
         
-        <Table striped style={{width:900, marginLeft:200, marginTop:-300, textAlign:"center"}}>
+        <Table striped>
   
              <thead>
                 <tr>
