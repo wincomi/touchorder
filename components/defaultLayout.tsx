@@ -6,7 +6,7 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function defaultLayout() {
   return (
     <div>
-        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
+        <Navbar collapseOnSelect expand="lg">
         <Container fluid>
             <div>
                 <Navbar.Brand href="#home" >터치오더</Navbar.Brand>
