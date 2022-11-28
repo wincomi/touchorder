@@ -1,4 +1,4 @@
-import SellerLayout from "../../components/SellerLayout"
+import SellerLayout from "@components/seller/SellerLayout"
 import { Table } from 'react-bootstrap';
 
 export default ({menus}) => {

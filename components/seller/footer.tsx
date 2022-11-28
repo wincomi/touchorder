@@ -1,4 +1,4 @@
-import styles from '../styles/Choice.module.css';
+import styles from '@styles/Choice.module.css';
 
 function footer() {
   return (

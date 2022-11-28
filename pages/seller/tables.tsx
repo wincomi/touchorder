@@ -1,4 +1,4 @@
-import SellerLayout from "../../components/SellerLayout";
+import SellerLayout from "@components/seller/SellerLayout";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Table} from 'react-bootstrap';
 import styles from '../../styles/tables.module.css';

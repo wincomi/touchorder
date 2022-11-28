@@ -1,4 +1,4 @@
-import SellerLayout from "../../components/SellerLayout"
+import SellerLayout from "@components/seller/SellerLayout"
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
