@@ -6,11 +6,10 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 function defaultLayout() {
   return (
     <div>
-        <Navbar collapseOnSelect expand="lg">
+        <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container fluid>
-            <div>
-                <Navbar.Brand href="#home" >터치오더</Navbar.Brand>
-            </div>
+
+            <Navbar.Brand href="#home" >터치오더</Navbar.Brand>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">
             <Nav className="me-auto">
