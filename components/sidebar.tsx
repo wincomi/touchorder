@@ -7,10 +7,10 @@ function sidebar() {
     
     return (
         <div>
-            <div className="flex-shrink-0 p-3 bg-white" style={{width: 160, margin:10}}>
+            <div className="flex-shrink-0 p-3 bg-white" style={{width: 190, margin:10}}>
 
                 <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                <span className="fs-5 fw-semibold">터치오더</span>
+                <span className="fs-5 fw-semibold">터치오더-판매자</span>
                 </a>
                 <ul className="list-unstyled ps-0">
                 <li className="mb-1">
