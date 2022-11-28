@@ -5,7 +5,7 @@ import { Table, Button } from 'react-bootstrap';
 export default ({ menus }) => {
     return (
       <SellerLayout>
-        <HeaderTitle title="메뉴 관리" subtitle="메뉴 정보" />
+        <HeaderTitle title="메뉴 관리" subtitle="메뉴 목록" />
         <Table striped>
           <thead>
               <tr>

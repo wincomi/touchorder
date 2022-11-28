@@ -1,9 +1,8 @@
-import "bootstrap/dist/css/bootstrap.min.css";
 import { useEffect } from "react";
 
 export default () => {
-    useEffect(()=>{
-        require("bootstrap/dist/js/bootstrap.bundle.min.js");
+    useEffect(() => {
+        require("bootstrap/dist/js/bootstrap.bundle.min.js")
     })
     
     return (
@@ -15,51 +14,48 @@ export default () => {
                 <ul className="list-unstyled ps-0">
                 <li className="mb-1">
                     <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    주문관리
+                     주문 관리
                     </button>
                     <div className="collapse show" id="home-collapse">
                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문정보 조회</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문변경/취소</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문알림</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문 정보 조회</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문 변경/취소</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문 알림</a></li>
                     </ul>
                     </div>
                 </li>
                 <li className="mb-1">
                     <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                    예약관리
+                     예약 관리
                     </button>
-                    <div className="collapse" id="dashboard-collapse">
+                    <div className="collapse show" id="dashboard-collapse">
                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">예약조회</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">예약추가/취소</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">예약설정</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">예약 조회</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">예약 추가/취소</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">예약 설정</a></li>
                     </ul>
                     </div>
                 </li>
                 <li className="mb-1">
                     <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                    메뉴관리
+                     메뉴 관리
                     </button>
-                    <div className="collapse" id="orders-collapse">
+                    <div className="collapse show" id="orders-collapse">
                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="/seller/menus" className="link-dark d-inline-flex text-decoration-none rounded">메뉴정보</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">재고관리</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">리뷰조회</a></li>
+                        <li><a href="/seller/menus" className="link-dark d-inline-flex text-decoration-none rounded">메뉴 목록</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">재고 관리</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">리뷰 조회</a></li>
                     </ul>
                     </div>
                 </li>
                 <li className="border-top my-3"></li>
                 <li className="mb-1">
                     <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                    계정
+                     계정
                     </button>
-                    <div className="collapse" id="account-collapse">
+                    <div className="collapse show" id="account-collapse">
                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">New...</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Profile</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Settings</a></li>
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">Sign out</a></li>
+                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">로그아웃</a></li>
                     </ul>
                     </div>
                 </li>
@@ -68,8 +64,6 @@ export default () => {
 
             <style jsx>
                 {`
-                .dropdown-toggle { outline: 0; }
-
                 .btn-toggle {
                   padding: .25rem .5rem;
                   font-weight: 600;
@@ -103,29 +97,10 @@ export default () => {
                   margin-left: 1.25rem;
                 }
                 .btn-toggle-nav a:hover,
-                .btn-toggle-nav a:focus {
+                .btn-toggle-nav a:focus,
+                .btn-toggle-nav a.active {
                   background-color: #d2f4ea;
                 }
-                
-                .scrollarea {
-                  overflow-y: auto;
-                }
-                
-                .b-example-divider {
-                  height: 3rem;
-                  background-color: rgba(0, 0, 0, .1);
-                  border: solid rgba(0, 0, 0, .15);
-                  border-width: 1px 0;
-                  box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
-                
-                }
-                
-                .b-example-vr {
-                  flex-shrink: 0;
-                  width: 1.5rem;
-                  height: 100vh;
-                }
-                
                 `}
             </style>
         </>
