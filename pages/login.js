@@ -1,32 +1,6 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import { Button, Form, Collapse } from 'react-bootstrap';
-import {useState, useEffect} from 'react'
-const testLogin = () => {
-    const [pn, getpn] = useState("");
-      const [code, getcode] = useState("");
-    const [isCert, showCert] = useState(false);
-      const inputpn=(e)=>{
-        getpn(e.target.value);
-        console.log(pn)
-      };
-      //아래 함수들 전부 예외처리 필요, 백엔드랑 협업해서 해결해야할듯
-      const getCertCode=async(e)=>{
-        showCert(true);
-        await fetch(`http://localhost:3000/api/request-code/${phoneNumber=pn}`,{method : 'POST'})
-      };
-      const inputac=(e)=>{
-        getcode(e.target.value);
-        console.log(code)
-      };
-      const checkCertCode=async()=>{
-        await fetch(`http://localhost:3000/api/verify-code/${phoneNumber=pn, verificationCode=code}`,{method : 'POST'})
-      }
-      const isUser=async()=>{
-        const user = await fetch(`http://localhost:3000/api/${phoneNumber=pn}`)
-      }
-      useEffect(() => {
-          
-      },[])
+import { Button, Form } from 'react-bootstrap';
+
+const Login = () => {
     return (
         <>
             <h1>휴대폰 번호를 입력해주세요</h1>
@@ -61,4 +35,4 @@ const testLogin = () => {
     );
 };
 
-export default testLogin; 
+export default Login;
