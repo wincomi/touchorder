@@ -18,9 +18,11 @@ const testLogin = () => {
         console.log(code)
       };
       const checkCertCode=async(e)=>{
-        const certcode = await fetch(`http://localhost:3000/api/request-code/${phoneNumber=pn, verificationCode=code}`,{method : 'POST'})
+        const certcode = await fetch(`http://localhost:3000/api/verify-code/${phoneNumber=pn, verificationCode=code}`,{method : 'POST'})
       }
-      
+      const isUser=async(e)=>{
+        const certcode = await fetch(`http://localhost:3000/api/${phoneNumber=pn}`)
+      }
       useEffect(() => {
           
       },[])
