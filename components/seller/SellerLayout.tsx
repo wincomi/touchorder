@@ -1,5 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap'
-import Sidebar from '@components/seller/sidebar'
+import Sidebar from '@components/seller/Sidebar'
 
 export default ({ children }) => {
    return (
