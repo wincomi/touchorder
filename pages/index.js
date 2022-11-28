@@ -1,7 +1,6 @@
 import Link from 'next/link'
 import { Button } from 'react-bootstrap';
-import 'bootstrap/dist/css/bootstrap.min.css';
-import styles from '../styles/Choice.module.css';
+import styles from '@styles/Choice.module.css';
 
 const Choice = () => {
     return (
