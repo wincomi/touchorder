@@ -1,6 +1,32 @@
-import { Button, Form } from 'react-bootstrap';
+import { Button, Form, Collapse } from 'react-bootstrap';
+import {useState, useEffect} from 'react'
 
-const Login = () => {
+export default ({ Login }) => {
+    const [pn, getpn] = useState("");
+    const [code, getcode] = useState("");
+    const [isCert, showCert] = useState(false);
+    const inputpn=(e)=>{
+      getpn(e.target.value);
+      console.log(pn)
+    };
+    //아래 함수들 전부 예외처리 필요, 백엔드랑 협업해서 해결해야할듯
+    const getCertCode=async(e)=>{
+      showCert(true);
+      await fetch(`http://localhost:3000/api/request-code/${phoneNumber=pn}`,{method : 'POST'})
+    };
+    const inputac=(e)=>{
+      getcode(e.target.value);
+      console.log(code)
+    };
+    const checkCertCode=async()=>{
+      await fetch(`http://localhost:3000/api/verify-code/${phoneNumber=pn, verificationCode=code}`,{method : 'POST'})
+    }
+    const isUser=async()=>{
+      const user = await fetch(`http://localhost:3000/api/users/${phoneNumber=pn}`)
+    }
+    useEffect(() => {
+
+    },[])
     return (
         <>
             <h1>휴대폰 번호를 입력해주세요</h1>
@@ -18,14 +44,14 @@ const Login = () => {
                 </div>
                 <Collapse in={isCert}>
                     <Form.Group>
-                        <Form.Label>codeentification Code</Form.Label>
+                        <Form.Label>identification Code</Form.Label>
                         <Form.Control
                             type="text"
                             placeholder="인증번호"
                             value={code}
                             onChange={inputac}
                         />
-                        <Button variant="primary" type="submit" onClick={checkCertCode}> 
+                        <Button variant="primary" type="submit" onClick={checkCertCode}>
                             확인
                         </Button>
                     </Form.Group>
@@ -34,5 +60,3 @@ const Login = () => {
         </>
     );
 };
-
-export default Login;
