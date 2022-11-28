@@ -7,7 +7,8 @@ function sidebar() {
     
     return (
         <div>
-            <div className="flex-shrink-0 p-3 bg-white" style={{width: 280}}>
+            <div className="flex-shrink-0 p-3 bg-white" style={{width: 160, margin:10}}>
+
                 <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
                 <span className="fs-5 fw-semibold">터치오더</span>
                 </a>
@@ -116,16 +117,18 @@ function sidebar() {
                   border: solid rgba(0, 0, 0, .15);
                   border-width: 1px 0;
                   box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+                
                 }
                 
                 .b-example-vr {
-                  flex-shrink: 1;
+                  flex-shrink: 0;
                   width: 1.5rem;
                   height: 100vh;
                 }
                 
                 `}
-            </style>
+            </style>  
+
         </div>
     );
 }

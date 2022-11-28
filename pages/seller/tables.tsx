@@ -7,25 +7,10 @@ import styles from '../../styles/tables.module.css';
 export default (Tables) => {
     return (
 <>
-        <div>
         <SellerLayout>
-<pre>
-    테이블 예약관리 - tables.tsx
- \예약조회
- \예약추가/취소
- \예약금 설정
-
- {/*
- /테이블 예약번호
- /예약자 이름
- /예약자 연락처
- /예약 내용:몇번 몇번 테이블 예약함
- /예약 금액
- /예약 접수 상태
- */}
-
-</pre>
-<Table striped>
+        
+        <Table striped style={{width:900, marginLeft:200, marginTop:-300, textAlign:"center"}}>
+  
              <thead>
                 <tr>
                   <th>예약번호</th>
@@ -49,7 +34,7 @@ export default (Tables) => {
               </tbody>
             </Table>
         </SellerLayout>
-        </div>
+
 </>
     )
 }
