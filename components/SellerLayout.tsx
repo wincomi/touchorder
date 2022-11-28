@@ -7,9 +7,7 @@ export default ({children}) => {
    return (
     <>
         <DefaultLayout/>
-        <Container fluid>
-            <Sidebar/>
-        </Container>
+        <Sidebar/>
         <Container>{children}</Container>
         <Footer/>
     </>

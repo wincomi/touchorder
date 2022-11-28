@@ -9,7 +9,7 @@ function defaultLayout() {
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <Container fluid>
             <div>
-                <Navbar.Brand href="#home" >터치오더-갈색으로 바꿔야하는데 잘 모르겠음 일단 메뉴바나 만듬</Navbar.Brand>
+                <Navbar.Brand href="#home" >터치오더</Navbar.Brand>
             </div>
             <Navbar.Toggle aria-controls="responsive-navbar-nav" />
             <Navbar.Collapse id="responsive-navbar-nav">

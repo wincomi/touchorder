@@ -1,7 +1,17 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
-
+import {useState, useEffect} from 'react'
 const Login = () => {
+    const [phoneNumber, getphoneNumber] = useState({
+        phoneNumber: ''
+      })
+      const inputNumber=(e)=>{
+        getphoneNumber(e.target.value);
+        {method=""}
+      };
+      useEffect(() => {
+          
+      },[])
     return (
         <>
             <h1>휴대폰 번호를 입력해주세요</h1>
