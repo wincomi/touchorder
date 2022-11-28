@@ -5,7 +5,7 @@ export default ({menus}) => {
     return (
       <div>
         <SellerLayout>
-          <Table striped style={{width:900, marginLeft:200, marginTop:-300, textAlign:"center"}}>
+          <Table striped>
             <thead>
                 <tr>
                   <th>메뉴번호</th>

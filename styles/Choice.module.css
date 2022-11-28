@@ -22,8 +22,8 @@
     text-align: left;
     padding-top: 20px;
     line-height: 2;
-    position: absolute;  
-    bottom: 0;
+    /* position: absolute;  
+    bottom: 0; */
 }
 
 .navbar-brand {

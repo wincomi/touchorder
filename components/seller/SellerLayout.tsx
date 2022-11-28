@@ -1,12 +1,22 @@
-import Container from 'react-bootstrap/Container';
-import Footer from './footer';
-import Sidebar from './sidebar';
+import { Container, Row, Col } from 'react-bootstrap'
+import Footer from './Footer'
+import Sidebar from './Sidebar'
 
-export default ({children}) => {
+export default ({ children }) => {
    return (
     <>
-        <Sidebar />
-        <Container>{children}</Container>
+        <Container>
+            <Row>
+                <Col sm={3}>
+                    <Sidebar />
+                </Col>
+                <Col sm={9}>
+                    <main>
+                        {children}
+                    </main>
+                </Col>
+            </Row>
+        </Container>
         <Footer />
     </>
    ) 

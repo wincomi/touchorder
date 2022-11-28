@@ -1,14 +1,15 @@
-import styles from '@styles/Choice.module.css';
+import { Container } from 'react-bootstrap'
+import styles from '@styles/Choice.module.css'
 
-function footer() {
+export default () => {
   return (
-    <div>
+    <>
         <div className={styles.Footer}>
-        &nbsp;&nbsp;Presented by team Yeolilgop<br />
-        &nbsp;&nbsp;Copyright 2022 Yeolilgop, Keimyung.- All rights Reserved.
+          <Container>
+            Presented by team Yeolilgop<br />
+            Copyright 2022 Yeolilgop, Keimyung.- All rights Reserved.
+          </Container>
         </div>
-    </div>
-  );
+    </>
+  )
 }
-
-export default footer;

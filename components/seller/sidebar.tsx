@@ -1,16 +1,16 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import {useEffect} from "react";
-function sidebar() {
+import { useEffect } from "react";
+
+export default () => {
     useEffect(()=>{
         require("bootstrap/dist/js/bootstrap.bundle.min.js");
     })
     
     return (
-        <div>
-            <div className="flex-shrink-0 p-3 bg-white" style={{width: 190, margin:10}}>
-
+        <>
+            <div className="flex-shrink-0 p-3 bg-white">
                 <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-                <span className="fs-5 fw-semibold">터치오더-판매자</span>
+                  <span className="fs-5 fw-semibold">터치오더 판매자</span>
                 </a>
                 <ul className="list-unstyled ps-0">
                 <li className="mb-1">
@@ -127,11 +127,7 @@ function sidebar() {
                 }
                 
                 `}
-            </style>  
-
-        </div>
+            </style>
+        </>
     );
 }
-
-  
-  export default sidebar;
