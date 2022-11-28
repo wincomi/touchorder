@@ -5,26 +5,37 @@ import { Table } from 'react-bootstrap';
 export default ({ orders }) => {
     return (
         <SellerLayout>
-          <HeaderTitle title="주문 관리" subtitle="주문 조회" />
+          <HeaderTitle title="주문" subtitle="주문 통합 조회" />
           <Table striped>
               <thead>
                 <tr>
-                  <th>선택</th>
-                  <th>주문날짜</th>
                   <th>주문번호</th>
-                  <th>상태</th>
+                  <th>주문이 들어온 테이블</th>
+                  <th>가격</th>
+                  <th>주문날짜</th>
                 </tr>
               </thead>
 
               <tbody>
-                <tr>
-                  <td>접수</td>
-                  <td>2022-10-11</td>
-                  <td>10105546</td>
-                  <td>주문접수</td>
-                </tr>
+                {orders.map((item) =>(
+                  <tr>
+                    <td>{item.order_id}</td>
+                    <td>{item.table_id}</td>
+                    <td>{new Intl.NumberFormat('ko-KR').format(item.payments)}원</td>
+                    <td>{item.date}</td>
+                  </tr>
+                ))}
               </tbody>
             </Table>
           </SellerLayout>
     )
+}
+
+export async function getStaticProps() {
+  const res = await fetch(`http://localhost:3000/api/orders`)
+  const orders = await res.json()
+
+return {
+   props: { orders }
+ }
 }

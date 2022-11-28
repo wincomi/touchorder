@@ -5,7 +5,7 @@ import { Button, Card, Row, Col } from 'react-bootstrap';
 export default ({ reviews }) => {
     return (
       <SellerLayout>
-        <HeaderTitle title="리뷰 관리" subtitle="리뷰 조회" />
+        <HeaderTitle title="매장 관리" subtitle="리뷰 관리" />
         <Row xs={1} md={2} className="g-4">
           {reviews.map((item) => ( 
             <Col>
@@ -24,7 +24,6 @@ export default ({ reviews }) => {
             </Col>
           ))}
         </Row>
-
       </SellerLayout>
     )
 }

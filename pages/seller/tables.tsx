@@ -5,7 +5,7 @@ import { Table, Button } from 'react-bootstrap';
 export default ({ items }) => {
     return (
         <SellerLayout>
-          <HeaderTitle title="예약" subtitle="예약 통합 조회" />
+          <HeaderTitle title="매장 관리" subtitle="테이블 설정" />
           <Table striped>
              <thead>
                 <tr>

@@ -21,59 +21,41 @@ export default () => {
                 <span className="fs-5 fw-semibold">터치오더 판매자</span>
               </a>
               <ul className="list-unstyled ps-0">
-              <li className="mb-1">
-                  <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
-                    주문 관리
-                  </button>
-                  <div className="collapse show" id="home-collapse">
-                  <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="/seller/orders" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>주문 조회</a></li>
-                      <li><a href="/seller/order_history" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>주문 알림</a></li>
-                  </ul>
-                  </div>
-              </li>
-              <li className="mb-1">
-                  <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-                    예약 관리
-                  </button>
-                  <div className="collapse show" id="dashboard-collapse">
-                  <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="/seller/reservations" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>예약 조회</a></li>
-                      <li><a href="/seller/reservation_setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>예약 설정</a></li>
-                  </ul>
-                  </div>
-              </li>
-              <li className="mb-1">
-                  <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-                    메뉴 관리
-                  </button>
-                  <div className="collapse show" id="orders-collapse">
-                  <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>메뉴 목록</a></li>
-                  </ul>
-                  </div>
-              </li>
-              <li className="mb-1">
-                  <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#reviews-collapse" aria-expanded="false">
-                    리뷰 관리
-                  </button>
-                  <div className="collapse show" id="reviews-collapse">
-                  <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="/seller/reviews" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>리뷰 조회</a></li>
-                  </ul>
-                  </div>
-              </li>
-              <li className="border-top my-3"></li>
-              <li className="mb-1">
-                  <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="false">
-                    계정
-                  </button>
-                  <div className="collapse show" id="account-collapse">
-                  <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                      <li><a href="#" className={'link-dark d-inline-flex text-decoration-none rounded'}>로그아웃</a></li>
-                  </ul>
-                  </div>
-              </li>
+                <li className="mb-1">
+                    <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+                      주문
+                    </button>
+                    <div className="collapse show" id="home-collapse">
+                      <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                          <li><a href="/seller/orders" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>주문 통합 조회</a></li>
+                          <li><a href="/seller/order_history" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>주문 알림</a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li className="mb-1">
+                    <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                      예약
+                    </button>
+                    <div className="collapse show" id="dashboard-collapse">
+                      <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                          <li><a href="/seller/reservations" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>예약 통합 조회</a></li>
+                          <li><a href="/seller/reservation_setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>예약 설정</a></li>
+                      </ul>
+                    </div>
+                </li>
+                <li className="border-top my-3"></li>
+                <li className="mb-1">
+                    <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#reviews-collapse" aria-expanded="false">
+                      매장 관리
+                    </button>
+                    <div className="collapse show" id="reviews-collapse">
+                      <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="/seller/reviews" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>리뷰 관리</a></li>
+                        <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>상품 설정</a></li>
+                        <li><a href="/seller/tables" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>테이블 설정</a></li>
+                      </ul>
+                    </div>
+                </li>
               </ul>
           </div>
 
