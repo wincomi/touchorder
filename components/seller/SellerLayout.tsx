@@ -10,10 +10,10 @@ export default ({ children }: LayoutProps) => {
    return (
         <Container>
             <Row>
-                <Col sm={3}>
+                <Col md={3}>
                     <Sidebar />
                 </Col>
-                <Col sm={9}>
+                <Col md={9}>
                     <main>
                         {children}
                     </main>

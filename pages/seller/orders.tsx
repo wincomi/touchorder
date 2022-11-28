@@ -1,14 +1,13 @@
 import SellerLayout from "@components/seller/SellerLayout"
+import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table } from 'react-bootstrap';
-import {PrismaClient} from "@prisma/client";
 
-export default ({orders}) => {
+export default ({ orders }) => {
     return (
-        <div>
         <SellerLayout>
-
+          <HeaderTitle title="주문 관리" subtitle="주문 조회" />
           <Table striped>
-             <thead>
+              <thead>
                 <tr>
                   <th>선택</th>
                   <th>주문날짜</th>
@@ -19,15 +18,13 @@ export default ({orders}) => {
 
               <tbody>
                 <tr>
-                  <th>접수</th>
-                  <th>2022-10-11</th>
-                  <th>10105546</th>
-                  <th>주문접수</th>
+                  <td>접수</td>
+                  <td>2022-10-11</td>
+                  <td>10105546</td>
+                  <td>주문접수</td>
                 </tr>
               </tbody>
             </Table>
           </SellerLayout>
-          </div>
     )
 }
-

@@ -1,15 +1,12 @@
 import SellerLayout from "@components/seller/SellerLayout";
-import {Table} from 'react-bootstrap';
-
-
+import HeaderTitle from "@components/seller/HeaderTitle"
+import { Table } from 'react-bootstrap';
 
 export default () => {
     return (
-<>
         <SellerLayout>
-        
-        <Table striped>
-  
+          <HeaderTitle title="예약 관리" subtitle="예약 조회" />
+          <Table striped>
              <thead>
                 <tr>
                   <th>예약번호</th>
@@ -33,7 +30,5 @@ export default () => {
               </tbody>
             </Table>
         </SellerLayout>
-
-</>
     )
 }
