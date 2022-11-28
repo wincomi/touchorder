@@ -1,5 +1,4 @@
-
-const SMS = require('src/models/sms');
+const SMS = require('@libs/auth/sms');
 
 export default (req, res) => {
     if (req.method == 'POST') {
