@@ -1,6 +1,5 @@
 import { Container, Row, Col } from 'react-bootstrap'
-import Footer from './Footer'
-import Sidebar from './Sidebar'
+import Sidebar from '@components/seller/sidebar'
 
 export default ({ children }) => {
    return (
@@ -17,7 +16,6 @@ export default ({ children }) => {
                 </Col>
             </Row>
         </Container>
-        <Footer />
     </>
    ) 
 }
