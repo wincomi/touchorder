@@ -1,37 +1,30 @@
-import SellerLayout from "../../components/SellerLayout"
+import SellerLayout from "../../components/SellerLayout";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import {Form,Button} from 'react-bootstrap';
+import styles from '../../styles/tables.module.css';
+
+
 export default (Tables) => {
     return (
+<>
         <div>
         <SellerLayout>
-<pre>
+<pre>2
     테이블 예약관리 - tables.tsx
  \예약조회
  \예약추가/취소
  \예약금 설정
 </pre>
-            <Table striped>
-             <thead>
-                <tr>
-                  <th>선택</th>
-                  <th>주문날짜</th>
-                  <th>주문번호</th>
-                  <th>상태</th>
-                </tr>
-              </thead>
-
-              <tbody>
-                <tr>
-                  <th>접수</th>
-                  <th>2022-10-11</th>
-                  <th>10105546</th>
-                  <th>주문접수</th>
-                </tr>
-              </tbody>
-            </Table>
-        
-
+    <Form>
+    <div className="container">
+    <div className="cell-a">1</div>
+    <div className="cell-b">2</div>
+    <div className="cell-c">3</div>
+    <div className="cell-d">4</div>
+    </div>
+    </Form>    
         </SellerLayout>
         </div>
-
+</>
     )
 }

@@ -9,7 +9,7 @@ const Choice = () => {
         <div className='container-fluid'>
             <div className={styles.title}>터치오더에 오신 것을 환영합니다</div>
             <div className={styles.Button}>
-                <Link href="/seller/reviews">
+                <Link href="/seller/tables">
                     <Button variant="primary" size="lg">점주님</Button>
                 </Link>
                 &nbsp;&nbsp;
