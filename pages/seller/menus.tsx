@@ -1,8 +1,10 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap'
+import { InferGetStaticPropsType } from "next"
+import { menu } from "@prisma/client"
 
-export default ({ items, testValue }) => {
+export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
     return (
       <SellerLayout>
         {testValue}
@@ -44,7 +46,8 @@ export default ({ items, testValue }) => {
 export async function getStaticProps() {
   const store_id = 1 // TODO
   const res = await fetch(`http://localhost:3000/api/stores/${store_id}/menus/`)
-  const items = await res.json()
+
+  const items: menu[] = await res.json()
   
   return {
     props: { items }

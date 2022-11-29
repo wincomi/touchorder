@@ -53,6 +53,7 @@ export default () => {
                         <li><a href="/seller/reviews" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>리뷰 관리</a></li>
                         <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>상품 설정</a></li>
                         <li><a href="/seller/tables" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>테이블 설정</a></li>
+                        <li><a href="/seller/qrcode" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>QR 코드 생성</a></li>
                       </ul>
                     </div>
                 </li>
