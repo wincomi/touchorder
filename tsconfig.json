@@ -31,7 +31,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/seller/orders.js"  ],
   "exclude": [
     "node_modules"
   ]

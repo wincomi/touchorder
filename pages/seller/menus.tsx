@@ -2,9 +2,11 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap'
 
-export default ({ items }) => {
+export default ({ items, testValue }) => {
     return (
       <SellerLayout>
+        {testValue}
+        
         <HeaderTitle title="매장 관리" subtitle="상품 설정" />
         <Table striped>
           <thead>
