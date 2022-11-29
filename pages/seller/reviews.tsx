@@ -1,21 +1,29 @@
 import SellerLayout from "@components/seller/SellerLayout"
-import { Button, Card }from 'react-bootstrap';
+import HeaderTitle from "@components/seller/HeaderTitle"
+import { Button, Card, Row, Col } from 'react-bootstrap';
 
 export default ({ reviews }) => {
     return (
       <SellerLayout>
-        {reviews.map((item) => ( 
-          <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={item.image_url1} />
-            <Card.Body>
-              <Card.Text>닉네임</Card.Text>
-              <Card.Text>
-                {item.content}
-              </Card.Text>
-              <Button variant="primary">답변</Button>  {/* 답변 버튼을 우측으로 옮겨야 함 */}
-            </Card.Body>
-          </Card>
-        ))}
+        <HeaderTitle title="매장 관리" subtitle="리뷰 관리" />
+        <Row xs={1} md={2} className="g-4">
+          {reviews.map((item) => ( 
+            <Col>
+              <Card>
+                <Card.Img variant="top" src={item.image_url1} />
+                <Card.Body>
+                  <Card.Title>닉네임</Card.Title>
+                  <Card.Text>
+                    {item.content}
+                  </Card.Text>
+                  <Card.Text className="text-end">
+                    <Button variant="primary">답변</Button>
+                  </Card.Text>
+                </Card.Body>
+              </Card>
+            </Col>
+          ))}
+        </Row>
       </SellerLayout>
     )
 }

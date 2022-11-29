@@ -1,21 +1,24 @@
+import { ReactNode } from "react";
 import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '@components/seller/Sidebar'
 
-export default ({ children }) => {
+interface LayoutProps {
+    children: ReactNode
+}
+
+export default ({ children }: LayoutProps) => {
    return (
-    <>
         <Container>
             <Row>
-                <Col sm={3}>
+                <Col md={3}>
                     <Sidebar />
                 </Col>
-                <Col sm={9}>
+                <Col md={9}>
                     <main>
                         {children}
                     </main>
                 </Col>
             </Row>
         </Container>
-    </>
    ) 
 }
