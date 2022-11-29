@@ -7,6 +7,8 @@ const prisma = new PrismaClient();
 
 const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
   const user_id : Number = Number(req.query.user_id)
+  console.log("review_idasdfasdfasdf")
+  console.log(req.body.review_id)
 
 
   switch (req.method) {
@@ -80,7 +82,7 @@ const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
     const deleteReview = await prisma.review.delete({
       where: {
         review_id: Number(req.body.review_id),
-        //user_id: user_id,  //외래키 지정 후 시도
+        // user_id: user_id,  //외래키 지정 후 시도
       },
     });
     res.status(200).json(deleteReview)
