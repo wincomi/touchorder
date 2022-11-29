@@ -1,13 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import { PrismaClient } from "@prisma/client";
 
-const prisma = new PrismaClient();
+const prisma = new PrismaClient()
 // 400 bad request
 // 200 no result
 
 const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
-  const user_id : Number = Number(req.query.user_id)
-
+  const user_id: number = Number(req.query.user_id)
 
   switch (req.method) {
     
@@ -22,7 +21,8 @@ const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
           {regdate: 'desc'},
           {rating: 'desc'} // 최근 등록일 + 평점순 정렬
           ],
-        });
+        })
+
         if (MyView != null) {
           res.status(200).send(MyView)
         } else {
@@ -30,11 +30,10 @@ const viewMyReview = async (req: NextApiRequest, res: NextApiResponse) => {
             "message": "store_id에 해당하는 store가 없습니다."
           })
         }
-    }
-    else {
+    } else {
           // 만약 store_id에 숫자가 아닌 다른 값이 들어갈 경우 400 Bad Request
           res.status(400).json({
-          "message": "store_id는 숫자로 요청해야합니다."
+           "message": "store_id는 숫자로 요청해야합니다."
           })
       }
       break
