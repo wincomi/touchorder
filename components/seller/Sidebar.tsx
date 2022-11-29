@@ -19,7 +19,7 @@ export default () => {
                     </button>
                     <div className="collapse show" id="home-collapse">
                     <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                        <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문정보 조회</a></li>
+                        <li><a href="/seller/orders" className="link-dark d-inline-flex text-decoration-none rounded">주문정보 조회</a></li>
                         <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문변경/취소</a></li>
                         <li><a href="#" className="link-dark d-inline-flex text-decoration-none rounded">주문알림</a></li>
                     </ul>
