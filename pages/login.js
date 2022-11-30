@@ -1,18 +1,17 @@
-import { Button, Form, Collapse } from 'react-bootstrap';
-import {useState} from 'react';
-import axios from 'axios';
-import {getUserInfo} from './_app'
+import { Button, Form, Collapse } from 'react-bootstrap'
+import {useState} from 'react'
+import axios from 'axios'
 
 export default ({ Login }) => {
-    const [PhoneNumber, getPhoneNumber] = useState("");
-    const [code, getcode] = useState("");
-    const [isCert, showCert] = useState(false);
-    const [userInfo, setUser] = useState({});
+    const [PhoneNumber, getPhoneNumber] = useState("")
+    const [code, getcode] = useState("")
+    const [isCert, showCert] = useState(false)
+    const [userInfo, setUser] = useState([])
     const inputPhoneNumber=(e)=>{
-        getPhoneNumber(e.target.value);
+        getPhoneNumber(e.target.value)
     };
     const inputac=(e)=>{
-        getcode(e.target.value);
+        getcode(e.target.value)
     };
     const checkCertCode=async()=>{
         const body = {
@@ -22,7 +21,7 @@ export default ({ Login }) => {
         await axios
             .post("http://localhost:3000/api/auth/verification-code/verify", body)
             .then((res)=>console.log(res))
-            .catch((err)=>console.log(err));
+            .catch((err)=>console.log(err))
     }
     const isUser=async ()=>{
         const query = {
@@ -32,20 +31,22 @@ export default ({ Login }) => {
             .get(`http://localhost:3000/api/users`, 
             {params: {phoneNumber: PhoneNumber}},
             {withCredentials:true})
-            .then((res)=>{console.log(res.data.message);
-               getUserInfo(res.data.result);
-            });
-        getCertCode();
+            .then((res)=>{console.log(res.data.message)
+               console.log(res.data.result)
+                setUser(res.data.result)
+               console.log(userInfo)
+            })
+        getCertCode()
     }
     const getCertCode=async()=>{
-        showCert(true);
+        showCert(true)
         const body = {
             phoneNumber: PhoneNumber
         }
         await axios
             .post("http://localhost:3000/api/auth/verification-code/request", body)
             .then((res)=>console.log(res))
-            .catch((err)=>console.log(err));
+            .catch((err)=>console.log(err))
     };
     return (
         <>

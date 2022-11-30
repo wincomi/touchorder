@@ -12,7 +12,7 @@ function create_verificationCode() {
 function request_verificationCode(phoneNumber) {
   const verificationCode = create_verificationCode();
   SMS_Cache.del(phoneNumber);
-  send(phoneNumber, verificationCode);
+  //send(phoneNumber, verificationCode);
   SMS_Cache.put(phoneNumber, verificationCode);
 }
 
