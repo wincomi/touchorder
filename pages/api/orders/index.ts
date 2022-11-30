@@ -61,6 +61,7 @@ async function order (req: NextApiRequest, res: NextApiResponse) {
         }
     });
     const orderId = result.order_id // 생성된 주문 번호
+    
 
 
     // 상세 주문 순회, 결과 값 result에 배열로 저장

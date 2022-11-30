@@ -24,14 +24,15 @@
       "@libs/*": ["libs/*"],
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@utils/*": ["utils/*"]
     }
   },
   "include": [
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-, "pages/api/images.js"  ],
+  ],
   "exclude": [
     "node_modules"
   ]

@@ -1,4 +1,3 @@
-
 // 참고 코드
 // https://jae04099.tistory.com/entry/Nodejs-%EB%84%A4%EC%9D%B4%EB%B2%84-%EB%AC%B8%EC%9E%90-%EC%A0%84%EC%86%A1-API-%EC%82%AC%EC%9A%A9%ED%95%98%EA%B8%B0feat-axios
 // https://happylulurara.tistory.com/197
@@ -8,7 +7,6 @@
 require("dotenv").config();
 
 const axios = require('axios');
-const request = require('request');
 const CryptoJS = require('crypto-js');
 const finErrCode = 404;
 

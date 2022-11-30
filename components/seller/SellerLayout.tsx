@@ -2,21 +2,19 @@ import { ReactNode } from "react";
 import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '@components/seller/Sidebar'
 
-interface LayoutProps {
-    children: ReactNode
+interface SellerLayoutProps {
+    children: ReactNode,
 }
 
-export default ({ children }: LayoutProps) => {
+export default ({ children }: SellerLayoutProps) => {
    return (
-        <Container>
+        <Container className="mt-3">
             <Row>
                 <Col md={3}>
                     <Sidebar />
                 </Col>
                 <Col md={9}>
-                    <main>
-                        {children}
-                    </main>
+                    {children}
                 </Col>
             </Row>
         </Container>

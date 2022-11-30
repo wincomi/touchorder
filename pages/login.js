@@ -1,61 +1,81 @@
 import { Button, Form, Collapse } from 'react-bootstrap';
-import {useState, useEffect} from 'react'
+import {useState} from 'react';
+import axios from 'axios';
+import {getUserInfo} from './_app'
 
 export default ({ Login }) => {
-    const [pn, getpn] = useState("");
+    const [PhoneNumber, getPhoneNumber] = useState("");
     const [code, getcode] = useState("");
     const [isCert, showCert] = useState(false);
-    const inputpn=(e)=>{
-      getpn(e.target.value);
-      console.log(pn)
-    };
-    //아래 함수들 전부 예외처리 필요, 백엔드랑 협업해서 해결해야할듯
-    const getCertCode=async(e)=>{
-      showCert(true);
-      await fetch(`http://localhost:3000/api/request-code/${phoneNumber=pn}`,{method : 'POST'})
+    const [userInfo, setUser] = useState({});
+    const inputPhoneNumber=(e)=>{
+        getPhoneNumber(e.target.value);
     };
     const inputac=(e)=>{
-      getcode(e.target.value);
-      console.log(code)
+        getcode(e.target.value);
     };
     const checkCertCode=async()=>{
-      await fetch(`http://localhost:3000/api/verify-code/${phoneNumber=pn, verificationCode=code}`,{method : 'POST'})
+        const body = {
+            phoneNumber: PhoneNumber,
+            verificationCode: code
+        }
+        await axios
+            .post("http://localhost:3000/api/auth/verification-code/verify", body)
+            .then((res)=>console.log(res))
+            .catch((err)=>console.log(err));
     }
-    const isUser=async()=>{
-      const user = await fetch(`http://localhost:3000/api/users/${phoneNumber=pn}`)
+    const isUser=async ()=>{
+        const query = {
+            phoneNumber: PhoneNumber
+        }
+        await axios
+            .get(`http://localhost:3000/api/users`, 
+            {params: {phoneNumber: PhoneNumber}},
+            {withCredentials:true})
+            .then((res)=>{console.log(res.data.message);
+               getUserInfo(res.data.result);
+            });
+        getCertCode();
     }
-    useEffect(() => {
-
-    },[])
+    const getCertCode=async()=>{
+        showCert(true);
+        const body = {
+            phoneNumber: PhoneNumber
+        }
+        await axios
+            .post("http://localhost:3000/api/auth/verification-code/request", body)
+            .then((res)=>console.log(res))
+            .catch((err)=>console.log(err));
+    };
     return (
         <>
             <h1>휴대폰 번호를 입력해주세요</h1>
             <p>터치오더 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="tel" placeholder="01012345678" value={pn} onChange={inputpn}></Form.Control>
+                    <Form.Control type="tel" placeholder="01012345678" value={PhoneNumber} onChange={inputPhoneNumber}></Form.Control>
                     
                     <Form.Text className="text-muted">
                         입력한 휴대폰 번호로 인증 코드가 발송됩니다.
                     </Form.Text>
                 </Form.Group>
-                <div className="d-grid">
-                    <Button type="submit" variant="primary" size="lg" onClick={()=>{isUser(),getCertCode}}>확인</Button>
-                </div>
                 <Collapse in={isCert}>
                     <Form.Group>
-                        <Form.Label>identification Code</Form.Label>
+                        <Form.Label>인증번호</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="인증번호"
+                            placeholder="인증번호를 입력해주세요"
                             value={code}
                             onChange={inputac}
                         />
-                        <Button variant="primary" type="submit" onClick={checkCertCode}>
+                        <Button variant="primary" onClick={checkCertCode}>
                             확인
                         </Button>
                     </Form.Group>
                 </Collapse>
+                <div className="d-grid">
+                    <Button variant="primary" size="lg" onClick={isUser}>확인</Button>
+                </div>
             </Form>
         </>
     );
