@@ -24,7 +24,8 @@
       "@libs/*": ["libs/*"],
       "@components/*": ["components/*"],
       "@styles/*": ["styles/*"],
-      "@public/*": ["public/*"]
+      "@public/*": ["public/*"],
+      "@utils/*": ["public/*"]
     }
   },
   "include": [
