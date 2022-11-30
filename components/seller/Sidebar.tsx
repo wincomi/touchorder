@@ -50,6 +50,7 @@ export default () => {
                     </button>
                     <div className="collapse show" id="reviews-collapse">
                       <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a href="/seller/setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>매장 정보 변경</a></li>
                         <li><a href="/seller/reviews" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>리뷰 관리</a></li>
                         <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>상품 설정</a></li>
                         <li><a href="/seller/tables" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>테이블 설정</a></li>
