@@ -3,6 +3,7 @@ import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap'
 import { InferGetStaticPropsType } from "next"
 import { menu } from "@prisma/client"
+import priceFormat from '@utils/priceFormat'
 
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
     return (
@@ -29,7 +30,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                 {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
                 <td><a href="#">{item.category}</a></td>
                 <td>{item.name}</td>
-                <td>{new Intl.NumberFormat('ko-KR').format(item.price)}원</td>
+                <td>{priceFormat('ko-KR')}원</td>
                 <td>{item.content}</td>
                 <td>
                   <Button variant="warning" size="sm" data-menu-id={item.menu_id}>수정</Button>{` `}
