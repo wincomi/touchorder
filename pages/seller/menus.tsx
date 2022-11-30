@@ -8,6 +8,8 @@ import priceFormat from '@utils/priceFormat'
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
     return (
       <SellerLayout>
+        {testValue}
+        
         <HeaderTitle title="매장 관리" subtitle="상품 설정" />
         <Table striped>
           <thead>

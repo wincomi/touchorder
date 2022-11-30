@@ -3,7 +3,7 @@ import { Container, Row, Col } from 'react-bootstrap'
 import Sidebar from '@components/seller/Sidebar'
 
 interface SellerLayoutProps {
-    children: ReactNode
+    children: ReactNode,
 }
 
 export default ({ children }: SellerLayoutProps) => {
@@ -14,9 +14,7 @@ export default ({ children }: SellerLayoutProps) => {
                     <Sidebar />
                 </Col>
                 <Col md={9}>
-                    <main>
-                        {children}
-                    </main>
+                    {children}
                 </Col>
             </Row>
         </Container>
