@@ -1,50 +1,52 @@
 import { Button, Form, Collapse } from 'react-bootstrap';
-import {useState, useEffect} from 'react';
+import {useState} from 'react';
 import axios from 'axios';
+import {getUserInfo} from './_app'
 
 export default ({ Login }) => {
     const [PhoneNumber, getPhoneNumber] = useState("");
     const [code, getcode] = useState("");
     const [isCert, showCert] = useState(false);
-    
+    const [userInfo, setUser] = useState({});
     const inputPhoneNumber=(e)=>{
-        //e.preventDefault();
         getPhoneNumber(e.target.value);
     };
     const inputac=(e)=>{
         getcode(e.target.value);
-        console.log(code)
     };
     const checkCertCode=async()=>{
-        let body = {
+        const body = {
             phoneNumber: PhoneNumber,
             verificationCode: code
         }
-        axios
-            .post("http://localhost:3000/api/verification-code/verify", body)
-            .then((res)=>console.log(res));
+        await axios
+            .post("http://localhost:3000/api/auth/verification-code/verify", body)
+            .then((res)=>console.log(res))
+            .catch((err)=>console.log(err));
     }
-    const isUser=async(e)=>{
-        let body = {
+    const isUser=async ()=>{
+        const query = {
             phoneNumber: PhoneNumber
         }
-        axios
-            .get(`http://localhost:3000/api/users/${body=body}`)
-            .then((res)=>console.log(res));
-        await getCertCode();
+        await axios
+            .get(`http://localhost:3000/api/users`, 
+            {params: {phoneNumber: PhoneNumber}},
+            {withCredentials:true})
+            .then((res)=>{console.log(res.data.message);
+               getUserInfo(res.data.result);
+            });
+        getCertCode();
     }
     const getCertCode=async()=>{
         showCert(true);
-        let body = {
+        const body = {
             phoneNumber: PhoneNumber
         }
-        axios
-            .post("http://localhost:3000/api/verification-code/request", body)
-            .then((res)=>console.log(res));
+        await axios
+            .post("http://localhost:3000/api/auth/verification-code/request", body)
+            .then((res)=>console.log(res))
+            .catch((err)=>console.log(err));
     };
-    useEffect(() => {
-
-    },[])
     return (
         <>
             <h1>휴대폰 번호를 입력해주세요</h1>
@@ -57,23 +59,23 @@ export default ({ Login }) => {
                         입력한 휴대폰 번호로 인증 코드가 발송됩니다.
                     </Form.Text>
                 </Form.Group>
-                <div className="d-grid">
-                    <Button type="submit" variant="primary" size="lg" onClick={()=>{isUser()}}>확인</Button>
-                </div>
                 <Collapse in={isCert}>
                     <Form.Group>
-                        <Form.Label>identification Code</Form.Label>
+                        <Form.Label>인증번호</Form.Label>
                         <Form.Control
                             type="text"
-                            placeholder="인증번호"
+                            placeholder="인증번호를 입력해주세요"
                             value={code}
                             onChange={inputac}
                         />
-                        <Button variant="primary" type="submit" onClick={checkCertCode}>
+                        <Button variant="primary" onClick={checkCertCode}>
                             확인
                         </Button>
                     </Form.Group>
                 </Collapse>
+                <div className="d-grid">
+                    <Button variant="primary" size="lg" onClick={isUser}>확인</Button>
+                </div>
             </Form>
         </>
     );

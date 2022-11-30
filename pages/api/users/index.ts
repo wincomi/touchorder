@@ -4,18 +4,28 @@ import { PrismaClient } from '@prisma/client'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
-
+    const phoneNumber:string|null=req.query.phoneNumber as string ?? null;
     switch (req.method) {
         // 전체 회원 조회
         case "GET":
-            const readResult = await prisma.user.findMany();
-            if (readResult != null) {
-                res.status(200).json(readResult)
-            } else {
-                res.status(400).json({
-                    "message": "사용자가 없습니다."
-                })
-            } 
+            if(phoneNumber == null){
+                const readResult = await prisma.user.findMany();
+                if (readResult != null) {
+                    res.status(200).json(readResult)
+                } else {
+                    res.status(400).json({
+                        "message": "사용자가 없습니다."
+                    })
+            }
+            }
+            else{
+                const result = await prisma.user.findFirst({where:{phone_number:phoneNumber}})
+                if(result==null){
+                    res.status(400).json({message:"해당 번호는 회원이 아닙니다"});
+                } else{
+                    res.status(200).json({result:result});
+                }
+            }
             break
         // 회원 등록
         case "POST":

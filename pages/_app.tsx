@@ -14,7 +14,7 @@ NProgress.configure({ showSpinner: false })
 
 export default ({ Component, pageProps }: AppProps) => {
     const [testValue, setTestValue] = useState(0)
-    const [user, setUser] = useState([])
+    const [user, setUser] = useState({})
     //useState 선언,
     //fetch나 axios로 디비 내용 가져옴 useState에 값 담기
 

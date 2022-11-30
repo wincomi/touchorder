@@ -8,7 +8,6 @@
 require("dotenv").config();
 
 const axios = require('axios');
-const request = require('request');
 const CryptoJS = require('crypto-js');
 const finErrCode = 404;
 
