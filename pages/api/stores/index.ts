@@ -3,20 +3,33 @@ import { PrismaClient } from '@prisma/client'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
-
+    const storeId:number|null=Number(req.query.store_id) as number ?? null;
     switch (req.method) {
         // READ
         case "GET":
-            const readResult = await prisma.store.findMany();
+            if(storeId==null){
+                const readResult = await prisma.store.findMany();
 
-            if (readResult != null) {
-                res.status(200).json(readResult)
-            } else {
-                res.status(400).json({
-                    "message": "store가 없습니다."
-                })
-            } 
-            break
+                if (readResult != null) {
+                    res.status(200).json({result:readResult})
+                } else {
+                    res.status(400).json({
+                        "message": "store가 없습니다."
+                    })
+                } 
+                break
+            }
+            else{
+                const readResult = await prisma.store.findFirst({where:{store_id: storeId}});
+                if (readResult != null) {
+                    res.status(200).json({result:readResult})
+                } else {
+                    res.status(400).json({
+                        "message": "해당 store가 없습니다."
+                    })
+                } 
+                break
+            }
         // CREATE
         case "POST":
             if (req.body.name == null) {

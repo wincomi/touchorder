@@ -24,9 +24,6 @@ export default ({ Login }) => {
             .catch((err)=>console.log(err))
     }
     const isUser=async ()=>{
-        const query = {
-            phoneNumber: PhoneNumber
-        }
         await axios
             .get(`http://localhost:3000/api/users`, 
             {params: {phoneNumber: PhoneNumber}},
