@@ -4,9 +4,11 @@ import { PrismaClient } from '@prisma/client'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
-    var orderId = Number(req.body.order_id)
-
-    let result = await prisma.detailed_order.findMany({where:{order_id: orderId}})
-
-    res.status(200).json(result);
+    
+    const updateStatus = await prisma.t_order.findMany({
+        where:{
+            status: 1,
+        }
+    })
+    res.status(200).json(updateStatus)
 }
