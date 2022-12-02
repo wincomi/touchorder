@@ -10,4 +10,5 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             status: 1,
         }
     })
+    res.status(200).json(updateStatus)
 }
