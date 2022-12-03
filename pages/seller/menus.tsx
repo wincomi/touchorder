@@ -6,7 +6,8 @@ import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
 
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
-    return (
+  
+  return (
       <SellerLayout>
         <HeaderTitle title="매장 관리" subtitle="상품 설정" />
         <Table striped>
