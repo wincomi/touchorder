@@ -11,6 +11,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const [state, setState] = useState({name:'', content:'', price:''})
   
   const addMenu = async()=>{
+    console.log(state)
     const store_id=1
     const result = await fetch(`http://localhost:3000/api/${store_id}/menus`, {
       method: "POST",
@@ -22,17 +23,18 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
   const updateMenu = async(menu_id:number, store_id:number)=>{
     const update={
-      name:state.name,
+      name:state[menu_id].name,
       content:state.content,
       price:parseInt(state.price)
     }
+    console.log(update)
     const result = await fetch(`http://localhost:3000/api/${store_id}/menus/${menu_id}`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(update)
-    })
+        "Content-Type": "app"
+    },
+    body: JSON.stringify(state)
+  })
   }
   const deleteMenu = async(menu_id:number, store_id:number)=>{
     const result = await fetch(`http://localhost:3000/api/${store_id}/menus/${menu_id}`, {
@@ -72,7 +74,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                       <Form.Control
                           type="text"
                           placeholder={item.name}
-                          value={state.name}
+                          value={null}
                           onChange={(e)=>{setState({...state,name:e.target.value})}}
                       />
                   </Form.Group>
@@ -84,7 +86,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                       <Form.Control
                           type="text"
                           placeholder={priceFormat(item.price)}
-                          value={state.price}
+                          value={null}
                           onChange={(e)=>{setState({...state,price:e.target.value})}}
                       />
                   </Form.Group>
@@ -96,7 +98,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                       <Form.Control
                           type="text"
                           placeholder={item.content}
-                          value={state.content}
+                          value={null}
                           onChange={(e)=>{setState({...state,content:e.target.value})}}
                       />
                   </Form.Group>
@@ -118,7 +120,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                         <Form.Control
                             type="text"
                             placeholder="메뉴 이름"
-                            value={state.name}
+                            value={null}
                             onChange={(e)=>{setState({...state,name:e.target.value})}}
                         />
                     </Form.Group>
@@ -127,7 +129,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                         <Form.Control
                             type="text"
                             placeholder="가격"
-                            value={state.price}
+                            value={null}
                             onChange={(e)=>{setState({...state,price:e.target.value})}}
                         />
                     </Form.Group>
@@ -136,7 +138,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                         <Form.Control
                             type="text"
                             placeholder="메뉴 설명"
-                            value={state.content}
+                            value={null}
                             onChange={(e)=>{setState({...state,content:e.target.value})}}
                         />
                     </Form.Group>
