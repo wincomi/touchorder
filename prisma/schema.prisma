@@ -41,7 +41,7 @@ model review {
   menu_id    Int
   rating     Int
   content    String?  @db.VarChar(255)
-  image_url1 String?  @db.VarChar(255)
+  image_url1 String?  @default("/default.png") @db.VarChar(255)
   image_url2 String?  @db.VarChar(255)
   image_url3 String?  @db.VarChar(255)
 }
@@ -98,6 +98,7 @@ model t_order {
   payments Int      @default(0)
   date     DateTime @default(now())
   table_id Int?
+  status   Int      @default(0)
 }
 
 model detailed_order {
