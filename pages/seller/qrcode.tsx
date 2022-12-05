@@ -2,11 +2,12 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { useQRCode } from 'next-qrcode'
 import { useRouter } from 'next/router'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 export default ({ orders }) => {
     const { Image } = useQRCode()
     const router = useRouter()
-    const store_url = `${process.env.NEXT_PUBLIC_URL}/stores/${router.query.store_id}`
+    const store_url = `${getAbsoluteURL}/stores/${router.query.store_id}`
     const qrcode_options = {
       level: '',
       margin: 3,
@@ -29,7 +30,7 @@ export default ({ orders }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const store_id = 1
 
 return {
