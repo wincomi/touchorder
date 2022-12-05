@@ -12,12 +12,12 @@ import Link from 'next/link'
 //TODO db랑 연동
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {              
   const [isAdd,setAdd]=useState(false)
-  const [state, setState] = useState({name:'', content:'', price:'', category:'', image_url:''})
+  const [state, setState] = useState({name:'', content:'', price:'', category:'', image_url:'', status:0})
   
   const addMenu = async()=>{
     console.log(state)
     const store_id=1
-    const result = await fetch(getAbsoluteURL() + `/api/${store_id}/menus`, {
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -27,7 +27,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
   }
 
   const deleteMenu = async(menu_id:number, store_id:number)=>{
-    const result = await fetch(getAbsoluteURL() + `/api/${store_id}/menus/${menu_id}`, {
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -60,7 +60,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <td> {priceFormat(item.price)} </td>
               <td> {item.content} </td>
               <td>
-                <Link href={{pathname: '/seller/menusUpdate', query:{routeItem: JSON.stringify(item)}}} as={`/menusUpdate/${item.menu_id}`}>
+                <Link href={{pathname: '/seller/menu_update', query:{routeItem: JSON.stringify(item)}}} as={`/menu_update/${item.menu_id}`}>
                   <Button variant="warning" size="sm">수정</Button>
                 </Link>{` `}
                 <Button variant="danger" size="sm" onClick={()=>{deleteMenu(item.menu_id, item.store_id)}}>삭제</Button>
