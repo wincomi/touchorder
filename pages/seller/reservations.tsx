@@ -36,7 +36,7 @@ export default ({ items }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const store_id = 1 // TODO
   const res = await fetch(`http://localhost:3000/api/stores/${store_id}/tables/`)
   const items = await res.json()

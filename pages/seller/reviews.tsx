@@ -55,7 +55,7 @@ export default ({ reviews }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const result = await fetch("http://localhost:3000/api/reviews/")
   let reviews = await result.json()
 

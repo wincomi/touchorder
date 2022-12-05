@@ -29,7 +29,7 @@ export default ({ orders }) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const store_id = 1
 
 return {

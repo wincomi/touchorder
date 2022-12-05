@@ -64,7 +64,7 @@ export default ({result}) => {
     )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const storeId=1;
   let result;
   if(storeId!=null){
