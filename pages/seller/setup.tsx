@@ -3,7 +3,7 @@ import SellerLayout from "@components/seller/SellerLayout"
 import {useState} from "react"
 import {Button, Form} from "react-bootstrap"
 import axios from 'axios'
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 /*
 model store {

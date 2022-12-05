@@ -1,7 +1,7 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Table } from 'react-bootstrap';
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 export default ( {orders} ) => {
   const checkedOrder = async (e) =>{

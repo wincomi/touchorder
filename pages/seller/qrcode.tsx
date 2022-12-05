@@ -2,7 +2,7 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { useQRCode } from 'next-qrcode'
 import { useRouter } from 'next/router'
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 export default ({ orders }) => {
     const { Image } = useQRCode()

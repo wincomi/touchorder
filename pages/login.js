@@ -1,7 +1,7 @@
 import { Button, Form, Collapse } from 'react-bootstrap'
 import {useState} from 'react'
 import axios from 'axios'
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 export default ({ Login }) => {
     const [PhoneNumber, getPhoneNumber] = useState("")

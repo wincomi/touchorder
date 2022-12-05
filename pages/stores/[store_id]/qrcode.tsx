@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { useQRCode } from 'next-qrcode'
 import { useRouter } from 'next/router'
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 export default () => {
   const { Image } = useQRCode()

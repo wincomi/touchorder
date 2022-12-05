@@ -5,7 +5,7 @@ import { Table, Button, Form, Collapse } from 'react-bootstrap'
 import { InferGetStaticPropsType } from "next"
 import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 //이미지, state 아직 추가안함
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {              

@@ -2,7 +2,7 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Card, Row, Col } from 'react-bootstrap';
 import Image from 'next/image'
-import getAbsoluteURL from '@utils/AbsoluteURL'
+import getAbsoluteURL from '@utils/absoluteURL'
 
 //리뷰 관리 이미지 및 관련내용 넣기
 export default ({ reviews }) => {
