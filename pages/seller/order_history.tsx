@@ -1,12 +1,13 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Table } from 'react-bootstrap';
+import getAbsoluteURL from '@utils/absoluteURL'
 
 export default ( {orders} ) => {
   const checkedOrder = async (e) =>{
     var orderId = e.target.getAttribute('data-order-id')
 
-    const result = await fetch(`http://localhost:3000/api/orders/update_status`, {
+    const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -49,8 +50,8 @@ export default ( {orders} ) => {
     )
 }
 
-export async function getStaticProps() {
-  const res = await fetch(`http://localhost:3000/api/orders/order_history`)
+export async function getServerSideProps() {
+  const res = await fetch(getAbsoluteURL() + `/api/orders/order_history`)
   const orders = await res.json()
 
   return {

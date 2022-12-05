@@ -5,15 +5,19 @@ import { Table, Button, Form, Collapse } from 'react-bootstrap'
 import { InferGetStaticPropsType } from "next"
 import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
+import getAbsoluteURL from '@utils/absoluteURL'
+import { useRouter } from "next/router"
 //이미지, state 아직 추가안함
+//TODO db랑 연동
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {              
+  const router=useRouter()
   const [isAdd,setAdd]=useState(false)
-  const [state, setState] = useState({name:'', content:'', price:''})
+  const [state, setState] = useState({name:'', content:'', price:'', category:'', image_url:'', status:0})
   
   const addMenu = async()=>{
     console.log(state)
     const store_id=1
-    const result = await fetch(`http://localhost:3000/api/${store_id}/menus`, {
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -21,23 +25,9 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
       body: JSON.stringify(state)
     })
   }
-  const updateMenu = async(menu_id:number, store_id:number)=>{
-    const update={
-      name:state[menu_id].name,
-      content:state.content,
-      price:parseInt(state.price)
-    }
-    console.log(update)
-    const result = await fetch(`http://localhost:3000/api/${store_id}/menus/${menu_id}`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "app"
-    },
-    body: JSON.stringify(state)
-  })
-  }
+
   const deleteMenu = async(menu_id:number, store_id:number)=>{
-    const result = await fetch(`http://localhost:3000/api/${store_id}/menus/${menu_id}`, {
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -65,47 +55,12 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <tr>
               {/* <td>{item.menu_id}</td> */}
               {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
+              <td> {item.menu_id} </td>
+              <td>  {item.name} </td>
+              <td> {priceFormat(item.price)} </td>
+              <td> {item.content} </td>
               <td>
-                {item.menu_id}
-              </td>
-              <td>                
-                <Form>
-                  <Form.Group>
-                      <Form.Control
-                          type="text"
-                          placeholder={item.name}
-                          value={null}
-                          onChange={(e)=>{setState({...state,name:e.target.value})}}
-                      />
-                  </Form.Group>
-                </Form>
-              </td>
-              <td>
-                <Form>
-                  <Form.Group>
-                      <Form.Control
-                          type="text"
-                          placeholder={priceFormat(item.price)}
-                          value={null}
-                          onChange={(e)=>{setState({...state,price:e.target.value})}}
-                      />
-                  </Form.Group>
-                </Form>
-                </td>
-              <td>
-                <Form>
-                  <Form.Group>
-                      <Form.Control
-                          type="text"
-                          placeholder={item.content}
-                          value={null}
-                          onChange={(e)=>{setState({...state,content:e.target.value})}}
-                      />
-                  </Form.Group>
-                </Form>
-              </td>
-              <td>
-                <Button variant="warning" onClick={() => {updateMenu(item.menu_id, item.store_id)}} size="sm">수정</Button>{` `}
+                <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id='+item.menu_id)}}>수정</Button>
                 <Button variant="danger" size="sm" onClick={()=>{deleteMenu(item.menu_id, item.store_id)}}>삭제</Button>
               </td>
             </tr>
@@ -151,9 +106,9 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
   )
 }
 
-export async function getStaticProps() {
+export async function getServerSideProps() {
   const store_id = 1 // TODO
-  const res = await fetch(`http://localhost:3000/api/stores/${store_id}/menus/`)
+  const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/`)
 
   const items: menu[] = await res.json()
   return {
