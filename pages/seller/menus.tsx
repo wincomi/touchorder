@@ -6,11 +6,11 @@ import { InferGetStaticPropsType } from "next"
 import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
 import getAbsoluteURL from '@utils/absoluteURL'
-
-import Link from 'next/link'
+import { useRouter } from "next/router"
 //이미지, state 아직 추가안함
 //TODO db랑 연동
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {              
+  const router=useRouter()
   const [isAdd,setAdd]=useState(false)
   const [state, setState] = useState({name:'', content:'', price:'', category:'', image_url:'', status:0})
   
@@ -60,9 +60,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <td> {priceFormat(item.price)} </td>
               <td> {item.content} </td>
               <td>
-                <Link href={{pathname: '/seller/menu_update', query:{routeItem: JSON.stringify(item)}}} as={`/menu_update/${item.menu_id}`}>
-                  <Button variant="warning" size="sm">수정</Button>
-                </Link>{` `}
+                <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id='+item.menu_id)}}>수정</Button>
                 <Button variant="danger" size="sm" onClick={()=>{deleteMenu(item.menu_id, item.store_id)}}>삭제</Button>
               </td>
             </tr>

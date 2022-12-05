@@ -40,7 +40,7 @@ export default ({ Login }) => {
             .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
             .then((res)=>console.log(res))
             .catch((err)=>console.log(err))
-    };
+    }
     return (
         <>
             <h1>휴대폰 번호를 입력해주세요</h1>
@@ -72,5 +72,5 @@ export default ({ Login }) => {
                 </div>
             </Form>
         </>
-    );
-};
+    )
+}
