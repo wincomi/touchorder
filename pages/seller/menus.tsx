@@ -5,6 +5,8 @@ import { Table, Button, Form, Collapse } from 'react-bootstrap'
 import { InferGetStaticPropsType } from "next"
 import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
+import getAbsoluteURL from '@utils/AbsoluteURL'
+
 //이미지, state 아직 추가안함
 export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {              
   const [isAdd,setAdd]=useState(false)
@@ -13,7 +15,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const addMenu = async()=>{
     console.log(state)
     const store_id=1
-    const result = await fetch(`http://localhost:3000/api/${store_id}/menus`, {
+    const result = await fetch(getAbsoluteURL() + `/api/${store_id}/menus`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,7 +30,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
       price:parseInt(state.price)
     }
     console.log(update)
-    const result = await fetch(`http://localhost:3000/api/${store_id}/menus/${menu_id}`, {
+    const result = await fetch(getAbsoluteURL() + `/api/${store_id}/menus/${menu_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "app"
@@ -37,7 +39,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
   })
   }
   const deleteMenu = async(menu_id:number, store_id:number)=>{
-    const result = await fetch(`http://localhost:3000/api/${store_id}/menus/${menu_id}`, {
+    const result = await fetch(getAbsoluteURL() + `/api/${store_id}/menus/${menu_id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -153,7 +155,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
 
 export async function getServerSideProps() {
   const store_id = 1 // TODO
-  const res = await fetch(`http://localhost:3000/api/stores/${store_id}/menus/`)
+  const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/`)
 
   const items: menu[] = await res.json()
   return {

@@ -2,6 +2,7 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Card, Row, Col } from 'react-bootstrap';
 import Image from 'next/image'
+import getAbsoluteURL from '@utils/AbsoluteURL'
 
 //리뷰 관리 이미지 및 관련내용 넣기
 export default ({ reviews }) => {
@@ -9,7 +10,7 @@ export default ({ reviews }) => {
     var reviewId = e.target.getAttribute('data-review-id')
     var userId = e.target.getAttribute('data-user-id')
 
-    const result = await fetch(`http://localhost:3000/api/reviews/${userId}`, {
+    const result = await fetch(getAbsoluteURL() + `/api/reviews/${userId}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -56,7 +57,7 @@ export default ({ reviews }) => {
 }
 
 export async function getServerSideProps() {
-  const result = await fetch("http://localhost:3000/api/reviews/")
+  const result = await fetch(getAbsoluteURL() + `/api/reviews/`)
   let reviews = await result.json()
 
   return {

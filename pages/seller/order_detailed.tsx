@@ -1,6 +1,7 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Table } from 'react-bootstrap';
+import getAbsoluteURL from '@utils/AbsoluteURL'
 
 export default ( {detailedorders} ) => {
     const back = async (e) =>{
@@ -42,7 +43,7 @@ export async function getServerSideProps(context) {
 
     var orderId = context.query.order_id
 
-    const res = await fetch(`http://localhost:3000/api/orders/detailed-orders`,{
+    const res = await fetch(getAbsoluteURL + `/api/orders/detailed-orders`,{
     method: "POST",
     headers: {
       "Content-Type": "application/json",

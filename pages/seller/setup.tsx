@@ -3,6 +3,7 @@ import SellerLayout from "@components/seller/SellerLayout"
 import {useState} from "react"
 import {Button, Form} from "react-bootstrap"
 import axios from 'axios'
+import getAbsoluteURL from '@utils/AbsoluteURL'
 
 /*
 model store {
@@ -20,7 +21,7 @@ export default ({result}) => {
   const [state, setState] = useState({name:'', address:'', phone:'', content:'', deposit:0, image_url:''})
   const updateStore = async()=>{
     const store_id=1
-    const result = await fetch(`http://localhost:3000/api/stores/${store_id}`, {
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -69,7 +70,7 @@ export async function getServerSideProps() {
   let result;
   if(storeId!=null){
     await axios
-    .get(`http://localhost:3000/api/stores`, 
+    .get(getAbsoluteURL() + `/api/stores`, 
     {params: {store_id: storeId}})
     .then((res)=>{ result=res.data.result })
     return {

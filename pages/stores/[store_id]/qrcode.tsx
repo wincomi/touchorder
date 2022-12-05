@@ -1,11 +1,12 @@
 import Image from 'next/image'
 import { useQRCode } from 'next-qrcode'
 import { useRouter } from 'next/router'
+import getAbsoluteURL from '@utils/AbsoluteURL'
 
 export default () => {
   const { Image } = useQRCode()
   const router = useRouter()
-  const store_url = `${process.env.NEXT_PUBLIC_URL}/stores/${router.query.store_id}`
+  const store_url = getAbsoluteURL() + `/stores/${router.query.store_id}`
   const qrcode_options = {
     level: '',
     margin: 3,
@@ -21,3 +22,5 @@ export default () => {
     <Image text={store_url} options={qrcode_options} />
   )
 }
+
+

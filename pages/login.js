@@ -1,6 +1,7 @@
 import { Button, Form, Collapse } from 'react-bootstrap'
 import {useState} from 'react'
 import axios from 'axios'
+import getAbsoluteURL from '@utils/AbsoluteURL'
 
 export default ({ Login }) => {
     const [PhoneNumber, getPhoneNumber] = useState("")
@@ -19,13 +20,13 @@ export default ({ Login }) => {
             verificationCode: code
         }
         await axios
-            .post("http://localhost:3000/api/auth/verification-code/verify", body)
+            .post(getAbsoluteURL() + "/api/auth/verification-code/verify", body)
             .then((res)=>console.log(res))
             .catch((err)=>console.log(err))
     }
     const isUser=async ()=>{
         await axios
-            .get(`http://localhost:3000/api/users`, 
+            .get(getAbsoluteURL() + `/api/users`, 
             {params: {phoneNumber: PhoneNumber}},
             {withCredentials:true})
             .then((res)=>{console.log(res.data.message)
@@ -41,7 +42,7 @@ export default ({ Login }) => {
             phoneNumber: PhoneNumber
         }
         await axios
-            .post("http://localhost:3000/api/auth/verification-code/request", body)
+            .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
             .then((res)=>console.log(res))
             .catch((err)=>console.log(err))
     };
