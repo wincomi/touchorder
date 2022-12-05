@@ -1,34 +1,65 @@
-.title{
-    color:rgb(0, 0, 0);
-    text-align: center;
-    font-size: 30px;
-    margin-top: 1.8%;
-    padding: 20px;
-    align-content: left;
-}
+   .title{
+     text-align: center;
+     font-size: 50px;
+     margin-top: 100px;
+   }
 
-.Button{
-    
-    padding:100px;
-    text-align: center;
-    
-}
+   .form-control{
+     border-color: #0d6efd;
+     border-width: 0.5px;
+   }
+ 
+   
+   .Auth_form_container {
+     margin-top: -100px;
+     display: flex;
+     justify-content: center;
+     align-items: center;
+     width: 100vw;
+     height: 100vh;
+   }
+   
+   .Auth_form {
+     width: 420px;
+     box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
+     padding-top: 100px;
+     padding-bottom: 20px;
+     padding-left: 20px;
+     border-radius: 8px;
+     background-color: white;
+   }
+   
+   .Auth_form_content {
+     padding-left: 6%;
+     padding-right: 12%;
+   }
+   
+   .Auth_form_title {
+     text-align: center;
+     margin-top:-50px;
+     margin-bottom: 1em;
+     font-size: 30px;
+     color: #0072E1;
+     font-weight: 800;
+     font-family: "JUA";
+   }
+   
+   .btn_success{
+     border-color:#0072E1;
+     background-color: white;
+     color: #0072E1;
+     width:100px;
+     margin-left: 35%;
+   }
+ 
+   .outline_success{
+     color: white;
+     border-color:#0072E1;
+     --bs-btn-hover-bg: #0072E1;
+     --bs-btn-hover-border-color: #0072E1;
+     text-align: right;
+     margin-left: 82%;
+     margin-top: -20%;
+     width: 60px;
 
-
-.Footer{
-    background-color: gainsboro;
-    width: 100%;
-    height: 100px;
-    text-align: left;
-    padding-top: 20px;
-    line-height: 2;
-    /* position: absolute;  
-    bottom: 0; */
-}
-
-.navbar-brand {
-    padding-top: .75rem;
-    padding-bottom: .75rem;
-    background-color: rgba(165, 83, 35, 0.596);
-    box-shadow: inset -1px 0 0 rgba(0, 0, 0, .25);
-  }
+   }
