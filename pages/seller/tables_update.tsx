@@ -18,7 +18,7 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
   
   const checkEmpty = (string: string) => {
     console.log(string.length)
-    if (string.length == 0){
+    if (string.length == 0) {
       return null
     } else {
       return string
@@ -26,7 +26,7 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
   }
   
   const returnPeople = (people: string) => {
-    if(people.length == 0){
+    if (people.length == 0) {
       return table.max_people
     } else {
       return parseInt(people)

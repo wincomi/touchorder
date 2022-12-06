@@ -16,14 +16,14 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
     image_url: "",
   })
   const checkEmpty = (string: string) => {
-    if (string.length == 0){
+    if (string.length == 0) {
       return null
     } else {
       return string
     }
   }
   const returnDeposit = (deposit: string) => {
-    if(deposit.length == 0){
+    if (deposit.length == 0) {
       return store.deposit
     } else {
       return parseInt(deposit)

@@ -20,14 +20,14 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
   useEffect(() => {
   }, [status])
   const checkEmpty = (string: string) => {
-    if (string.length == 0){
+    if (string.length == 0) {
       return null
     } else {
       return string
     }
   }
   const returnPrice = (price: string) => {
-    if(price.length == 0){
+    if (price.length == 0) {
       return item.price
     } else {
       return parseInt(price)
