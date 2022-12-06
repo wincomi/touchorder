@@ -39,7 +39,7 @@ export default ( {orders} ) => {
                   <tr>
                     <td>{item.order_id}</td>
                     <td>{item.table_id}</td>
-                    <td>{item.date}</td>
+                    <td>{new Date(item.date).toLocaleString()}</td>
                     <td>{item.status==1?"주문확인":""}</td>
                     <td><Button data-order-id={item.order_id} variant="warning" size="sm" onClick={checkedOrder}>주문 완료</Button></td>
                   </tr>
