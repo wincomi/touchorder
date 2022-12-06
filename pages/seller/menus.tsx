@@ -2,7 +2,6 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { useState } from 'react'
 import { Table, Button, Form, Collapse } from 'react-bootstrap'
-import { InferGetStaticPropsType } from "next"
 import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
 import getAbsoluteURL from '@utils/absoluteURL'
@@ -24,6 +23,8 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
       },
       body: JSON.stringify(state)
     })
+    setAdd(false)
+    router.replace(router.asPath)
   }
 
   const deleteMenu = async (menu_id:number, store_id:number)=>{
@@ -33,6 +34,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
         "Content-Type": "application/json"
       }
     })
+    router.replace(router.asPath)
   }
     return (
       <SellerLayout>
@@ -99,9 +101,9 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                     </Form.Group>
                   </Form>
                 </Collapse>
-                <div className="d-grid">
+                <p>
                     <Button variant="primary" size="sm" onClick={()=>{if (!isAdd) {setAdd(true)}else{addMenu()}}}>추가</Button>
-                </div>
+                </p>
       </SellerLayout>
   )
 }

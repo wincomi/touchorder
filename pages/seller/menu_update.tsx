@@ -5,9 +5,11 @@ import { Table, Button, Form } from "react-bootstrap"
 import priceFormat from "@utils/priceFormat"
 import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from 'next'
+import { useRouter } from "next/router"
 
 //이미지 추가안함
 export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter()
   const [update, setUpdate] = useState({ name: "", price: "", content: "" })
   const store_id = 1
   const updateMenu = async (menu_id: number, store_id: number) => {
@@ -27,6 +29,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
         body: JSON.stringify(query),
       }
     )
+    Router.back()
   }
   return (
     <SellerLayout>
