@@ -1,12 +1,12 @@
-import { useEffect, MouseEvent } from "react";
+import { MouseEvent } from 'react'
 import { useRouter } from 'next/router'
 
-export default () => {
-  const router = useRouter()
+type Props = {
+  title: string
+}
 
-  useEffect(() => {
-    require("bootstrap/dist/js/bootstrap.bundle.min.js")
-  })
+export default ({ title }: Props) => {
+  const router = useRouter()
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault()
@@ -19,7 +19,7 @@ export default () => {
     <>
       <div className="flex-shrink-0 p-3 bg-white">
         <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-          <span className="fs-5 fw-semibold">터치오더 판매자</span>
+          <span className="fs-5 fw-semibold">{title}</span>
         </a>
         <ul className="list-unstyled ps-0">
           <li className="mb-1">
@@ -28,8 +28,8 @@ export default () => {
             </button>
             <div className="collapse show" id="home-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="/seller/orders" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>주문 통합 조회</a></li>
-                <li><a href="/seller/order_history" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>주문 알림</a></li>
+                <li><a href="/seller/orders" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/orders' ? ' active' : '')}>주문 통합 조회</a></li>
+                <li><a href="/seller/order_history" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/order_history' ? ' active' : '')}>주문 알림</a></li>
               </ul>
             </div>
           </li>
@@ -39,8 +39,8 @@ export default () => {
             </button>
             <div className="collapse show" id="dashboard-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="/seller/reservations" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>예약 통합 조회</a></li>
-                <li><a href="/seller/reservation_setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>예약 설정</a></li>
+                <li><a href="/seller/reservations" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/reservations' ? ' active' : '')}>예약 통합 조회</a></li>
+                <li><a href="/seller/reservation_setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/reservation_setup' ? ' active' : '')}>예약 설정</a></li>
               </ul>
             </div>
           </li>
@@ -51,11 +51,11 @@ export default () => {
             </button>
             <div className="collapse show" id="reviews-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                <li><a href="/seller/setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>매장 정보 변경</a></li>
-                <li><a href="/seller/reviews" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>리뷰 관리</a></li>
-                <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>상품 설정</a></li>
-                <li><a href="/seller/tables" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>테이블 설정</a></li>
-                <li><a href="/seller/qrcode" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded'}>QR 코드 생성</a></li>
+                <li><a href="/seller/setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/setup' ? ' active' : '')}>매장 정보 변경</a></li>
+                <li><a href="/seller/reviews" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/reviews' ? ' active' : '')}>리뷰 관리</a></li>
+                <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/menus' ? ' active' : '')}>상품 설정</a></li>
+                <li><a href="/seller/tables" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/tables' ? ' active' : '')}>테이블 설정</a></li>
+                <li><a href="/seller/qrcode" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/qrcode' ? ' active' : '')}>QR 코드 생성</a></li>
               </ul>
             </div>
           </li>
@@ -104,5 +104,5 @@ export default () => {
               `}
       </style>
     </>
-  );
+  )
 }
