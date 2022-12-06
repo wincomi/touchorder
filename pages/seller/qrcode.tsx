@@ -9,7 +9,7 @@ type Props = {
   store_id: number
 }
 
-export default ({ store_id }: InferGetServerSidePropsType<GetServerSideProps>) => {
+export default ({ store_id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const { Image } = useQRCode()
   const store_url = `${getAbsoluteURL()}/stores/${store_id}`
   const qrcode_options: QRCodeOptions = {

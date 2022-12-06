@@ -1,16 +1,40 @@
-import SellerLayout from "@components/seller/SellerLayout"
-import HeaderTitle from "@components/seller/HeaderTitle"
+import SellerLayout from '@components/seller/SellerLayout'
+import HeaderTitle from '@components/seller/HeaderTitle'
 import { Button, Table } from 'react-bootstrap'
-import { useRouter } from 'next/router'
-import getAbsoluteURL from '@utils/absoluteURL'
-import { InferGetServerSidePropsType } from 'next'
 
-export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+import { MouseEvent } from 'react'
+import { useRouter } from 'next/router'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+
+import getAbsoluteURL from '@utils/absoluteURL'
+import priceFormat from '@utils/priceFormat'
+import dateFormat from '@utils/dateFormat'
+
+import { t_order } from '@prisma/client'
+
+type Props = {
+  t_orders: t_order[]
+}
+
+export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
-  //주문 확인 버튼
-  const checkOrder = async (e) => {
-    var orderId = e.target.getAttribute('data-order-id')
+  const statusToString = (status: number) => {
+    switch (status) {
+      case 0:
+        return "대기 중"
+      case 1:
+        return "주문 확인"
+      case 2:
+        return "정산 완료"
+      default:
+        return "주문 취소"
+    }
+  }
+
+  // 주문 확인 버튼
+  const checkOrder = async (e: MouseEvent<HTMLButtonElement>) => {
+    var orderId = e.currentTarget.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
       method: "PUT",
@@ -18,16 +42,19 @@ export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProp
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        order_id: orderId, 
+        order_id: orderId,
         status: 1,
       })
     })
-   location.reload()
+
+    alert('주문을 확인하였습니다.')
+
+    location.reload()
   }
 
-   //주문 거절 버튼
-  const rejectOrder = async (e) => {
-    var orderId = e.target.getAttribute('data-order-id')
+  // 주문 거절 버튼
+  const rejectOrder = async (e: MouseEvent<HTMLButtonElement>) => {
+    var orderId = e.currentTarget.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
       method: "PUT",
@@ -35,16 +62,19 @@ export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProp
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        order_id: orderId, 
+        order_id: orderId,
         status: -1,
       })
     })
-   location.reload()
+
+    alert('주문을 거절하였습니다.')
+
+    location.reload()
   }
 
- //주문 상세 버튼
-  const detailOrder = async (e) => {
-    var orderId = e.target.getAttribute('data-order-id')
+  // 주문 상세 버튼
+  const detailOrder = async (e: MouseEvent<HTMLButtonElement>) => {
+    var orderId = e.currentTarget.getAttribute('data-order-id')
 
     router.push({
       pathname: '/seller/order_detailed',
@@ -52,53 +82,48 @@ export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProp
     })
   }
 
-    return (
-        <SellerLayout>
-          <HeaderTitle title="주문" subtitle="주문 통합 조회" />
-          <Table striped>
-              <thead>
-                <tr>
-                  <th>주문번호</th>
-                  <th>주문이 들어온 테이블</th>
-                  <th>가격</th>
-                  <th>주문날짜</th>
-                  <th>주문상태</th>
-                  <th>주문확인</th>
-                  <th>주문거절</th>
-                  <th>주문상세</th>
-                </tr>
-              </thead>
+  return (
+    <SellerLayout>
+      <HeaderTitle title="주문" subtitle="주문 통합 조회" />
+      <Table striped>
+        <thead>
+          <tr>
+            <th>주문 번호</th>
+            <th>주문이 들어온 테이블</th>
+            <th>가격</th>
+            <th>주문 날짜</th>
+            <th>주문 상태</th>
+            <th>주문 처리</th>
+            <th>주문 상세</th>
+          </tr>
+        </thead>
 
-              <tbody>
-                {orders.map((item) => (
-                  <tr>
-                    <td>{item.order_id}</td>
-                    <td>{item.table_id}</td>
-                    <td>{new Intl.NumberFormat('ko-KR').format(item.payments)}원</td>
-                    <td>{item.date}</td>
-                    {/*0이면 대기중 1이면 주문확인 2이면 정산 나머지(-1)이면 주문취소*/}
-                    <td>{(item.status == 0) ? "대기중":(item.status == 1) ? "주문 확인":(item.status == 2) ? "정산완료" : "주문 취소"}</td>
-                    <td><Button data-order-id={item.order_id} variant="primary" size="sm" onClick={checkOrder}>주문 확인</Button></td>
-                    <td><Button data-order-id={item.order_id} variant="danger" size="sm" onClick={rejectOrder}>주문 거절</Button></td>
-                    <td><Button data-order-id={item.order_id} variant="warning" size="sm" onClick={detailOrder}>상세</Button></td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          </SellerLayout>
-    )
+        <tbody>
+          {t_orders.map((item) => (
+            <tr>
+              <td>{item.order_id}</td>
+              <td>{item.table_id ?? '없음'}</td>
+              <td>{priceFormat(item.payments)}원</td>
+              <td>{dateFormat(item.date)}</td>
+              <td>{statusToString(item.status)}</td>
+              <td>
+                <Button data-order-id={item.order_id} variant="primary" size="sm" disabled={item.status == 2} onClick={checkOrder}>주문 확인</Button>{` `}
+                <Button data-order-id={item.order_id} variant="danger" size="sm" disabled={item.status == 2} onClick={rejectOrder}>주문 거절</Button>
+              </td>
+              <td><Button data-order-id={item.order_id} variant="dark" size="sm" onClick={detailOrder}>상세</Button></td>
+            </tr>
+          ))}
+        </tbody>
+      </Table>
+    </SellerLayout>
+  )
 }
 
-export async function getServerSideProps() {
+export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
   const res = await fetch(getAbsoluteURL() + `/api/orders`)
-  const orders = await res.json()
+  const t_orders: t_order[] = await res.json()
 
-  if (orders == null){
-    console.log("값을 받아올 수 없습니다.")
-    
-  } else {
-    return {
-      props: { orders }
-    }
+  return {
+    props: { t_orders }
   }
 }

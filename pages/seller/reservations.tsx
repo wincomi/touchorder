@@ -1,6 +1,10 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap'
+<<<<<<< HEAD
+import { useRouter } from 'next/router'
+=======
+>>>>>>> 8c60547ef3ff1503d51b3be26a0459be88b1a59b
 import getAbsoluteURL from '@utils/absoluteURL'
 import { InferGetServerSidePropsType } from 'next'
 
@@ -15,7 +19,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                   <th>최대 인원</th>
                   <th>테이블 설명</th>
                   <th>현재 상태</th>
-                  <th>수정/삭제</th>
+                  <th>예약조회</th>
                 </tr>
               </thead>
 
@@ -25,10 +29,9 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                     <td>{item.table_id}</td>
                     <td>{item.max_people}명</td>
                     <td>{item.description ?? <span className="text-muted">설명 없음</span>}</td>
-                    <td>{item.status}</td>
+                    <td>{(item.status) == 0 ? "예약 가능" : "예약 불가"}</td>
                     <td>
-                      <Button variant="warning" size="sm" data-menu-id={item.menu_id}>수정</Button>{` `}
-                      <Button variant="danger" size="sm" data-menu-id={item.menu_id}>삭제</Button>
+                      <Button variant="warning" size="sm" data-table-id={item.table_id} onClick = {searchReservation}>예약 조회</Button>
                     </td>
                   </tr>
                 ))}

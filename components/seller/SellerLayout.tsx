@@ -21,6 +21,13 @@ export default ({ children }: SellerLayoutProps) => {
                     {children}
                 </Col>
             </Row>
+
+            <style>
+            {`
+                /* 테이블 컬럼 세로 정렬 */
+                td { vertical-align: middle }
+            `}
+            </style>
         </Container>
     )
 }
