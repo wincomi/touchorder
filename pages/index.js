@@ -1,7 +1,8 @@
 import Link from 'next/link'
-import styles from '@styles/Choice.module.css';
-import {Form , Button } from 'react-bootstrap';
-const Choice = () => {
+import styles from '@styles/Choice.module.css'
+import { Form , Button } from 'react-bootstrap'
+
+export default () => {
     return (
         <>
         <div className='container-fluid'>
@@ -9,9 +10,9 @@ const Choice = () => {
         </div>
         <Form>
         <div className={styles.Auth_form_container}> 
-      <form className={styles.Auth_form}>
+      <div className={styles.Auth_form}>
         <div className={styles.Auth_form_content}> 
-          <h3 className={styles.Auth_form_title}>login to touchorder</h3>
+          <h3 className={styles.Auth_form_title}>Login to touchorder</h3>
 
           <div className={styles.form_group}>
             <input
@@ -33,7 +34,7 @@ const Choice = () => {
           <br/>
 
           <div className="login-button">
-          <Link href="/MyPage">  
+          <Link href="/">  
             <Button type="submit" className={styles.btn_success}>
               Login
             </Button>
@@ -42,12 +43,9 @@ const Choice = () => {
 
           <br/>
         </div>
-      </form>
+      </div>
     </div>
         </Form>
         </>
-    );
-};
-
-export default Choice;
-
+    )
+}

@@ -17,7 +17,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     if (req.method == "GET") {
         const result = await prisma.menu.findMany({ where: { store_id: store_id } });
         res.status(200).json(result)
-    } 
+    }
     else if (req.method == "POST") { 
         // 메뉴 생성
         const name:string               = String(req.body.name);
