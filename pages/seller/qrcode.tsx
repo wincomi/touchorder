@@ -1,6 +1,6 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { GetServerSideProps, InferGetServerSidePropsType } from "next"
+import { GetStaticProps, InferGetStaticPropsType } from "next"
 import { useQRCode } from 'next-qrcode'
 import { QRCodeOptions } from "next-qrcode/dist/useQRCode"
 import getAbsoluteURL from '@utils/absoluteURL'
@@ -9,7 +9,7 @@ type Props = {
   store_id: number
 }
 
-export default ({ store_id }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+export default ({ store_id }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { Image } = useQRCode()
   const store_url = `${getAbsoluteURL()}/stores/${store_id}`
   const qrcode_options: QRCodeOptions = {
@@ -28,13 +28,13 @@ export default ({ store_id }: InferGetServerSidePropsType<typeof getServerSidePr
       <HeaderTitle title="매장 관리" subtitle="QR 코드 생성" />
       <div className="text-center text-muted">
         <p><Image text={store_url} options={qrcode_options} /></p>
-        {/* <p>클릭하여 QR 코드 이미지를 다운로드할 수 있습니다.</p> */}
+        <p className="text-muted">{store_url}</p>
       </div>
     </SellerLayout>
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const store_id = 1
 
   return {
