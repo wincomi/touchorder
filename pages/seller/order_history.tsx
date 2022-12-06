@@ -1,12 +1,25 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Table } from 'react-bootstrap'
-import getAbsoluteURL from '@utils/absoluteURL'
+
+import { MouseEvent } from 'react'
+import { useRouter } from 'next/router'
 import { InferGetServerSidePropsType } from 'next'
 
-export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  const checkedOrder = async (e) => {
-    var orderId = e.target.getAttribute('data-order-id')
+import getAbsoluteURL from '@utils/absoluteURL'
+import dateFormat from "@utils/dateFormat"
+
+import { t_order } from '@prisma/client'
+
+type Props = {
+  t_orders: t_order[]
+}
+
+export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter()
+
+  const checkedOrder = async (e: MouseEvent<HTMLButtonElement>) => {
+    var orderId = e.currentTarget.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
       method: "PUT",
@@ -18,7 +31,7 @@ export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProp
         status: 2,
       })
     })
-   location.reload()
+    router.replace
   }
 
     return (
@@ -36,12 +49,12 @@ export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProp
               </thead>
 
               <tbody>
-                {orders.map((item) => (
+                {t_orders.map((item) => (
                   <tr>
                     <td>{item.order_id}</td>
                     <td>{item.table_id}</td>
-                    <td>{item.date}</td>
-                    <td>{item.status == 1 ? "주문확인" : ""}</td>
+                    <td>{dateFormat(item.date)}</td>
+                    <td>{(item.status == 1) ? "주문확인" : ""}</td>
                     <td><Button data-order-id={item.order_id} variant="warning" size="sm" onClick={checkedOrder}>주문 완료</Button></td>
                   </tr>
                 ))}
@@ -53,14 +66,14 @@ export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProp
 
 export async function getServerSideProps() {
   const res = await fetch(getAbsoluteURL() + `/api/orders/order_history`)
-  const orders = await res.json()
+  const t_orders: t_order[] = await res.json()
 
-  if (orders == null){
+  if (t_orders == null){
     console.log("값을 받아올 수 없습니다.")
     
   } else {
     return {
-      props: { orders }
+      props: { t_orders }
     }
   }
 }
