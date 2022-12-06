@@ -7,29 +7,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
     switch (req.method) {
         // READ
         case "GET":
-            if(storeId==null){
                 const readResult = await prisma.store.findMany();
 
                 if (readResult != null) {
-                    res.status(200).json({result:readResult})
+                    res.status(200).json({readResult})
                 } else {
                     res.status(400).json({
                         "message": "store가 없습니다."
                     })
                 } 
                 break
-            }
-            else{
-                const readResult = await prisma.store.findFirst({where:{store_id: storeId}});
-                if (readResult != null) {
-                    res.status(200).json({result:readResult})
-                } else {
-                    res.status(400).json({
-                        "message": "해당 store가 없습니다."
-                    })
-                } 
-                break
-            }
         // CREATE
         case "POST":
             if (req.body.name == null) {

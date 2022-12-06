@@ -1,11 +1,12 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Button, Card, Row, Col } from 'react-bootstrap';
+import { Button, Card, Row, Col } from 'react-bootstrap'
 import Image from 'next/image'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { InferGetServerSidePropsType } from 'next'
 
 //리뷰 관리 이미지 및 관련내용 넣기
-export default ({ reviews }) => {
+export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const deleteReview = async (e) =>{
     var reviewId = e.target.getAttribute('data-review-id')
     var userId = e.target.getAttribute('data-user-id')
@@ -60,7 +61,12 @@ export async function getServerSideProps() {
   const result = await fetch(getAbsoluteURL() + `/api/reviews/`)
   let reviews = await result.json()
 
-  return {
-    props: { reviews }
+  if (reviews == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { reviews }
+    }
   }
 }

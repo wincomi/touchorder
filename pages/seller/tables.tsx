@@ -1,9 +1,41 @@
-import SellerLayout from "@components/seller/SellerLayout";
+import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { InferGetServerSidePropsType } from 'next'
+import { useRouter } from 'next/router'
+import { useState } from 'react'
+import { store_table } from "@prisma/client"
 
-export default ({ items }) => {
+export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter()
+  const [isAdd, setAdd] = useState(false)
+  const [state, setState] = useState({max_people:'', description:''})
+  
+  const addTable = async () => {
+    const store_id = 1
+    const table = {
+      max_people: parseInt(state.max_people),
+      description: state.description, 
+      status: 0
+    }
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables`, {//result받아서 처리 안하는것도 고쳐보자
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(table)
+    })
+  }
+
+  const deleteTable = async (table_id:number, store_id:number)=>{
+    const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables/${table_id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+  }
     return (
         <SellerLayout>
           <HeaderTitle title="매장 관리" subtitle="테이블 설정" />
@@ -19,15 +51,15 @@ export default ({ items }) => {
               </thead>
 
               <tbody>
-               {items.map((item) =>( 
+               {items.map((item) => ( 
                   <tr>
                     <td>{item.table_id}</td>
                     <td>{item.max_people}명</td>
                     <td>{item.description ?? <span className="text-muted">설명 없음</span>}</td>
                     <td>{item.status}</td>
                     <td>
-                      <Button variant="warning" size="sm" data-menu-id={item.menu_id}>수정</Button>{` `}
-                      <Button variant="danger" size="sm" data-menu-id={item.menu_id}>삭제</Button>
+                      <Button variant="warning" size="sm" data-table-id={item.table_id}>수정</Button>{` `}
+                      <Button variant="danger" size="sm" data-table-id={item.table_id}>삭제</Button>
                     </td>
                   </tr>
                 ))}
@@ -39,13 +71,14 @@ export default ({ items }) => {
 
 export async function getServerSideProps() {
   const store_id = 1 // TODO
-  const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables/`)
-  const items = await res.json()
-  if(items==null){
+  const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables`)
+  const tables: store_table[] = await res.json()
+  if (tables == null){
     console.log("값을 받아올 수 없습니다.")
     
-  }
-  return {
-    props: { items }
+  } else {
+    return {
+      props: { tables }
+    }
   }
 }
