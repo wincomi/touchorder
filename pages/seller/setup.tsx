@@ -15,15 +15,29 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
     deposit: "",
     image_url: "",
   })
+  const checkEmpty = (string: string) => {
+    if (string.length == 0){
+      return null
+    } else {
+      return string
+    }
+  }
+  const returnDeposit = (deposit: string) => {
+    if(deposit.length == 0){
+      return store.deposit
+    } else {
+      return parseInt(deposit)
+    }
+  }
   const updateStore = async () => {
     const store_id = 1
     const update = {
-      name: state.name,
-      address: state.address,
-      phone: state.phone,
-      content: state.content,
-      deposit: parseInt(state.deposit),
-      image_url: state.image_url,
+      name: checkEmpty(state.name) ?? store.name,
+      address: checkEmpty(state.address) ?? store.address,
+      phone: checkEmpty(state.phone) ?? store.phone,
+      content: checkEmpty(state.content) ?? store.content,
+      deposit: returnDeposit(state.deposit),
+      image_url: checkEmpty(state.image_url) ?? store.image_url,
     }
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`, {
       method: "POST",
