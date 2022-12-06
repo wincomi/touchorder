@@ -18,7 +18,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
       states: 0
     }
     const result = await fetch(
-      `http://localhost:3000/api/stores/${store_id}/menus/${menu_id}`,
+      getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`,
       {
         method: "POST",
         headers: {
