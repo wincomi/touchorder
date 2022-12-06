@@ -40,7 +40,7 @@ export default ({ detailedorders }: InferGetServerSidePropsType<typeof getServer
     )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps (context) {
 
     var orderId = context.query.order_id
 
