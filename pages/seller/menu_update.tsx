@@ -29,7 +29,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
         body: JSON.stringify(query),
       }
     )
-    Router.back()
+    router.back()
   }
   return (
     <SellerLayout>
