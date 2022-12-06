@@ -1,10 +1,11 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { InferGetServerSidePropsType } from 'next'
 
-export default ( {orders} ) => {
-  const checkedOrder = async (e) =>{
+export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const checkedOrder = async (e) => {
     var orderId = e.target.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
@@ -35,12 +36,12 @@ export default ( {orders} ) => {
               </thead>
 
               <tbody>
-                {orders.map((item) =>(
+                {orders.map((item) => (
                   <tr>
                     <td>{item.order_id}</td>
                     <td>{item.table_id}</td>
                     <td>{item.date}</td>
-                    <td>{item.status==1?"주문확인":""}</td>
+                    <td>{item.status == 1 ? "주문확인" : ""}</td>
                     <td><Button data-order-id={item.order_id} variant="warning" size="sm" onClick={checkedOrder}>주문 완료</Button></td>
                   </tr>
                 ))}
@@ -54,7 +55,12 @@ export async function getServerSideProps() {
   const res = await fetch(getAbsoluteURL() + `/api/orders/order_history`)
   const orders = await res.json()
 
-  return {
-    props: { orders }
+  if (orders == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { orders }
+    }
   }
 }

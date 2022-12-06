@@ -1,10 +1,11 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { InferGetServerSidePropsType } from 'next'
 
-export default ( {detailedorders} ) => {
-    const back = async (e) =>{
+export default ({ detailedorders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+    const back = async (e) => {
         location.href = "/seller/orders"
       }
 
@@ -23,7 +24,7 @@ export default ( {detailedorders} ) => {
               </thead>
 
               <tbody>
-                {detailedorders.map((item) =>(
+                {detailedorders.map((item) => (
                   <tr>
                     <td>{item.detailed_order_id}</td>
                     <td>{item.order_id}</td>
@@ -39,7 +40,7 @@ export default ( {detailedorders} ) => {
     )
 }
 
-export async function getServerSideProps(context) {
+export async function getServerSideProps (context) {
 
     var orderId = context.query.order_id
 
@@ -55,8 +56,13 @@ export async function getServerSideProps(context) {
     
   const detailedorders = await res.json()
   
-  return {
-     props: { detailedorders }
-   }
+  if (detailedorders == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { detailedorders }
+    }
   }
+}
   
