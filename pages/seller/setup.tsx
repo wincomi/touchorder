@@ -7,24 +7,32 @@ import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { store } from "@prisma/client"
 
-export default ({ result }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   
   const [state, setState] = useState({
     name: "",
     address: "",
     phone: "",
     content: "",
-    deposit: 0,
+    deposit: "",
     image_url: "",
   })
   const updateStore = async () => {
     const store_id = 1
+    const update = {
+      name: state.name,
+      address: state.address,
+      phone: state.phone,
+      content: state.content,
+      deposit: parseInt(state.deposit),
+      image_url: state.image_url,
+    }
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify(state),
+      body: JSON.stringify(update),
     })
   }
   return (
@@ -96,26 +104,15 @@ export default ({ result }: InferGetServerSidePropsType<typeof getServerSideProp
 }
 
 export async function getServerSideProps() {
-  const query = {
-    store_id: 1
-  }
-  const res = await fetch(
-    getAbsoluteURL() + `/api/stores/`,
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(query),
-    }
-  )
-  const result: store[] = await res.json()
-  if (result == null){
+  const store_id = 1
+  const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`)
+  const store: store[] = await res.json()
+  if (store == null){
     console.log("값을 받아올 수 없습니다.")
     
   } else {
     return {
-      props: { result }
+      props: { store }
     }
   }
 }
