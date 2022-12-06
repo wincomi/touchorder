@@ -44,7 +44,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
               <tr>
                 {/*<th>#</th> */}
                 {/* <th>이미지</th> */}
-                <th>#</th>
+                <th>상태</th>
                 <th>이름</th>
                 <th>가격</th>
                 <th>설명</th>
@@ -57,13 +57,15 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
               <tr>
               {/* <td>{item.menu_id}</td> */}
               {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
-              <td> {item.menu_id} </td>
+              {item.status == 0 ? <td>판매중</td> : <td>판매 불가</td> }
               <td>  {item.name} </td>
               <td> {priceFormat(item.price)} </td>
               <td> {item.content} </td>
               <td>
-                <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id=' + item.menu_id)}}>수정</Button>{' '}
-                <Button variant="danger" size="sm" onClick={()=>{deleteMenu(item.menu_id, item.store_id)}}>삭제</Button>
+                <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id=' + item.menu_id)}}>
+                  수정</Button>{' '}
+                <Button variant="danger" size="sm" onClick={()=>{deleteMenu(item.menu_id, item.store_id)}}>
+                  삭제</Button>
               </td>
             </tr>
             ))}

@@ -48,7 +48,7 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
                   <th>테이블 번호</th>
                   <th>최대 인원</th>
                   <th>테이블 설명</th>
-                  <th>현재 상태</th>
+                  <th>상태</th>
                   <th>수정/삭제</th>
                 </tr>
               </thead>
@@ -59,10 +59,15 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
                     <td>{item.table_id}</td>
                     <td>{item.max_people}명</td>
                     <td>{item.description ?? <span className="text-muted">설명 없음</span>}</td>
-                    <td>{item.status}</td>
+                    { item.status == 0 ? (<td>사용 가능</td>) : 
+                    ( item.status == 1 ? (<td>예약 불가능</td>) : 
+                    (<td>사용 불가능</td>) )
+                      }
                     <td>
-                      <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/tables_update?table_id=' + item.table_id)}}>수정</Button>{` `}
-                      <Button variant="danger" size="sm" onClick={()=>{deleteTable(item.table_id, item.store_id)}}>삭제</Button>
+                      <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/tables_update?table_id=' + item.table_id)}}>
+                        수정</Button>{` `}
+                      <Button variant="danger" size="sm" onClick={()=>{deleteTable(item.table_id, item.store_id)}}>
+                        삭제</Button>
                     </td>
                   </tr>
                 ))}
@@ -91,7 +96,8 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
                   </Form>
                 </Collapse>
                 <p>
-                    <Button variant="primary" size="sm" onClick={()=>{if (!isAdd) {setAdd(true)}else{addTable()}}}>추가</Button>
+                    <Button variant="primary" size="sm" onClick={()=>{if (!isAdd) {setAdd(true)}else{addTable()}}}>
+                      추가</Button>
                 </p>
         </SellerLayout>
     )
