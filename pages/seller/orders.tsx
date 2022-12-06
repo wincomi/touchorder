@@ -4,7 +4,7 @@ import { Button, Table } from 'react-bootstrap'
 
 import { MouseEvent } from 'react'
 import { useRouter } from 'next/router'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { InferGetServerSidePropsType } from 'next'
 
 import getAbsoluteURL from '@utils/absoluteURL'
 import priceFormat from '@utils/priceFormat'
@@ -37,9 +37,9 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
     var orderId = e.currentTarget.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         order_id: orderId,
@@ -49,7 +49,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
 
     alert('주문을 확인하였습니다.')
 
-    location.reload()
+    router.replace
   }
 
   // 주문 거절 버튼
@@ -57,9 +57,9 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
     var orderId = e.currentTarget.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
-      method: "PUT",
+      method: 'PUT',
       headers: {
-        "Content-Type": "application/json",
+        'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         order_id: orderId,
@@ -69,7 +69,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
 
     alert('주문을 거절하였습니다.')
 
-    location.reload()
+    router.replace
   }
 
   // 주문 상세 버튼
@@ -84,7 +84,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
 
   return (
     <SellerLayout>
-      <HeaderTitle title="주문" subtitle="주문 통합 조회" />
+      <HeaderTitle title ='주문' subtitle ='주문 통합 조회' />
       <Table striped>
         <thead>
           <tr>
@@ -107,6 +107,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
               <td>{dateFormat(item.date)}</td>
               <td>{statusToString(item.status)}</td>
               <td>
+                {/*disabled 처리하기*/}
                 <Button data-order-id={item.order_id} variant="primary" size="sm" disabled={item.status == 2} onClick={checkOrder}>주문 확인</Button>{` `}
                 <Button data-order-id={item.order_id} variant="danger" size="sm" disabled={item.status == 2} onClick={rejectOrder}>주문 거절</Button>
               </td>
@@ -119,11 +120,16 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
   )
 }
 
-export const getServerSideProps: GetServerSideProps<Props> = async (context) => {
+export async function getServerSideProps() {
   const res = await fetch(getAbsoluteURL() + `/api/orders`)
   const t_orders: t_order[] = await res.json()
 
-  return {
-    props: { t_orders }
+  if (t_orders == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { t_orders }
+    }
   }
 }

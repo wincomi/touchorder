@@ -8,7 +8,13 @@ import { InferGetServerSidePropsType } from 'next'
 
 import getAbsoluteURL from '@utils/absoluteURL'
 
-export default ({ detailedorders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+import { detailed_order } from '@prisma/client'
+
+type Props = {
+  detailed_order: detailed_order[]
+}
+
+export default ({ detailed_order }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
     const back = (e: MouseEvent<HTMLButtonElement>) => {
       
@@ -31,7 +37,7 @@ export default ({ detailedorders }: InferGetServerSidePropsType<typeof getServer
               </thead>
 
               <tbody>
-                {detailedorders.map((item) => (
+                {detailed_order.map((item) => (
                   <tr>
                     <td>{item.detailed_order_id}</td>
                     <td>{item.order_id}</td>
@@ -49,7 +55,7 @@ export default ({ detailedorders }: InferGetServerSidePropsType<typeof getServer
     )
 }
 
-export async function getServerSideProps (context) {
+export async function getServerSideProps (context: { query: { order_id: Number } }) {
 
     var orderId = context.query.order_id
 
@@ -63,14 +69,14 @@ export async function getServerSideProps (context) {
     })
   })
     
-  const detailedorders = await res.json()
+  const detailed_order: detailed_order[] = await res.json()
   
-  if (detailedorders == null){
+  if (detailed_order == null){
     console.log("값을 받아올 수 없습니다.")
     
   } else {
     return {
-      props: { detailedorders }
+      props: { detailed_order }
     }
   }
 }
