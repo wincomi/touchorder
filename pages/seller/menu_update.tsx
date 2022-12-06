@@ -20,7 +20,6 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
   useEffect(() => {
   }, [status])
   const checkEmpty = (string: string) => {
-    console.log(string.length)
     if (string.length == 0){
       return null
     } else {
@@ -42,7 +41,6 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
       content: checkEmpty(update.content) ?? item.content,
       status: status,
     }
-    console.log(query)
     const result = await fetch(
       getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`,
       {
