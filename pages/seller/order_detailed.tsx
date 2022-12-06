@@ -1,12 +1,18 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Table } from 'react-bootstrap'
-import getAbsoluteURL from '@utils/absoluteURL'
+
+import { MouseEvent } from 'react'
+import { useRouter } from "next/router"
 import { InferGetServerSidePropsType } from 'next'
 
+import getAbsoluteURL from '@utils/absoluteURL'
+
 export default ({ detailedorders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-    const back = async (e) => {
-        location.href = "/seller/orders"
+  const router = useRouter()
+    const back = (e: MouseEvent<HTMLButtonElement>) => {
+      
+        router.push(`/seller/orders`)
       }
 
     return (
