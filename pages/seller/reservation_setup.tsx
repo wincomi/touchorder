@@ -1,4 +1,4 @@
-import SellerLayout from "@components/seller/SellerLayout";
+import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 
 export default () => {
