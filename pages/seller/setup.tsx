@@ -2,13 +2,11 @@ import HeaderTitle from "@components/seller/HeaderTitle"
 import SellerLayout from "@components/seller/SellerLayout"
 import { useState } from "react"
 import { Button, Form } from "react-bootstrap"
-import axios from "axios"
 import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { store } from "@prisma/client"
 
 export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
-  
   const [state, setState] = useState({
     name: "",
     address: "",
@@ -43,8 +41,8 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>가게명</Form.Label>
           <Form.Control
             type="text"
-            placeholder={result.name}
-            value={state.name}
+            placeholder={store.name}
+            value={null}
             onChange={(e) => setState({ ...state, name: e.target.value })}
           />
         </Form.Group>
@@ -52,8 +50,8 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>주소</Form.Label>
           <Form.Control
             type="text"
-            placeholder={result.address}
-            value={state.address}
+            placeholder={store.address}
+            value={null}
             onChange={(e) => setState({ ...state, address: e.target.value })}
           />
         </Form.Group>
@@ -61,8 +59,8 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>전화번호</Form.Label>
           <Form.Control
             type="text"
-            placeholder={result.phone}
-            value={state.phone}
+            placeholder={store.phone}
+            value={null}
             onChange={(e) => setState({ ...state, phone: e.target.value })}
           />
         </Form.Group>
@@ -70,8 +68,8 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>설명</Form.Label>
           <Form.Control
             type="text"
-            placeholder={result.content}
-            value={state.content}
+            placeholder={store.content}
+            value={null}
             onChange={(e) => setState({ ...state, content: e.target.value })}
           />
         </Form.Group>
@@ -80,9 +78,9 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Control
             type="text"
             placeholder="추가 예정"
-            value={state.deposit}
+            value={null}
             onChange={(e) =>
-              setState({ ...state, deposit: parseInt(e.target.value) })
+              setState({ ...state, deposit: e.target.value})
             }
           />
         </Form.Group>
@@ -91,7 +89,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Control
             type="text"
             placeholder="추가 예정"
-            value={state.image_url}
+            value={null}
             onChange={(e) => setState({ ...state, image_url: e.target.value })}
           />
         </Form.Group>
@@ -106,7 +104,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
 export async function getServerSideProps() {
   const store_id = 1
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`)
-  const store: store[] = await res.json()
+  const store: store = await res.json()
   if (store == null){
     console.log("값을 받아올 수 없습니다.")
     
