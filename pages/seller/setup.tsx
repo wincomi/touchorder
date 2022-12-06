@@ -5,6 +5,7 @@ import { Button, Form } from "react-bootstrap"
 import axios from "axios"
 import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
+import { store } from "@prisma/client"
 
 export default ({ result }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   
@@ -95,20 +96,26 @@ export default ({ result }: InferGetServerSidePropsType<typeof getServerSideProp
 }
 
 export async function getServerSideProps() {
-  const storeId = 1
-  let result
-  if ((storeId! == null)) {
-    await axios
-      .get(getAbsoluteURL() + `/api/stores`, { params: { store_id: storeId } })
-      .then((res) => {
-        result = res.data.result
-      })
-      if (result == null){
-        console.log("값을 받아올 수 없습니다.")
-      } else {
-        return {
-          props: { result }
-        }
-      }
+  const query = {
+    store_id: 1
+  }
+  const res = await fetch(
+    getAbsoluteURL() + `/api/stores/`,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(query),
+    }
+  )
+  const result: store[] = await res.json()
+  if (result == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { result }
+    }
   }
 }
