@@ -1,9 +1,10 @@
-import SellerLayout from "@components/seller/SellerLayout";
+import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Table, Button } from 'react-bootstrap';
+import { Table, Button } from 'react-bootstrap'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { InferGetServerSidePropsType } from 'next'
 
-export default ({ items }) => {
+export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
     return (
         <SellerLayout>
           <HeaderTitle title="매장 관리" subtitle="테이블 설정" />
@@ -19,7 +20,7 @@ export default ({ items }) => {
               </thead>
 
               <tbody>
-               {items.map((item) =>( 
+               {items.map((item) => ( 
                   <tr>
                     <td>{item.table_id}</td>
                     <td>{item.max_people}명</td>
@@ -41,11 +42,12 @@ export async function getServerSideProps() {
   const store_id = 1 // TODO
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables/`)
   const items = await res.json()
-  if(items==null){
+  if (items == null){
     console.log("값을 받아올 수 없습니다.")
     
-  }
-  return {
-    props: { items }
+  } else {
+    return {
+      props: { items }
+    }
   }
 }

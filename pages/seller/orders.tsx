@@ -1,14 +1,15 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Button, Table } from 'react-bootstrap';
+import { Button, Table } from 'react-bootstrap'
 import { useRouter } from 'next/router'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { InferGetServerSidePropsType } from 'next'
 
-export default ({ orders }) => {
-  const router = useRouter();
+export default ({ orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter()
 
   //주문 확인 버튼
-  const checkOrder = async (e) =>{
+  const checkOrder = async (e) => {
     var orderId = e.target.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
@@ -25,7 +26,7 @@ export default ({ orders }) => {
   }
 
    //주문 거절 버튼
-  const rejectOrder = async (e) =>{
+  const rejectOrder = async (e) => {
     var orderId = e.target.getAttribute('data-order-id')
 
     const result = await fetch(getAbsoluteURL() + `/api/orders/update_status`, {
@@ -42,7 +43,7 @@ export default ({ orders }) => {
   }
 
  //주문 상세 버튼
-  const detailOrder = async (e) =>{
+  const detailOrder = async (e) => {
     var orderId = e.target.getAttribute('data-order-id')
 
     router.push({
@@ -69,7 +70,7 @@ export default ({ orders }) => {
               </thead>
 
               <tbody>
-                {orders.map((item) =>(
+                {orders.map((item) => (
                   <tr>
                     <td>{item.order_id}</td>
                     <td>{item.table_id}</td>
@@ -92,7 +93,12 @@ export async function getServerSideProps() {
   const res = await fetch(getAbsoluteURL() + `/api/orders`)
   const orders = await res.json()
 
-return {
-   props: { orders }
- }
+  if (orders == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { orders }
+    }
+  }
 }

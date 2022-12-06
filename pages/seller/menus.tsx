@@ -7,30 +7,30 @@ import { menu } from "@prisma/client"
 import priceFormat from '@utils/priceFormat'
 import getAbsoluteURL from '@utils/absoluteURL'
 import { useRouter } from "next/router"
+import { InferGetServerSidePropsType } from 'next'
 //이미지, state 아직 추가안함
 //TODO db랑 연동
-export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {              
-  const router=useRouter()
-  const [isAdd,setAdd]=useState(false)
+export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps>) => {              
+  const router = useRouter()
+  const [isAdd, setAdd] = useState(false)
   const [state, setState] = useState({name:'', content:'', price:'', category:'', image_url:'', status:0})
   
-  const addMenu = async()=>{
-    console.log(state)
-    const store_id=1
+  const addMenu = async () => {
+    const store_id = 1
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus`, {
       method: "POST",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       },
       body: JSON.stringify(state)
     })
   }
 
-  const deleteMenu = async(menu_id:number, store_id:number)=>{
+  const deleteMenu = async (menu_id:number, store_id:number)=>{
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`, {
       method: "DELETE",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/json"
       }
     })
   }
@@ -51,7 +51,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
           </thead>
           <tbody>
             <>
-            {items.map((item) =>(
+            {items.map((item) => (
               <tr>
               {/* <td>{item.menu_id}</td> */}
               {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
@@ -60,7 +60,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
               <td> {priceFormat(item.price)} </td>
               <td> {item.content} </td>
               <td>
-                <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id='+item.menu_id)}}>수정</Button>
+                <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id=' + item.menu_id)}}>수정</Button>{' '}
                 <Button variant="danger" size="sm" onClick={()=>{deleteMenu(item.menu_id, item.store_id)}}>삭제</Button>
               </td>
             </tr>
@@ -76,7 +76,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                             type="text"
                             placeholder="메뉴 이름"
                             value={null}
-                            onChange={(e)=>{setState({...state,name:e.target.value})}}
+                            onChange={(e)=>{setState({...state, name:e.target.value})}}
                         />
                     </Form.Group>
                     <Form.Group>
@@ -85,7 +85,7 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                             type="text"
                             placeholder="가격"
                             value={null}
-                            onChange={(e)=>{setState({...state,price:e.target.value})}}
+                            onChange={(e)=>{setState({...state, price:e.target.value})}}
                         />
                     </Form.Group>
                     <Form.Group>
@@ -94,24 +94,29 @@ export default ({ items }: InferGetStaticPropsType<typeof getStaticProps>) => {
                             type="text"
                             placeholder="메뉴 설명"
                             value={null}
-                            onChange={(e)=>{setState({...state,content:e.target.value})}}
+                            onChange={(e)=>{setState({...state, content:e.target.value})}}
                         />
                     </Form.Group>
                   </Form>
                 </Collapse>
                 <div className="d-grid">
-                    <Button variant="primary" size="sm" onClick={()=>{if(!isAdd){setAdd(true)}else{addMenu()}}}>추가</Button>
+                    <Button variant="primary" size="sm" onClick={()=>{if (!isAdd) {setAdd(true)}else{addMenu()}}}>추가</Button>
                 </div>
       </SellerLayout>
   )
 }
 
-export async function getServerSideProps() {
+export async function getServerSideProps () {
   const store_id = 1 // TODO
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/`)
 
   const items: menu[] = await res.json()
-  return {
-    props: { items }
+  if (items == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { items }
+    }
   }
 }

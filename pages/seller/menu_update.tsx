@@ -4,9 +4,10 @@ import { useState } from "react"
 import { Table, Button, Form } from "react-bootstrap"
 import priceFormat from "@utils/priceFormat"
 import getAbsoluteURL from "@utils/absoluteURL"
+import { InferGetServerSidePropsType } from 'next'
 
 //이미지 추가안함
-export default ({ item }) => {
+export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const [update, setUpdate] = useState({ name: "", price: "", content: "" })
   const store_id = 1
   const updateMenu = async (menu_id: number, store_id: number) => {
@@ -14,14 +15,14 @@ export default ({ item }) => {
       name: update.name,
       price: parseInt(update.price),
       content: update.content,
-      states: 0,
+      states: 0
     }
     const result = await fetch(
       `http://localhost:3000/api/stores/${store_id}/menus/${menu_id}`,
       {
         method: "POST",
         headers: {
-          "Content-Type": "application/json",
+          "Content-Type": "application/json"
         },
         body: JSON.stringify(query),
       }
@@ -111,8 +112,13 @@ export async function getServerSideProps(context) {
   const res = await fetch(
     getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`
   )
-  const item = await res.json();
-  return {
-    props: { item },
+  const item = await res.json()
+  if (item == null){
+    console.log("값을 받아올 수 없습니다.")
+    
+  } else {
+    return {
+      props: { item }
+    }
   }
 }
