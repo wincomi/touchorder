@@ -45,6 +45,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const result = await prisma.store_table.delete({where:{table_id}});
         res.status(400).json(result);
 
+    }  else if (req.method == "GET") {
+        const result = await prisma.store_table.findFirst({ where: { table_id: table_id } });
+        res.status(200).json(result)
     } else {
         res.status(400).json({message:"잘못된 요청입니다."});
     }
