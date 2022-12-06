@@ -1,6 +1,6 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { Table, Button } from 'react-bootstrap'
+import { Table, Button, Form, Collapse } from 'react-bootstrap'
 import getAbsoluteURL from '@utils/absoluteURL'
 import { InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
@@ -26,6 +26,8 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
       },
       body: JSON.stringify(table)
     })
+    setAdd(false)
+    router.replace(router.asPath)
   }
 
   const deleteTable = async (table_id:number, store_id:number)=>{
@@ -35,6 +37,7 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
         "Content-Type": "application/json"
       }
     })
+    router.replace(router.asPath)
   }
     return (
         <SellerLayout>
@@ -51,20 +54,45 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
               </thead>
 
               <tbody>
-               {items.map((item) => ( 
+               {tables.map((item) => ( 
                   <tr>
                     <td>{item.table_id}</td>
                     <td>{item.max_people}명</td>
                     <td>{item.description ?? <span className="text-muted">설명 없음</span>}</td>
                     <td>{item.status}</td>
                     <td>
-                      <Button variant="warning" size="sm" data-table-id={item.table_id}>수정</Button>{` `}
-                      <Button variant="danger" size="sm" data-table-id={item.table_id}>삭제</Button>
+                      <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/tables_update?table_id=' + item.table_id)}}>수정</Button>{` `}
+                      <Button variant="danger" size="sm" onClick={()=>{deleteTable(item.table_id, item.store_id)}}>삭제</Button>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
+                <Collapse in={isAdd}>
+                  <Form>
+                    <Form.Group>
+                        <Form.Label>최대 인원</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="숫자만 적어주세요"
+                            value={null}
+                            onChange={(e)=>{setState({...state, max_people:e.target.value})}}
+                        />
+                    </Form.Group>
+                    <Form.Group>
+                        <Form.Label>테이블 설명</Form.Label>
+                        <Form.Control
+                            type="text"
+                            placeholder="테이블 설명"
+                            value={null}
+                            onChange={(e)=>{setState({...state, description:e.target.value})}}
+                        />
+                    </Form.Group>
+                  </Form>
+                </Collapse>
+                <p>
+                    <Button variant="primary" size="sm" onClick={()=>{if (!isAdd) {setAdd(true)}else{addTable()}}}>추가</Button>
+                </p>
         </SellerLayout>
     )
 }
