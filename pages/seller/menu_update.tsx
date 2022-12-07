@@ -8,7 +8,7 @@ import { InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
 import ImageUp from '../image-upload'
 
-//이미지 추가안함
+//이미지 Child=ImageUp(image-upload.tsx)
 export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const [update, setUpdate] = useState({
@@ -27,12 +27,12 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
   useEffect(() => {
   }, [status])
   
-  const setImageNameDelete = () => {
+  const setImageNameDelete = () => { //이미지 업로드-삭제버튼
     setImgName("")
   }
   
-  const setImageName = async (string: string) => {
-    if (imgName != "") {
+  const setImageName = async (string: string) => { //이미지 업로드-추가버튼
+    if (imgName != "") { //이미 이미지 속성이 있었다면 삭제
       const result = await fetch(
         getAbsoluteURL() + `/api/images?img=${imgName}`,
       {
@@ -45,7 +45,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
     }
     setImgName(string)
   }
-  const checkEmpty = (string: string) => {
+  const checkEmpty = (string: string) => { //string이 비었다면 null값 반환
     if (string.length == 0) {
       return null
     } else {

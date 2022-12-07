@@ -5,13 +5,15 @@ import getAbsoluteURL from "@utils/absoluteURL"
 import axios from "axios"
 
 const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
+  //url:item.image_url, getImageName, getImageNameDelete:function - menu_update 참고
   const [selectedImage, setSelectedImage] = useState("")
   const fileInput = useRef()
   // 업로드 처리
+  
   const handleUploadClick = (e) => {
     fileInput.current.click()
   }
-  const encodeFileToBase64 = (fileBlob) => {
+  const encodeFileToBase64 = (fileBlob) => { //이미지 미리보기
     const reader = new FileReader()
     reader.readAsDataURL(fileBlob)
     return new Promise((resolve) => {
@@ -21,7 +23,7 @@ const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
       }
     })
   }
-  const handleDelete = async () => {
+  const handleDelete = async () => { //삭제버튼
     if (url != "") {
       const result = await fetch(
         getAbsoluteURL() + `/api/images?img=${url}`,
@@ -36,7 +38,7 @@ const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
       setSelectedImage("")
     }
   }
-  const handleUpload = async (e) => { 
+  const handleUpload = async (e) => { //추가버튼
     //버튼 누르기만 하면 사진이 생기니까 뒤로가기해버리면 답이없음
     //=>수정버튼 눌러야 업로드하도록 만드는게 좋음
     if(!e.target.files[0]) return;
