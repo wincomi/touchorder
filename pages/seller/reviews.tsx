@@ -1,11 +1,15 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Card, Row, Col } from 'react-bootstrap'
+
 import Image from 'next/image'
-import getAbsoluteURL from '@utils/absoluteURL'
 import { InferGetServerSidePropsType } from 'next'
-import { MouseEvent } from 'react'
 import { useRouter } from "next/router"
+import { MouseEvent } from 'react'
+
+import getAbsoluteURL from '@utils/absoluteURL'
+
+//리뷰 상세?
 
 type review = {
   review_id: number
@@ -59,12 +63,12 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
                   {item.image_url3 != null ? (<Image src={item.image_url3} width="100" height="100" alt={""} />) : <></>}
                 </div>
                 <Card.Body>
-                  <Card.Title>{new Date(item.regdate).toISOString().split('T')[0]}</Card.Title>
+                  <Card.Title>{new Date(item.regdate).toISOString().split('T')[0]}{'      '}{item.menu_name}</Card.Title>
                   <Card.Text>
-                    {item.user_name}
+                    {item.user_name} 
                   </Card.Text>
                   <Card.Text>
-                    {item.content}
+                    {'>'}{item.content}
                   </Card.Text>
                   <Card.Text className="text-end">
                     {/* <Button variant="primary">답변</Button> */}
@@ -80,7 +84,19 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
 }
 
 export async function getServerSideProps() {
-  const result = await fetch(getAbsoluteURL() + `/api/reviews/`)
+  const storeId = 1
+  const result = await fetch(getAbsoluteURL() + `/api/reviews/storeReview`,{
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      store_id: storeId, 
+    })
+  })
+
+  //const result = await fetch(getAbsoluteURL() + `/api/reviews/`)
+
   let reviews: review[] = await result.json()
 
   if (reviews == null){
