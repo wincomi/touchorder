@@ -13,7 +13,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
   const router = useRouter()
   const [isAdd, setAdd] = useState(false)
   const [state, setState] = useState({name:'', content:'', price:'', category:'', image_url:'', status:0})
-  
+
   const addMenu = async () => {
     const store_id = 1
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus`, {
@@ -48,6 +48,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                 <th>이름</th>
                 <th>가격</th>
                 <th>설명</th>
+                <th>이미지</th>
                 <th>수정/삭제</th>
               </tr>
           </thead>
@@ -61,6 +62,11 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
               <td>  {item.name} </td>
               <td> {priceFormat(item.price)} </td>
               <td> {item.content} </td>
+              <td> {item.image_url}
+                <div className="preview">
+                  {item.image_url && <img src={`/images/${item.image_url}`}/>}
+                </div>
+              </td>
               <td>
                 <Button variant="warning" size="sm" onClick={()=>{router.push('/seller/menu_update?menu_id=' + item.menu_id)}}>
                   수정</Button>{' '}
@@ -79,7 +85,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                         <Form.Control
                             type="text"
                             placeholder="메뉴 이름"
-                            value={null}
+                            value={""}
                             onChange={(e)=>{setState({...state, name:e.target.value})}}
                         />
                     </Form.Group>
@@ -88,7 +94,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                         <Form.Control
                             type="text"
                             placeholder="가격"
-                            value={null}
+                            value={""}
                             onChange={(e)=>{setState({...state, price:e.target.value})}}
                         />
                     </Form.Group>
@@ -97,7 +103,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                         <Form.Control
                             type="text"
                             placeholder="메뉴 설명"
-                            value={null}
+                            value={""}
                             onChange={(e)=>{setState({...state, content:e.target.value})}}
                         />
                     </Form.Group>

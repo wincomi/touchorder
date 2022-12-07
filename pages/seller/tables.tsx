@@ -80,7 +80,7 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
                         <Form.Control
                             type="text"
                             placeholder="숫자만 적어주세요"
-                            value={null}
+                            value={""}
                             onChange={(e)=>{setState({...state, max_people:e.target.value})}}
                         />
                     </Form.Group>
@@ -89,7 +89,7 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
                         <Form.Control
                             type="text"
                             placeholder="테이블 설명"
-                            value={null}
+                            value={""}
                             onChange={(e)=>{setState({...state, description:e.target.value})}}
                         />
                     </Form.Group>
