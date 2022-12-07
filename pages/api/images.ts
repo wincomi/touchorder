@@ -14,7 +14,7 @@ export const config = {
 const readFile = (
   req: NextApiRequest,
   saveLocally?: boolean
-): Promise<{ fields: formidable.Fields; files: formidable.Files }> => {
+): Promise<{ fields: formidable.Fields; files: formidable.Files }> => { 
   const options: formidable.Options = {};
   if (saveLocally) {
     // 업로드 경로
@@ -38,12 +38,14 @@ const readFile = (
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method == "POST") {
+    /*
     // 폴더 없을 경우 생성
     try {
       await fs.readdir(path.join(process.cwd() + "/public", "/images"));
     } catch (error) {
       await fs.mkdir(path.join(process.cwd() + "/public", "/images"));
     }
+    */
     const result:any = (await readFile(req, true));  // 요청, local 저장 : true
     
     try {
@@ -62,7 +64,6 @@ const handler: NextApiHandler = async (req, res) => {
     try {
       // console.log(process.cwd());
       const filePath = path.join(process.cwd()+`/public/images/${req.query.img}`);
-      console.log(filePath);
       await fs.unlink(filePath);  // 삭제 수행
       res.status(200).json({message:"파일 삭제", target: req.query.img});
     } catch (err) {
