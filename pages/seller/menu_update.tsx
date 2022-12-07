@@ -23,24 +23,24 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
     if (item.image_url) {
       setImgName(item.image_url)
     }
-  },[])
+  }, [])
   useEffect(() => {
   }, [status])
-  
+
   const setImageNameDelete = () => { //이미지 업로드-삭제버튼
     setImgName("")
   }
-  
+
   const setImageName = async (string: string) => { //이미지 업로드-추가버튼
     if (imgName != "") { //이미 이미지 속성이 있었다면 삭제
       const result = await fetch(
         getAbsoluteURL() + `/api/images?img=${imgName}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          }
         }
-      }
       )
     }
     setImgName(string)
@@ -81,7 +81,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
   }
   return (
     <>
-    
+
       <SellerLayout>
         <HeaderTitle title="매장 관리" subtitle="상품 수정" />
         <Table striped>
@@ -101,9 +101,9 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
               {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
               <td>
                 {
-                  status == 0 ? 
-                  (<Button variant="primary" size="sm" onClick={(e) => setStatus(1)}>판매 가능</Button>) : 
-                  (<Button variant="danger" size="sm" onClick={(e) => setStatus(0)}>판매 불가</Button>)
+                  status == 0 ?
+                    (<Button variant="primary" size="sm" onClick={(e) => setStatus(1)}>판매 가능</Button>) :
+                    (<Button variant="danger" size="sm" onClick={(e) => setStatus(0)}>판매 불가</Button>)
                 }
               </td>
               <td>
@@ -154,7 +154,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                 {` `}
               </td>
               <td>
-                <ImageUp url={imgName} getImageName={setImageName} getImageNameDelete={setImageNameDelete}/>
+                <ImageUp url={imgName} getImageName={setImageName} getImageNameDelete={setImageNameDelete} />
               </td>
             </tr>
           </tbody>

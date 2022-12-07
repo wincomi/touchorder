@@ -18,21 +18,21 @@ function request_verificationCode(phoneNumber) {
 
 // 인증 번호 확인
 function validate_verificationCode(phoneNumber, verificationCode) {
-    const CacheData = SMS_Cache.get(phoneNumber);
+  const CacheData = SMS_Cache.get(phoneNumber);
 
-    if (!CacheData) {
-      return false;
-    } else if (CacheData !== verificationCode) {
-      return false;
-    } else {
-      SMS_Cache.del(phoneNumber);
-      return true 
-    }
-  };
+  if (!CacheData) {
+    return false;
+  } else if (CacheData !== verificationCode) {
+    return false;
+  } else {
+    SMS_Cache.del(phoneNumber);
+    return true
+  }
+};
 
 
-  module.exports = {
-    create_verificationCode, 
-    request_verificationCode,
-    validate_verificationCode
-  };
+module.exports = {
+  create_verificationCode,
+  request_verificationCode,
+  validate_verificationCode
+};

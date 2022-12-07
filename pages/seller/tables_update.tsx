@@ -10,12 +10,12 @@ import { useRouter } from 'next/router'
 //이미지 추가안함
 export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
-  const [update, setUpdate] = useState({ max_people: "", description: ""})
+  const [update, setUpdate] = useState({ max_people: "", description: "" })
   const [status, setStatus] = useState(table.status)
 
   useEffect(() => {
   }, [status])
-  
+
   const checkEmpty = (string: string) => {
     console.log(string.length)
     if (string.length == 0) {
@@ -24,7 +24,7 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
       return string
     }
   }
-  
+
   const returnPeople = (people: string) => {
     if (people.length == 0) {
       return table.max_people
@@ -70,11 +70,11 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
             <td>{table.table_id}</td>
             <td>
               {
-                status == 0 ? 
-                (<Button variant="primary" size="sm" onClick={(e) => setStatus(1)}>사용 가능</Button>) : 
-                (status == 1 ? 
-                (<Button variant="warning" size="sm" onClick={(e) => setStatus(2)}>예약 불가능</Button>) : 
-                (<Button variant="danger" size="sm" onClick={(e) => setStatus(0)}>사용 불가능</Button>))
+                status == 0 ?
+                  (<Button variant="primary" size="sm" onClick={(e) => setStatus(1)}>사용 가능</Button>) :
+                  (status == 1 ?
+                    (<Button variant="warning" size="sm" onClick={(e) => setStatus(2)}>예약 불가능</Button>) :
+                    (<Button variant="danger" size="sm" onClick={(e) => setStatus(0)}>사용 불가능</Button>))
               }
             </td>
             <td>
@@ -121,7 +121,7 @@ export async function getServerSideProps(context) {
     getAbsoluteURL() + `/api/stores/${store_id}/tables/${table_id}`
   )
   const table = await res.json()
-  if (table == null){
+  if (table == null) {
     console.log("값을 받아올 수 없습니다.")
   } else {
     return {

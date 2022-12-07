@@ -1,5 +1,5 @@
 import { Button, Form, Collapse } from 'react-bootstrap'
-import {useState} from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 import getAbsoluteURL from '@utils/absoluteURL'
 
@@ -9,37 +9,38 @@ export default ({ Login }) => {
     const [isCert, showCert] = useState(false)
     const [userInfo, setUser] = useState({})
     console.log()
-    const checkCertCode=async()=>{
+    const checkCertCode = async () => {
         const body = {
             phoneNumber: PhoneNumber,
             verificationCode: code
         }
         await axios
             .post(getAbsoluteURL() + "/api/auth/verification-code/verify", body)
-            .then((res)=>console.log(res))
-            .catch((err)=>console.log(err))
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
     }
-    const isUser=async ()=>{
+    const isUser = async () => {
         await axios
-            .get(getAbsoluteURL() + `/api/users`, 
-            {params: {phoneNumber: PhoneNumber}},
-            {withCredentials:true})
-            .then((res)=>{console.log(res.data.message)
-               console.log(res.data.result)
+            .get(getAbsoluteURL() + `/api/users`,
+                { params: { phoneNumber: PhoneNumber } },
+                { withCredentials: true })
+            .then((res) => {
+                console.log(res.data.message)
+                console.log(res.data.result)
                 setUser(res.data.result)
-               console.log(userInfo)
+                console.log(userInfo)
             })
         getCertCode()
     }
-    const getCertCode=async()=>{
+    const getCertCode = async () => {
         showCert(true)
         const body = {
             phoneNumber: PhoneNumber
         }
         await axios
             .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
-            .then((res)=>console.log(res))
-            .catch((err)=>console.log(err))
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
     }
     return (
         <>
@@ -47,8 +48,8 @@ export default ({ Login }) => {
             <p>터치오더 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="tel" placeholder="01012345678" value={PhoneNumber} onChange={(e)=>{getPhoneNumber(e.target.value)}}></Form.Control>
-                    
+                    <Form.Control type="tel" placeholder="01012345678" value={PhoneNumber} onChange={(e) => { getPhoneNumber(e.target.value) }}></Form.Control>
+
                     <Form.Text className="text-muted">
                         입력한 휴대폰 번호로 인증 코드가 발송됩니다.
                     </Form.Text>
@@ -60,7 +61,7 @@ export default ({ Login }) => {
                             type="text"
                             placeholder="인증번호를 입력해주세요"
                             value={code}
-                            onChange={(e)=>{getcode(e.target.value)}}
+                            onChange={(e) => { getcode(e.target.value) }}
                         />
                         <Button variant="primary" onClick={checkCertCode}>
                             확인

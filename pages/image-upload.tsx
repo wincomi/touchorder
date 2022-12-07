@@ -9,7 +9,7 @@ const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
   const [selectedImage, setSelectedImage] = useState("")
   const fileInput = useRef()
   // 업로드 처리
-  
+
   const handleUploadClick = (e) => {
     fileInput.current.click()
   }
@@ -27,12 +27,12 @@ const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
     if (url != "") {
       const result = await fetch(
         getAbsoluteURL() + `/api/images?img=${url}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
       )
       getImageNameDelete()
       setSelectedImage("")
@@ -41,7 +41,7 @@ const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
   const handleUpload = async (e) => { //추가버튼
     //버튼 누르기만 하면 사진이 생기니까 뒤로가기해버리면 답이없음
     //=>수정버튼 눌러야 업로드하도록 만드는게 좋음
-    if(!e.target.files[0]) return;
+    if (!e.target.files[0]) return;
     encodeFileToBase64(e.target.files[0])
     try {
       const formData = new FormData()  // 폼 데이터 생성
@@ -66,7 +66,7 @@ const image_upload: NextPage = ({ url, getImageName, getImageNameDelete }) => {
           onChange={handleUpload}
         />
         <div className="preview">
-          {selectedImage && <img src={selectedImage}/>}
+          {selectedImage && <img src={selectedImage} />}
         </div>
       </label>
     </div>

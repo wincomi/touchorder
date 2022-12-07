@@ -4,9 +4,9 @@ import { PrismaClient } from '@prisma/client'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
-    
+
     const updateStatus = await prisma.t_order.findMany({
-        where:{
+        where: {
             status: 1,
         }
     })
