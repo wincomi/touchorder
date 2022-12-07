@@ -108,8 +108,8 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
               <td>{statusToString(item.status)}</td>
               <td>
                 {/*disabled 처리하기*/}
-                <Button data-order-id={item.order_id} variant="primary" size="sm" disabled={item.status == 2} onClick={checkOrder}>주문 확인</Button>{` `}
-                <Button data-order-id={item.order_id} variant="danger" size="sm" disabled={item.status == 2} onClick={rejectOrder}>주문 거절</Button>
+                <Button data-order-id={item.order_id} variant="primary" size="sm" disabled={item.status == 2 || item.status == 1} onClick={checkOrder}>주문 확인</Button>{` `}
+                <Button data-order-id={item.order_id} variant="danger" size="sm" disabled={item.status == 2 || item.status == -1} onClick={rejectOrder}>주문 거절</Button>
               </td>
               <td><Button data-order-id={item.order_id} variant="dark" size="sm" onClick={detailOrder}>상세</Button></td>
             </tr>

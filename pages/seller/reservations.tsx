@@ -18,7 +18,7 @@ export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSid
   const router = useRouter()
 
   const searchReservation = async (e: MouseEvent<HTMLButtonElement>) => {
-    let tableId = e.currentTarget.getAttribute('data-table_id-id')
+    let tableId = e.currentTarget.getAttribute('data-table-id')
 
     router.push({
       pathname: '/seller/order_detailed',
@@ -26,6 +26,7 @@ export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSid
     })
   }
   return (
+    //평균 평점도 나오게하기
       <SellerLayout>
         <HeaderTitle title="예약" subtitle="예약 통합 조회" />
         <Table striped>

@@ -1,11 +1,13 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Button, Card, Row, Col } from 'react-bootstrap'
+
 import Image from 'next/image'
-import getAbsoluteURL from '@utils/absoluteURL'
 import { InferGetServerSidePropsType } from 'next'
-import { MouseEvent } from 'react'
 import { useRouter } from "next/router"
+import { MouseEvent } from 'react'
+
+import getAbsoluteURL from '@utils/absoluteURL'
 
 type review = {
   review_id: number
@@ -80,7 +82,19 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
 }
 
 export async function getServerSideProps() {
-  const result = await fetch(getAbsoluteURL() + `/api/reviews/`)
+  const storeId = 1
+  const result = await fetch(getAbsoluteURL() + `/api/reviews/storeReview`,{
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      store_id: storeId, 
+    })
+  })
+
+  //const result = await fetch(getAbsoluteURL() + `/api/reviews/`)
+
   let reviews: review[] = await result.json()
 
   if (reviews == null){
