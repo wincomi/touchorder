@@ -9,6 +9,8 @@ import { MouseEvent } from 'react'
 
 import getAbsoluteURL from '@utils/absoluteURL'
 
+//리뷰 상세?
+
 type review = {
   review_id: number
   regdate: Date
@@ -61,12 +63,12 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
                   {item.image_url3 != null ? (<Image src={item.image_url3} width="100" height="100" alt={""} />) : <></>}
                 </div>
                 <Card.Body>
-                  <Card.Title>{new Date(item.regdate).toISOString().split('T')[0]}</Card.Title>
+                  <Card.Title>{new Date(item.regdate).toISOString().split('T')[0]}{'      '}{item.menu_name}</Card.Title>
                   <Card.Text>
-                    {item.user_name}
+                    {item.user_name} 
                   </Card.Text>
                   <Card.Text>
-                    {item.content}
+                    {'>'}{item.content}
                   </Card.Text>
                   <Card.Text className="text-end">
                     {/* <Button variant="primary">답변</Button> */}
