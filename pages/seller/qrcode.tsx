@@ -16,7 +16,8 @@ export default ({ store_id }: InferGetStaticPropsType<typeof getServerSideProps>
   if(store_id == null) { router.replace(router.asPath) } //삭제 예정
 
   const { Image } = useQRCode()
-  const store_url = `touchorder.kr`
+  
+  const store_url = `touchorder.kr/stores/${store_id}`
   const qrcode_options: QRCodeOptions = {
     level: '',
     margin: 3,
