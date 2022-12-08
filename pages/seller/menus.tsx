@@ -16,11 +16,12 @@ import { getSession, useSession } from "next-auth/react"
 //TODO db랑 연동
 export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+  const session = useSession()
   const [isAdd, setAdd] = useState(false)
   const [state, setState] = useState({ name: '', content: '', price: '', category: '', image_url: '', status: 0 })
 
   const addMenu = async () => {
-    const store_id = 1
+    const store_id = session.user.store_id
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus`, {
       method: "POST",
       headers: {
@@ -41,7 +42,6 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
     })
     router.replace(router.asPath)
   }
-  const session = useSession()
   
   return (
     <SellerLayout>
@@ -123,8 +123,8 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
   )
 }
 
-export async function getServerSideProps() {
-  const session = getSession()
+export async function getServerSideProps( context ) {
+  const session = await getSession(context)
 
   if (session.user == null) {
     const items: menu[] = []
