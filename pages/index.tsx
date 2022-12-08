@@ -11,16 +11,16 @@ export default () => {
     const [isCert, showCert] = useState(false)
     const [userInfo, setUser] = useState({})
 
-    // const checkCertCode = async () => {
-    //     const body = {
-    //         phoneNumber: PhoneNumber,
-    //         verificationCode: code
-    //     }
-    //     await axios
-    //         .post(getAbsoluteURL() + "/api/auth/verification-code/verify", body)
-    //         .then((res) => console.log(res))
-    //         .catch((err) => console.log(err))
-    // }
+    const checkCertCode = async () => {
+        const body = {
+            phoneNumber: PhoneNumber,
+            verificationCode: code
+        }
+        await axios
+            .post(getAbsoluteURL() + "/api/auth/verification-code/verify", body)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+    }
 
     const isUser = async () => {
         const result = await signIn("credentials", {
@@ -88,7 +88,7 @@ export default () => {
                         입력한 휴대폰 번호로 인증 코드가 발송됩니다.
                     </Form.Text>
                 </Form.Group>
-                {/* <Collapse in={isCert}>
+                {<Collapse in={isCert}>
                     <Form.Group>
                         <Form.Label>인증번호</Form.Label>
                         <Form.Control
@@ -101,7 +101,7 @@ export default () => {
                             확인
                         </Button>
                     </Form.Group>
-                </Collapse> */}
+                </Collapse>}
                 <div className="d-grid">
                     <Button variant="primary" size="lg" onClick={isUser}>확인</Button>
                 </div>
