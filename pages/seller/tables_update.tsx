@@ -87,7 +87,7 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
                   <Form.Control
                     type="text"
                     placeholder={"숫자만 적어주세요"}
-                    value={""}
+                    value={undefined}
                     onChange={(e) => {
                       setUpdate({ ...update, max_people: e.target.value })
                     }}
@@ -101,7 +101,7 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
                   <Form.Control
                     type="text"
                     placeholder={table.description}
-                    value={""}
+                    value={undefined}
                     onChange={(e) => { setUpdate({ ...update, description: e.target.value }) }}
                   />
                 </Form.Group>

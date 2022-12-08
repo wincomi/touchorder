@@ -90,7 +90,7 @@ export default () => {
                 <p>{session.data.user.phone_number} 회원님 안녕하세요.</p>
                 <p>
                     <Button onClick={() => signOut()}>로그아웃</Button>{' '}
-                    <Button onClick={() => router.push('/seller/menus')} disabled={session.data?.user.is_admin != 1}>판매자 관리 페이지</Button>
+                    <Button onClick={() => router.push('/seller/orders')} disabled={session.data?.user.is_admin != 1}>판매자 관리 페이지</Button>
                 </p>
             </Container>
         )

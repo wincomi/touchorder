@@ -132,9 +132,9 @@ export async function getServerSideProps( context: GetSessionParams ) {
   const session = await getSession(context)
 
   if (session?.user == null) {
-    const items: menu[] = []
+    const item: menu[] = []
     return {
-      props: { items }
+      props: { item }
     }
   }
 

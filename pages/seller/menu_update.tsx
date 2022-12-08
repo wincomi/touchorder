@@ -96,8 +96,8 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
               <th>이름</th>
               <th>가격</th>
               <th>설명</th>
-              <th>수정</th>
               <th>사진</th>
+              <th>수정</th>
             </tr>
           </thead>
           <tbody>
@@ -117,7 +117,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                     <Form.Control
                       type="text"
                       placeholder={item.name}
-                      value={""}
+                      value={undefined}
                       onChange={(e) => {
                         setUpdate({ ...update, name: e.target.value })
                       }}
@@ -131,7 +131,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                     <Form.Control
                       type="text"
                       placeholder={priceFormat(item.price)}
-                      value={""}
+                      value={undefined}
                       onChange={(e) => {
                         setUpdate({ ...update, price: e.target.value })
                       }}
@@ -145,7 +145,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                     <Form.Control
                       type="text"
                       placeholder={item.content}
-                      value={""}
+                      value={undefined}
                       onChange={(e) => {
                         setUpdate({ ...update, content: e.target.value })
                       }}
@@ -154,12 +154,12 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                 </Form>
               </td>
               <td>
+                <ImageUp url={imgName} getImageName={setImageName} getImageNameDelete={setImageNameDelete} />
+              </td>
+              <td>
                 <Button variant="warning" onClick={() => { updateMenu(item.menu_id, item.store_id) }} size="sm">
                   수정</Button>
                 {` `}
-              </td>
-              <td>
-                <ImageUp url={imgName} getImageName={setImageName} getImageNameDelete={setImageNameDelete} />
               </td>
             </tr>
           </tbody>
