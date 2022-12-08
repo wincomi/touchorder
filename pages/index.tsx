@@ -47,7 +47,7 @@ export default () => {
         })
 
         if (!result?.error) {
-            alert('로그인 성공!')
+            // alert('로그인 성공!')
             router.reload()
         } else {
             //alert(result.error)
