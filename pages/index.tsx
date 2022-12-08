@@ -16,9 +16,12 @@ export default () => {
             phoneNumber: PhoneNumber,
             verificationCode: code
         }
-        await axios
+        await axios //res:정상이면 db에 회원가입, err면 번호 또는 인증코드가 틀립니다 띄우기
             .post(getAbsoluteURL() + "/api/auth/verification-code/verify", body)
-            .then((res) => console.log(res))
+            .then((res) => {
+                if ( res.status == 200 ) {  }
+                else if ( res.status == 400 ) { alert('인증코드가 틀립니다.') }
+            })
             .catch((err) => console.log(err))
     }
 
@@ -33,6 +36,7 @@ export default () => {
             router.reload()
         } else {
             alert(result.error)
+            getCertCode()
         }
     }
 
@@ -50,16 +54,16 @@ export default () => {
     // getCertCode()
 
 
-    // const getCertCode = async () => {
-    //     showCert(true)
-    //     const body = {
-    //         phoneNumber: PhoneNumber
-    //     }
-    //     await axios
-    //         .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
-    //         .then((res) => console.log(res))
-    //         .catch((err) => console.log(err))
-    // }
+    const getCertCode = async () => {
+        showCert(true)
+        const body = {
+            phoneNumber: PhoneNumber
+        }
+        await axios
+            .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
+            .then((res) => console.log(res))
+            .catch((err) => console.log(err))
+    }
 
     const session = useSession()
     const router = useRouter()
