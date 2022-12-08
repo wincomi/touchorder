@@ -12,7 +12,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         // GET (index->[store_id]로 옮김) - 최진호
         const readResult = await prisma.store.findFirst({ where: { store_id: store_id } });
         if (readResult != null) {
-            res.status(200).json({ readResult })
+            res.status(200).json(readResult)
         } else {
             res.status(400).json({
                 "message": "해당 store가 없습니다."

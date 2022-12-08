@@ -18,8 +18,23 @@ export default () => {
         }
         await axios //res:정상이면 db에 회원가입, err면 번호 또는 인증코드가 틀립니다 띄우기
             .post(getAbsoluteURL() + "/api/auth/verification-code/verify", body)
-            .then((res) => {
-                if ( res.status == 200 ) {  }
+            .then( async (res) => {
+                if ( res.status == 200 ) { 
+                    const result = await fetch(
+                        getAbsoluteURL() + `/api/users`,
+                        {
+                          method: "POST",
+                          headers: {
+                            "Content-Type": "application/json",
+                          },
+                          body: JSON.stringify({ phone_number: PhoneNumber}),
+                        }).then((res) => {
+                            if (res.status == 400) { alert(res.message)}
+                            else { alert('회원가입 성공!'); router.reload() }
+                        }
+                      )
+
+                }
                 else if ( res.status == 400 ) { alert('인증코드가 틀립니다.') }
             })
             .catch((err) => console.log(err))
@@ -32,10 +47,10 @@ export default () => {
         })
 
         if (!result?.error) {
-            alert('로그인 성공!')
+            // alert('로그인 성공!')
             router.reload()
         } else {
-            alert(result.error)
+            //alert(result.error)
             getCertCode()
         }
     }
@@ -85,31 +100,29 @@ export default () => {
         <Container className="mt-3">
             <h1>휴대폰 번호를 입력해주세요</h1>
             <p>터치오더 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
+            <div className="d-grid">
             <Form>
-                <Form.Group className="mb-3" controlId="formBasicEmail">
-                    <Form.Control type="tel" placeholder="01012345678" value={PhoneNumber} onChange={(e) => { getPhoneNumber(e.target.value) }}></Form.Control>
+                <Form.Group className="mb-3 w-50" controlId="formBasicEmail">
+                    <Form.Control className = "w-50" type="tel" placeholder="01012345678" value={PhoneNumber} onChange={(e) => { getPhoneNumber(e.target.value) }}></Form.Control>
                     <Form.Text className="text-muted">
-                        입력한 휴대폰 번호로 인증 코드가 발송됩니다.
+                        처음 이용하시는 분은 인증 번호가 발송됩니다.
                     </Form.Text>
                 </Form.Group>
                 {<Collapse in={isCert}>
-                    <Form.Group>
+                    <Form.Group className="w-25">
                         <Form.Label>인증번호</Form.Label>
                         <Form.Control
-                            type="number"
+                            className = ""
+                            type="text"
                             placeholder="인증번호를 입력해주세요"
                             value={code}
                             onChange={(e) => { getcode(e.target.value) }}
                         />
-                        <Button variant="primary" onClick={checkCertCode}>
-                            확인
-                        </Button>
                     </Form.Group>
-                </Collapse>}
-                <div className="d-grid">
-                    <Button variant="primary" size="lg" onClick={isUser}>확인</Button>
-                </div>
+                </Collapse>}<br></br>
+                    <Button variant="primary" size="md" onClick={() => {if(!isCert)isUser(); else checkCertCode();}}>확인</Button>
             </Form>
+            </div>
         </Container>
     )
 }

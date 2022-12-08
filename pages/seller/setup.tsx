@@ -5,8 +5,13 @@ import { Button, Form } from "react-bootstrap"
 import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { store } from "@prisma/client"
+import { getSession, GetSessionParams } from "next-auth/react"
+import { useRouter } from "next/router"
 
 export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter() //삭제 예정
+  if(store == null) { router.replace(router.asPath) } //삭제 예정
+  
   const [state, setState] = useState({
     name: "",
     address: "",
@@ -24,7 +29,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
   }
   const returnDeposit = (deposit: string) => {
     if (deposit.length == 0) {
-      return store.deposit
+      return store?.deposit
     } else {
       return parseInt(deposit)
     }
@@ -32,12 +37,12 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
   const updateStore = async () => {
     const store_id = 1
     const update = {
-      name: checkEmpty(state.name) ?? store.name,
-      address: checkEmpty(state.address) ?? store.address,
-      phone: checkEmpty(state.phone) ?? store.phone,
-      content: checkEmpty(state.content) ?? store.content,
+      name: checkEmpty(state.name) ?? store?.name,
+      address: checkEmpty(state.address) ?? store?.address,
+      phone: checkEmpty(state.phone) ?? store?.phone,
+      content: checkEmpty(state.content) ?? store?.content,
       deposit: returnDeposit(state.deposit),
-      image_url: checkEmpty(state.image_url) ?? store.image_url,
+      image_url: checkEmpty(state.image_url) ?? store?.image_url,
     }
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`, {
       method: "POST",
@@ -55,7 +60,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>가게명</Form.Label>
           <Form.Control
             type="text"
-            placeholder={store.name}
+            placeholder={store?.name}
             value={null}
             onChange={(e) => setState({ ...state, name: e.target.value })}
           />
@@ -64,7 +69,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>주소</Form.Label>
           <Form.Control
             type="text"
-            placeholder={store.address}
+            placeholder={store?.address}
             value={null}
             onChange={(e) => setState({ ...state, address: e.target.value })}
           />
@@ -73,7 +78,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>전화번호</Form.Label>
           <Form.Control
             type="text"
-            placeholder={store.phone}
+            placeholder={store?.phone}
             value={null}
             onChange={(e) => setState({ ...state, phone: e.target.value })}
           />
@@ -82,12 +87,12 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
           <Form.Label>설명</Form.Label>
           <Form.Control
             type="text"
-            placeholder={store.content}
+            placeholder={store?.content}
             value={null}
             onChange={(e) => setState({ ...state, content: e.target.value })}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        {/*<Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>계좌-수정필요</Form.Label>
           <Form.Control
             type="text"
@@ -106,7 +111,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
             value={null}
             onChange={(e) => setState({ ...state, image_url: e.target.value })}
           />
-        </Form.Group>
+        </Form.Group>*/}
         <Button variant="primary" type="submit" onClick={updateStore}>
           수정
         </Button>
@@ -115,8 +120,17 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
   )
 }
 
-export async function getServerSideProps() {
-  const store_id = 1
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+
+  if (session?.user == null) {
+    const items: store[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const store_id = session?.user.store_id
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`)
   const store: store = await res.json()
   if (store == null) {

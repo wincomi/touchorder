@@ -6,14 +6,20 @@ import { InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import { useState } from 'react'
 import { store_table } from "@prisma/client"
+import { getSession, useSession, GetSessionParams } from "next-auth/react"
 
 export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+
+  if(tables == null) { router.replace(router.asPath) } //삭제 예정
+
+  const session = useSession()
+
   const [isAdd, setAdd] = useState(false)
   const [state, setState] = useState({ max_people: '', description: '' })
 
   const addTable = async () => {
-    const store_id = 1
+    const store_id = session?.user.store_id
     const table = {
       max_people: parseInt(state.max_people),
       description: state.description,
@@ -54,7 +60,7 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
         </thead>
 
         <tbody>
-          {tables.map((item) => (
+          {tables?.map((item) => (
             <tr>
               <td>{item.table_id}</td>
               <td>{item.max_people}명</td>
@@ -103,8 +109,17 @@ export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProp
   )
 }
 
-export async function getServerSideProps() {
-  const store_id = 1 // TODO
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+  if (session?.user == null) {
+    const items: store_table[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const store_id = session?.user.store_id
+
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables`)
   const tables: store_table[] = await res.json()
   if (tables == null) {

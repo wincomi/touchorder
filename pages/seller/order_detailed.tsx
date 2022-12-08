@@ -37,7 +37,7 @@ export default ({ detailed_order }: InferGetServerSidePropsType<typeof getServer
         </thead>
 
         <tbody>
-          {detailed_order.map((item) => (
+          {detailed_order?.map((item) => (
             <tr>
               <td>{item.detailed_order_id}</td>
               <td>{item.order_id}</td>

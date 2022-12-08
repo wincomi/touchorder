@@ -5,11 +5,15 @@ import { Table, Button, Form } from "react-bootstrap"
 import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
+import { getSession, GetSessionParams } from "next-auth/react"
 
 // TODO : status 구체화
 //이미지 추가안함
 export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+
+  if(table == null) { router.replace(router.asPath) } //삭제 예정
+
   const [update, setUpdate] = useState({ max_people: "", description: "" })
   const [status, setStatus] = useState(table.status)
 
@@ -114,8 +118,17 @@ export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps
     </SellerLayout>
   )
 }
-export async function getServerSideProps(context) {
-  const store_id = 1 // TODO
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+
+  if (session?.user == null) {
+    const items: store_table[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const store_id = session?.user.store_id
   const table_id = context.query.table_id
   const res = await fetch(
     getAbsoluteURL() + `/api/stores/${store_id}/tables/${table_id}`

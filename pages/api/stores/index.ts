@@ -10,7 +10,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
             const readResult = await prisma.store.findMany();
 
             if (readResult != null) {
-                res.status(200).json({ readResult })
+                res.status(200).json(readResult)
             } else {
                 res.status(400).json({
                     "message": "store가 없습니다."

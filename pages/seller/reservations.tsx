@@ -2,6 +2,7 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap'
 
+import { getSession, GetSessionParams} from "next-auth/react"
 import { InferGetServerSidePropsType } from 'next'
 import { useRouter } from 'next/router'
 import { MouseEvent } from 'react'
@@ -17,8 +18,10 @@ type Props = {
 export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
+  if(store_table == null) { router.replace(router.asPath) } //삭제 예정
+
   const searchReservation = async (e: MouseEvent<HTMLButtonElement>) => {
-    let tableId = e.currentTarget.getAttribute('data-table-id')
+    const tableId = e.currentTarget.getAttribute('data-table-id')
 
     router.push({
       pathname: '/seller/reservation_time',
@@ -41,7 +44,7 @@ export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSid
         </thead>
 
         <tbody>
-          {store_table.map((item) => (
+          {store_table?.map((item) => (
             <tr>
               <td>{item.table_id}</td>
               <td>{item.max_people}명</td>
@@ -58,17 +61,22 @@ export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSid
   )
 }
 
-export async function getServerSideProps() {
-  const store_id = 1 // TODO
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+
+  if (session?.user == null) {
+    const items: store_table[] = []
+    return {
+      props: { items }
+    }
+  }
+  
+  const store_id = session?.user.store_id
+  
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables/`)
   const store_table: store_table[] = await res.json()
 
-  if (store_table == null) {
-    console.log("값을 받아올 수 없습니다.")
-
-  } else {
-    return {
-      props: { store_table }
-    }
+  return {
+    props: { store_table }
   }
 }

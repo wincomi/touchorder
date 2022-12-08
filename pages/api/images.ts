@@ -38,14 +38,14 @@ const readFile = (
 
 const handler: NextApiHandler = async (req, res) => {
   if (req.method == "POST") {
-    /*
+    
     // 폴더 없을 경우 생성
     try {
       await fs.readdir(path.join(process.cwd() + "/public", "/images"));
     } catch (error) {
       await fs.mkdir(path.join(process.cwd() + "/public", "/images"));
     }
-    */
+    
     const result: any = (await readFile(req, true));  // 요청, local 저장 : true
 
     try {
