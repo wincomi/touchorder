@@ -37,6 +37,9 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         const userId = result.user_id;
         const storeId = result.store_id;
         const tableId = result.table_id;
+
+        let addedPayments = 0;
+
         result.detailed_orders = await Promise.all(
             req.body.detailedOrders.map(async (detailedOrder: any) => {
                 // 메뉴 정보 받아오기
@@ -65,10 +68,16 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     }
                 });
 
+                addedPayments += payment;   // 추가 금액
+
                 // 결과에 추가
                 return detailedOrderResult
             })
         );
+        
+        // 총 합계 금액 갱신
+        await prisma.$queryRaw`UPDATE t_order SET payments = payments + ${addedPayments} WHERE order_id = ${orderId}`;
+
 
         res.status(200).json(result);
         return;

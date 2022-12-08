@@ -63,6 +63,7 @@ async function order(req: NextApiRequest, res: NextApiResponse) {
     const orderId = result.order_id // 생성된 주문 번호
 
 
+    let addedPayments = 0;
 
     // 상세 주문 순회, 결과 값 result에 배열로 저장
     result.detailed_orders = await Promise.all(
@@ -93,11 +94,14 @@ async function order(req: NextApiRequest, res: NextApiResponse) {
                 }
             });
 
+            addedPayments += payment;
             console.log(detailedOrderResult);
             // 결과에 추가
             return detailedOrderResult
         })
     );
+    // 총 합계 금액 갱신
+    await prisma.$queryRaw`UPDATE t_order SET payments = payments + ${addedPayments} WHERE order_id = ${orderId}`;
 
     console.log("주문 결과");
     console.log(result);

@@ -7,7 +7,7 @@ export default (req: NextApiRequest, res: NextApiResponse) => {
         let phoneNumber = req.body.phoneNumber.toString()
         let verificationCode = req.body.verificationCode
         let result = SMS.validate_verificationCode(phoneNumber, verificationCode)
-
+        
         if (result == true) {
             console.log("번호 인증 성공")
 
