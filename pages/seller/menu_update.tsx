@@ -165,7 +165,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
     </>
   )
 }
-export async function getServerSideProps( context: GetSessionParams, Qcontext ) {
+export async function getServerSideProps( context: GetSessionParams ) {
   const session = await getSession(context)
 
   if (session?.user == null) {
@@ -177,7 +177,7 @@ export async function getServerSideProps( context: GetSessionParams, Qcontext ) 
 
   const store_id = session?.user.store_id
 
-  const menu_id = Qcontext.query.menu_id
+  const menu_id = context.query.menu_id
   
   const res = await fetch(
     getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`
