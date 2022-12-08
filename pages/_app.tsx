@@ -13,7 +13,6 @@ Router.events.on('routeChangeError', () => NProgress.done())
 NProgress.configure({ showSpinner: false })
 
 export default ({ Component, pageProps }: AppProps) => {
-    
     return (
         <SessionProvider>
             <Head>
