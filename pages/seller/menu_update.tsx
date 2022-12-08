@@ -13,6 +13,9 @@ import { menu } from "@prisma/client"
 //이미지 Child=ImageUp(image-upload.tsx)
 export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+
+  if(item == null) { router.replace(router.asPath) } //삭제 예정
+
   const [update, setUpdate] = useState({
     name: "",
     price: "",

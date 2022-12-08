@@ -20,6 +20,8 @@ type Props = {
 export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
+  if(t_orders == null) { router.replace(router.asPath) } //삭제 예정
+
   const checkedOrder = async (e: MouseEvent<HTMLButtonElement>) => {
     var orderId = e.currentTarget.getAttribute('data-order-id')
 

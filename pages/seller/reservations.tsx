@@ -18,6 +18,8 @@ type Props = {
 export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
+  if(store_table == null) { router.replace(router.asPath) } //삭제 예정
+
   const searchReservation = async (e: MouseEvent<HTMLButtonElement>) => {
     const tableId = e.currentTarget.getAttribute('data-table-id')
 

@@ -6,9 +6,12 @@ import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { store } from "@prisma/client"
 import { getSession, GetSessionParams } from "next-auth/react"
-
+import { useRouter } from "next/router"
 
 export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter() //삭제 예정
+  if(store == null) { router.replace(router.asPath) } //삭제 예정
+  
   const [state, setState] = useState({
     name: "",
     address: "",
@@ -89,7 +92,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
             onChange={(e) => setState({ ...state, content: e.target.value })}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        {/*<Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>계좌-수정필요</Form.Label>
           <Form.Control
             type="text"
@@ -108,7 +111,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
             value={null}
             onChange={(e) => setState({ ...state, image_url: e.target.value })}
           />
-        </Form.Group>
+        </Form.Group>*/}
         <Button variant="primary" type="submit" onClick={updateStore}>
           수정
         </Button>
