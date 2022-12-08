@@ -17,7 +17,7 @@ export default ({ store_id }: InferGetStaticPropsType<typeof getServerSideProps>
 
   const { Image } = useQRCode()
   
-  const store_url = `touchorder.kr/stores/${store_id}`
+  const store_url = `https://touchorder.kr/stores/${store_id}`
   const qrcode_options: QRCodeOptions = {
     level: '',
     margin: 3,
