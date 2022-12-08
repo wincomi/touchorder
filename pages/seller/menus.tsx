@@ -58,7 +58,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
             <th>이름</th>
             <th>가격</th>
             <th>설명</th>
-            <th>이미지</th>
+            {/*<th>이미지</th>*/}
             <th>수정/삭제</th>
           </tr>
         </thead>
@@ -72,11 +72,13 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
                 <td>  {item.name} </td>
                 <td> {priceFormat(item.price)} </td>
                 <td> {item.content} </td>
+                {/*
                 <td> {item.image_url}
                   <div className="preview">
                     {item.image_url && <img src={`/images/${item.image_url}`} />}
                   </div>
                 </td>
+            */}
                 <td>
                   <Button variant="warning" size="sm" onClick={() => { router.push('/seller/menu_update?menu_id=' + item.menu_id) }}>
                     수정</Button>{' '}

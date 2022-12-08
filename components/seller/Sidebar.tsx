@@ -42,7 +42,7 @@ export default ({ title }: Props) => {
             <div className="collapse show" id="dashboard-collapse">
               <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                 <li><a href="/seller/reservations" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/reservations' ? ' active' : '')}>예약 통합 조회</a></li>
-                <li><a href="/seller/reservation_setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/reservation_setup' ? ' active' : '')}>예약 설정</a></li>
+                {/*<li><a href="/seller/reservation_setup" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/reservation_setup' ? ' active' : '')}>예약 설정</a></li>*/}
               </ul>
             </div>
           </li>
