@@ -15,7 +15,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 
         // 가게에서 예약 조회 - 현재 시간 이후 값 조회 == 현재 ~ 미래
         if (storeId != null) {
-            const result = await prisma.$queryRaw`SELECT store.name, reserve.* FROM store, reserve WHERE (store.store_id = reserve.store_id) AND (reserve.store_id = ${storeId}) AND (reserve.reserve_date >= ${currentTime})`;
+            const result = await prisma.$queryRaw`SELECT store.name, user.user_name, reserve.* FROM store, reserve, user WHERE (store.store_id = reserve.store_id) AND (user.user_id = reserve.user_id) AND (reserve.store_id = ${storeId}) AND (reserve.reserve_date >= ${currentTime})`;
             res.status(200).json(result);
             return;
         }
