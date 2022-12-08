@@ -10,7 +10,7 @@ import priceFormat from '@utils/priceFormat'
 import getAbsoluteURL from '@utils/absoluteURL'
 
 import { menu } from "@prisma/client"
-import { getSession, useSession } from "next-auth/react"
+import { getSession, useSession, GetSessionParams } from "next-auth/react"
 
 //이미지, state 아직 추가안함
 //TODO db랑 연동
@@ -21,7 +21,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
   const [state, setState] = useState({ name: '', content: '', price: '', category: '', image_url: '', status: 0 })
 
   const addMenu = async () => {
-    const store_id = session.user.store_id
+    const store_id = session?.user.store_id
     const result = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus`, {
       method: "POST",
       headers: {
@@ -61,7 +61,7 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
         </thead>
         <tbody>
           <>
-            {items.map((item) => (
+            {items?.map((item) => (
               <tr>
                 {/* <td>{item.menu_id}</td> */}
                 {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
@@ -123,17 +123,17 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
   )
 }
 
-export async function getServerSideProps( context ) {
+export async function getServerSideProps( context: GetSessionParams ) {
   const session = await getSession(context)
 
-  if (session.user == null) {
+  if (session?.user == null) {
     const items: menu[] = []
     return {
       props: { items }
     }
   }
 
-  const store_id = session.user.store_id
+  const store_id = session?.user.store_id
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/`)
 
   const items: menu[] = await res.json()

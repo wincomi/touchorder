@@ -1,15 +1,16 @@
 import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
-import { GetStaticProps, InferGetStaticPropsType } from "next"
+import { InferGetStaticPropsType } from "next"
 import { useQRCode } from 'next-qrcode'
 import { QRCodeOptions } from "next-qrcode/dist/useQRCode"
 import getAbsoluteURL from '@utils/absoluteURL'
+import { getSession, GetSessionParams } from "next-auth/react"
 
 type Props = {
   store_id: number
 }
 
-export default ({ store_id }: InferGetStaticPropsType<typeof getStaticProps>) => {
+export default ({ store_id }: InferGetStaticPropsType<typeof getServerSideProps>) => {
   const { Image } = useQRCode()
   const store_url = `${getAbsoluteURL()}/stores/${store_id}`
   const qrcode_options: QRCodeOptions = {
@@ -34,8 +35,15 @@ export default ({ store_id }: InferGetStaticPropsType<typeof getStaticProps>) =>
   )
 }
 
-export const getStaticProps: GetStaticProps<Props> = async (context) => {
-  const store_id = 1
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+  if (session?.user == null) {
+    return {
+      props: { items: null }
+    }
+  }
+
+  const store_id = session?.user.store_id
 
   return {
     props: { store_id }

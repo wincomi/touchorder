@@ -7,6 +7,8 @@ import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
 import ImageUp from '../image-upload'
+import { getSession, GetSessionParams } from "next-auth/react"
+import { menu } from "@prisma/client"
 
 //이미지 Child=ImageUp(image-upload.tsx)
 export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
@@ -163,9 +165,20 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
     </>
   )
 }
-export async function getServerSideProps(context) {
-  const store_id = 1 // TODO
-  const menu_id = context.query.menu_id
+export async function getServerSideProps( context: GetSessionParams, Qcontext ) {
+  const session = await getSession(context)
+
+  if (session?.user == null) {
+    const items: menu[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const store_id = session?.user.store_id
+
+  const menu_id = Qcontext.query.menu_id
+  
   const res = await fetch(
     getAbsoluteURL() + `/api/stores/${store_id}/menus/${menu_id}`
   )

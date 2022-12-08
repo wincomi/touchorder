@@ -5,8 +5,8 @@ import { Prisma, PrismaClient } from '@prisma/client'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
-    const userId: number = Number(req.query.userId);
-    const storeId: number = Number(req.query.storeId);
+    const userId: number = Number(req.query.user_id)
+    const storeId: number = Number(req.query.store_id)
 
     // GET - 주문 조회
     if (req.method === "GET") {

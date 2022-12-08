@@ -9,6 +9,8 @@ import { MouseEvent } from 'react'
 
 import getAbsoluteURL from '@utils/absoluteURL'
 
+import { getSession, GetSessionParams } from "next-auth/react"
+
 //리뷰 상세?
 
 type review = {
@@ -47,14 +49,14 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
       })
     })
 
-    router.replace
+    router.replace(router.asPath)
   }
-
+  
   return (
     <SellerLayout>
       <HeaderTitle title="매장 관리" subtitle="리뷰 관리" />
       <Row xs={1} md={2} className="g-4">
-        {reviews.map((item) => (
+        {reviews?.map((item) => (
           <Col>
             <Card>
               <div>
@@ -83,8 +85,16 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
   )
 }
 
-export async function getServerSideProps() {
-  const storeId = 1
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+  if (session?.user == null) {
+    const items: review[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const storeId = session?.user.store_id
   const result = await fetch(getAbsoluteURL() + `/api/reviews/storeReview`, {
     method: 'POST',
     headers: {

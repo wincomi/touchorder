@@ -5,11 +5,13 @@ import { Button, Table } from 'react-bootstrap'
 import { MouseEvent } from 'react'
 import { useRouter } from 'next/router'
 import { InferGetServerSidePropsType } from 'next'
+import { getSession, GetSessionParams } from "next-auth/react"
 
 import getAbsoluteURL from '@utils/absoluteURL'
 import dateFormat from "@utils/dateFormat"
 
 import { t_order } from '@prisma/client'
+
 
 type Props = {
   t_orders: t_order[]
@@ -31,7 +33,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
         status: 2,
       })
     })
-    router.replace
+    router.replace(router.asPath)
   }
 
   return (
@@ -49,7 +51,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
         </thead>
 
         <tbody>
-          {t_orders.map((item) => (
+          {t_orders?.map((item) => (
             <tr>
               <td>{item.order_id}</td>
               <td>{item.table_id}</td>
@@ -64,8 +66,27 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
   )
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(getAbsoluteURL() + `/api/orders/order_history`)
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+
+  if (session?.user == null) {
+    const items: t_order[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const storeId = session?.user.store_id
+
+  const res = await fetch(getAbsoluteURL() + `/api/orders/order_history`,{
+    method: 'POST',
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      store_id: storeId,
+    })
+  })
   const t_orders: t_order[] = await res.json()
 
   if (t_orders == null) {

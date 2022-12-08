@@ -5,6 +5,7 @@ import { Button, Table } from 'react-bootstrap'
 import { MouseEvent } from 'react'
 import { useRouter } from 'next/router'
 import { InferGetServerSidePropsType } from 'next'
+import { getSession, GetSessionParams } from "next-auth/react"
 
 import getAbsoluteURL from '@utils/absoluteURL'
 import priceFormat from '@utils/priceFormat'
@@ -49,7 +50,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
 
     alert('주문을 확인하였습니다.')
 
-    router.replace
+    router.replace(router.asPath)
   }
 
   // 주문 거절 버튼
@@ -69,7 +70,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
 
     alert('주문을 거절하였습니다.')
 
-    router.replace
+    router.replace(router.asPath)
   }
 
   // 주문 상세 버튼
@@ -99,7 +100,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
         </thead>
 
         <tbody>
-          {t_orders.map((item) => (
+          {t_orders?.map((item) => (
             <tr>
               <td>{item.order_id}</td>
               <td>{item.table_id ?? '없음'}</td>
@@ -120,16 +121,24 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
   )
 }
 
-export async function getServerSideProps() {
-  const res = await fetch(getAbsoluteURL() + `/api/orders`)
-  const t_orders: t_order[] = await res.json()
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
 
-  if (t_orders == null) {
-    console.log("값을 받아올 수 없습니다.")
-
-  } else {
+  if (session?.user == null) {
+    const items: t_order[] = []
     return {
-      props: { t_orders }
+      props: { items }
     }
   }
+
+  const storeId = session?.user.store_id
+
+  const res = await fetch(getAbsoluteURL() + `/api/orders?store_id=${storeId}`)
+
+  const t_orders: t_order[] = await res.json()
+
+  return {
+    props: { t_orders }
+  }
+
 }
