@@ -20,7 +20,7 @@ export default NextAuth({
                 })
 
                 if (user == null) {
-                    throw new Error("회원을 찾을 수 없습니다.");
+                    throw new Error("회원을 찾을 수 없습니다.")
                 }
 
                 return {

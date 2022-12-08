@@ -10,6 +10,7 @@ import priceFormat from '@utils/priceFormat'
 import getAbsoluteURL from '@utils/absoluteURL'
 
 import { menu } from "@prisma/client"
+import { getSession, useSession } from "next-auth/react"
 
 //이미지, state 아직 추가안함
 //TODO db랑 연동
@@ -40,6 +41,8 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
     })
     router.replace(router.asPath)
   }
+  const session = useSession()
+  
   return (
     <SellerLayout>
       <HeaderTitle title="매장 관리" subtitle="상품 설정" />
@@ -121,7 +124,16 @@ export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps
 }
 
 export async function getServerSideProps() {
-  const store_id = 1 // TODO
+  const session = getSession()
+
+  if (session.user == null) {
+    const items: menu[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const store_id = session.user.store_id
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/menus/`)
 
   const items: menu[] = await res.json()

@@ -1,5 +1,6 @@
 import { MouseEvent } from 'react'
 import { useRouter } from 'next/router'
+import { signOut, useSession } from 'next-auth/react'
 
 type Props = {
   title: string
@@ -7,6 +8,7 @@ type Props = {
 
 export default ({ title }: Props) => {
   const router = useRouter()
+  const session = useSession()
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>) {
     e.preventDefault()
@@ -19,7 +21,7 @@ export default ({ title }: Props) => {
     <>
       <div className="flex-shrink-0 p-3 bg-white">
         <a href="/" className="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-          <span className="fs-5 fw-semibold">{title}</span>
+          <span className="fs-5 fw-semibold">{title} ({session?.data?.user?.store_id}번 가게)</span>
         </a>
         <ul className="list-unstyled ps-0">
           <li className="mb-1">
@@ -56,6 +58,16 @@ export default ({ title }: Props) => {
                 <li><a href="/seller/menus" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/menus' ? ' active' : '')}>상품 설정</a></li>
                 <li><a href="/seller/tables" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/tables' ? ' active' : '')}>테이블 설정</a></li>
                 <li><a href="/seller/qrcode" onClick={handleClick} className={'link-dark d-inline-flex text-decoration-none rounded' + (router.pathname == '/seller/qrcode' ? ' active' : '')}>QR 코드 생성</a></li>
+              </ul>
+            </div>
+          </li>
+          <li className="mb-1">
+            <button className="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#user-collapse" aria-expanded="false">
+              사용자
+            </button>
+            <div className="collapse show" id="user-collapse">
+              <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                <li><a href="#" onClick={() => signOut({callbackUrl: `/`})} className={'link-dark d-inline-flex text-decoration-none rounded'}>로그아웃</a></li>
               </ul>
             </div>
           </li>
