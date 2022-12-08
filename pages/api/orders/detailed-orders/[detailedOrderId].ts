@@ -17,7 +17,17 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(200).json(result);
         // DELETE : 상세 주문 삭제
     } else if (req.method === 'DELETE') {
-        let result = await prisma.$queryRaw`DELETE FROM detailed_order WHERE detailed_order_id = ${detailedOrderId}`;
+        let result = await prisma.detailed_order.delete({where: {detailed_order_id:detailedOrderId}})
+
+        if(result == null)
+        {
+            res.status(400).json({message:"주문 실패"});
+            return;
+        }
+
+        let subtractedPayment = result.payment;
+        let orderId = result.order_id;
+        await prisma.$queryRaw`UPDATE t_order SET payments = payments - ${subtractedPayment} WHERE order_id = ${orderId}`;
         res.status(200).json({ detailedOrderId, message: "상세 주문 삭제" });
     } else {
         res.status(400).json({ message: "잘못된 요청입니다" });
