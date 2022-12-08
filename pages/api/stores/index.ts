@@ -3,20 +3,20 @@ import { PrismaClient } from '@prisma/client'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
     const prisma = new PrismaClient()
-    const storeId:number|null=Number(req.query.store_id) as number ?? null;
+    const storeId: number | null = Number(req.query.store_id) as number ?? null;
     switch (req.method) {
         // READ
         case "GET":
-                const readResult = await prisma.store.findMany();
+            const readResult = await prisma.store.findMany();
 
-                if (readResult != null) {
-                    res.status(200).json({readResult})
-                } else {
-                    res.status(400).json({
-                        "message": "store가 없습니다."
-                    })
-                } 
-                break
+            if (readResult != null) {
+                res.status(200).json({ readResult })
+            } else {
+                res.status(400).json({
+                    "message": "store가 없습니다."
+                })
+            }
+            break
         // CREATE
         case "POST":
             if (req.body.name == null) {
@@ -32,7 +32,7 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     "message": "가게 전화번호를 입력해주세요."
                 })
             } else {
-                const createResult = await prisma.store.create({ 
+                const createResult = await prisma.store.create({
                     data: {
                         name: req.body.name,
                         address: req.body.address,
@@ -50,10 +50,10 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
                     res.status(400).json({
                         "message": "store를 등록할 수 없습니다."
                     })
-                } 
+                }
             }
             break
         default:
-            res.status(400).json({message:"잘못된 요청"});
+            res.status(400).json({ message: "잘못된 요청" });
     }
 }

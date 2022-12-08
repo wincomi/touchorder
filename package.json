@@ -11,34 +11,33 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/yeorilgop/touchorder.git"
+    "url": "git+https://github.com/wincomi/touchorder.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/yeorilgop/touchorder/issues"
+    "url": "https://github.com/wincomi/touchorder/issues"
   },
-  "homepage": "https://github.com/yeorilgop/touchorder#readme",
+  "homepage": "https://github.com/wincomi/touchorder#readme",
   "dependencies": {
     "@prisma/client": "^4.6.0",
-    "axios": "^1.2.0",
+    "axios": "^1.2.1",
     "body-parser": "^1.20.1",
-    "bootstrap": "^5.2.2",
+    "bootstrap": "^5.2.3",
     "cookie-parser": "^1.4.6",
+    "crypt-js": "^1.0.4",
     "crypto-js": "^4.1.1",
     "dotenv": "^16.0.3",
-    "formidable": "^2.0.1",
+    "formidable": "^2.1.1",
     "jsonwebtoken": "^8.5.1",
     "memory-cache": "^0.2.0",
-    "multer": "^1.4.5-lts.1",
-    "next": "^13.0.2",
-    "next-auth": "^4.17.0",
-    "next-connect": "^0.13.0",
-    "next-qrcode": "^2.3.0",
+    "next": "^13.0.6",
+    "next-auth": "^4.18.1",
+    "next-qrcode": "^2.4.0",
     "nprogress": "^0.2.0",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.6.0",
+    "react-bootstrap": "^2.7.0",
     "react-dom": "^18.2.0"
   },
   "devDependencies": {
@@ -46,7 +45,7 @@
     "@types/node": "^18.11.9",
     "@types/nprogress": "^0.2.0",
     "@types/react": "^18.0.25",
-    "prisma": "^4.6.1",
+    "prisma": "^4.7.1",
     "typescript": "^4.8.4"
   }
 }

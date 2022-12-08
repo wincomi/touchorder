@@ -14,8 +14,8 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
         // DB에 토큰 저장
         const prisma = new PrismaClient()
         const result = await prisma.user.update({
-            where: { 
-                user_id: user_id 
+            where: {
+                user_id: user_id
             },
             data: {
                 token: token

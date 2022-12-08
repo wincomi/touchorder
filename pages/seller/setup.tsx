@@ -94,7 +94,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
             placeholder="추가 예정"
             value={null}
             onChange={(e) =>
-              setState({ ...state, deposit: e.target.value})
+              setState({ ...state, deposit: e.target.value })
             }
           />
         </Form.Group>
@@ -119,9 +119,9 @@ export async function getServerSideProps() {
   const store_id = 1
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}`)
   const store: store = await res.json()
-  if (store == null){
+  if (store == null) {
     console.log("값을 받아올 수 없습니다.")
-    
+
   } else {
     return {
       props: { store }

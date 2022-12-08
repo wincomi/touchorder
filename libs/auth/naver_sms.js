@@ -14,7 +14,7 @@ const finErrCode = 404;
 const NCP_serviceID = process.env.NCP_SERVICE_ID;
 const NCP_accessKey = process.env.NCP_ACCESS_KEY;
 const NCP_secretKey = process.env.NCP_SECRET_KEY;
-const senderNumber  = process.env.SENDER_NUMBER;
+const senderNumber = process.env.SENDER_NUMBER;
 
 const date = Date.now().toString();
 const secretKey = NCP_secretKey;
@@ -28,7 +28,7 @@ const url = `https://sens.apigw.ntruss.com/sms/v2/services/${NCP_serviceID}/mess
 const url2 = `/sms/v2/services/${NCP_serviceID}/messages`;
 
 // HMAC(Hash-based Message Authentication Code)`
-const  hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
+const hmac = CryptoJS.algo.HMAC.create(CryptoJS.algo.SHA256, secretKey);
 
 hmac.update(method);
 hmac.update(space);
@@ -70,4 +70,4 @@ function send(phoneNumber, verificationCode) {
     return finErrCode;
 };
 
-  module.exports = send;
+module.exports = send;
