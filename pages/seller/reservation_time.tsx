@@ -2,17 +2,87 @@ import SellerLayout from "@components/seller/SellerLayout"
 import HeaderTitle from "@components/seller/HeaderTitle"
 import { Table, Button } from 'react-bootstrap'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { MouseEvent } from 'react'
+import { useRouter } from "next/router"
 
-export default ({ items }) => {
+import dateFormat from '@utils/dateFormat'
+import { getSession, GetSessionParams } from "next-auth/react"
 
+type reserve = {
+  reserve_id: number
+  reserve_date: Date
+  user_id: number
+  user_name: string
+  name: string
+  store_id: string
+  num_of_people: number
 }
 
-export async function getServerSideProps() {
-  const store_id = 1 // TODO
-  const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables/`)
-  const items = await res.json()
+type Props = {
+  reserve: reserve[]
+}
+
+export default ({ reserve }) => {
+  const router = useRouter()
+
+  if( reserve == null ) {router.replace(router.asPath)}
+ 
+  const back = (e: MouseEvent<HTMLButtonElement>) => {
+
+    router.back()
+  }
+
+  return (
+    <SellerLayout>
+      <HeaderTitle title="주문" subtitle="주문 상세" />
+      <Table striped>
+        <thead>
+          <tr>
+            <th>예약번호</th>
+            <th>고객이름</th>
+            <th>예약테이블번호</th>
+            <th>인원</th>
+            <th>예약시간</th>
+          </tr>
+        </thead>
+
+        <tbody>
+          {reserve?.map((item) => (
+            <tr>
+              <td>{item.reserve_id}</td>
+              <td>{item.user_name}</td>
+              <td>{item.store_table_id}번</td>
+              <td>{item.num_of_people}명</td>
+              <td>{dateFormat(item.reserve_date)}</td>
+            </tr>
+          ))}
+        </tbody>
+        <br />
+        <Button variant="primary" size="lg" onClick={back}>뒤로 가기</Button>
+      </Table>
+    </SellerLayout>
+  )
+}
+
+export async function getServerSideProps( context: GetSessionParams ) {
+  const session = await getSession(context)
+
+  if (session?.user == null) {
+    const items: reserve[] = []
+    return {
+      props: { items }
+    }
+  }
+
+  const store_id = session?.user.store_id
+
+  const table_id = context.query.table_id
+
+  const res = await fetch(getAbsoluteURL() + `/api/reservations?storeId=${store_id}&tableId=${table_id}`)
+
+  const reserve: reserve[] = await res.json()
 
   return {
-    props: { items }
+    props: { reserve }
   }
 }

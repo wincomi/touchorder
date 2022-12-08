@@ -18,7 +18,7 @@ export default ({ detailed_order }: InferGetServerSidePropsType<typeof getServer
   const router = useRouter()
   const back = (e: MouseEvent<HTMLButtonElement>) => {
 
-    router.push(`/seller/orders`)
+    router.back()
   }
 
   return (
