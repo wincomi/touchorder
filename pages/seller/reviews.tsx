@@ -35,6 +35,8 @@ type Props = {
 export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
+  if(reviews == null) { router.replace(router.asPath) } //삭제 예정
+
   const deleteReview = async (e: MouseEvent<HTMLButtonElement>) => {
     var reviewId = e.currentTarget.getAttribute('data-review-id')
     var userId = e.currentTarget.getAttribute('data-user-id')
@@ -87,6 +89,7 @@ export default ({ reviews }: InferGetServerSidePropsType<typeof getServerSidePro
 
 export async function getServerSideProps( context: GetSessionParams ) {
   const session = await getSession(context)
+  
   if (session?.user == null) {
     const items: review[] = []
     return {

@@ -10,6 +10,9 @@ import { getSession, useSession, GetSessionParams } from "next-auth/react"
 
 export default ({ tables }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+
+  if(tables == null) { router.replace(router.asPath) } //삭제 예정
+
   const session = useSession()
 
   const [isAdd, setAdd] = useState(false)

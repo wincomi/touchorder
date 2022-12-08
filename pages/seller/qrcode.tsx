@@ -5,12 +5,16 @@ import { useQRCode } from 'next-qrcode'
 import { QRCodeOptions } from "next-qrcode/dist/useQRCode"
 import getAbsoluteURL from '@utils/absoluteURL'
 import { getSession, GetSessionParams } from "next-auth/react"
+import { useRouter } from "next/router" //삭제 예정
 
 type Props = {
   store_id: number
 }
 
 export default ({ store_id }: InferGetStaticPropsType<typeof getServerSideProps>) => {
+  const router = useRouter() //삭제 예정
+  if(store_id == null) { router.replace(router.asPath) } //삭제 예정
+
   const { Image } = useQRCode()
   const store_url = `${getAbsoluteURL()}/stores/${store_id}`
   const qrcode_options: QRCodeOptions = {

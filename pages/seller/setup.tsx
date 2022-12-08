@@ -6,9 +6,12 @@ import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { store } from "@prisma/client"
 import { getSession, GetSessionParams } from "next-auth/react"
-
+import { useRouter } from "next/router"
 
 export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
+  const router = useRouter() //삭제 예정
+  if(store == null) { router.replace(router.asPath) } //삭제 예정
+  
   const [state, setState] = useState({
     name: "",
     address: "",

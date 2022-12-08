@@ -16,6 +16,9 @@ import { getSession, useSession, GetSessionParams } from "next-auth/react"
 //TODO db랑 연동
 export default ({ items }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+
+  if(items == null) { router.replace(router.asPath) } //삭제 예정
+
   const session = useSession()
   const [isAdd, setAdd] = useState(false)
   const [state, setState] = useState({ name: '', content: '', price: '', category: '', image_url: '', status: 0 })

@@ -20,6 +20,8 @@ type Props = {
 export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
 
+  if(t_orders == null) { router.replace(router.asPath) } //삭제 예정
+
   const statusToString = (status: number) => {
     switch (status) {
       case 0:

@@ -11,6 +11,9 @@ import { getSession, GetSessionParams } from "next-auth/react"
 //이미지 추가안함
 export default ({ table }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
+
+  if(table == null) { router.replace(router.asPath) } //삭제 예정
+
   const [update, setUpdate] = useState({ max_people: "", description: "" })
   const [status, setStatus] = useState(table.status)
 
