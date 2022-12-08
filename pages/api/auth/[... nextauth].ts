@@ -1,35 +1,58 @@
-import NextAuth from "next-auth";
-import CredentialsProvider from "next-auth/providers/credentials";
+import NextAuth from "next-auth"
+import CredentialsProvider from "next-auth/providers/credentials"
+import { PrismaClient, user } from '@prisma/client'
 
+const prisma = new PrismaClient()
 
 export default NextAuth({
     providers: [
         CredentialsProvider({
-            // The name to display on the sign in form (e.g. "Sign in with...")
             name: "Credentials",
-            // The credentials is used to generate a suitable form on the sign in page.
-            // You can specify whatever fields you are expecting to be submitted.
-            // e.g. domain, username, password, 2FA token, etc.
-            // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                username: { label: "Username", type: "text", placeholder: "jsmith" },
-                password: { label: "Password", type: "password" }
+                phone_number: { label: "PhoneNumber", type: "text", placeholder: "PhoneNumber" },
+                // password: { label: "Password", type: "password" }
             },
             async authorize(credentials, req) {
-                // Add logic here to look up the user from the credentials supplied
-                const user = { id: 1, name: "J Smith", email: "jsmith@example.com" }
+                const user: user | null = await prisma.user.findFirst({
+                    where: {
+                        phone_number: credentials?.phone_number,
+                    }
+                })
 
-                if (user) {
-                    // Any object returned will be saved in `user` property of the JWT
-                    return user
-                } else {
-                    // If you return null or false then the credentials will be rejected
-                    return null
-                    // You can also Reject this callback with an Error or with a URL:
-                    // throw new Error("error message") // Redirect to error page
-                    // throw "/path/to/redirect"        // Redirect to a URL
+                if (user == null) {
+                    throw new Error("회원을 찾을 수 없습니다.");
+                }
+
+                return {
+                    user_id: user!.user_id,
+                    store_id: user!.store_id,
+                    phone_number: user!.phone_number,
+                    email_addr: user!.email_addr,
+                    is_admin: user!.is_admin,
+                    token: user!.token,
+                    user_name: user!.user_name
                 }
             }
         })
-    ]
+    ],
+
+    callbacks: {
+        session: async ({ session, token }) => {
+            if (session?.user) {
+                session.user.id = token.uid as string
+            }
+            session.user = token
+
+            return session
+        },
+        jwt: async ({ user, token }) => {
+            if (user) {
+                token.uid = user.id
+            }
+            return { ...token, ...user }
+        },
+    },
+    session: {
+        strategy: "jwt",
+    },
 })

@@ -2,8 +2,10 @@ import { Container, Button, Form, Collapse } from 'react-bootstrap'
 import { useState } from 'react'
 import axios from 'axios'
 import getAbsoluteURL from '@utils/absoluteURL'
+import { signIn, signOut, useSession } from "next-auth/react"
+import { useRouter } from 'next/router'
 
-export default ({ Login }) => {
+export default () => {
     const [PhoneNumber, getPhoneNumber] = useState("")
     const [code, getcode] = useState("")
     const [isCert, showCert] = useState(false)
@@ -21,29 +23,55 @@ export default ({ Login }) => {
     }
 
     const isUser = async () => {
-        console.log(getAbsoluteURL() + `/api/users`)
-        await axios
-            .get(getAbsoluteURL() + `/api/users`,
-                { params: { phoneNumber: PhoneNumber } })
-            .then((res) => {
-                console.log(res.data.message)
-                console.log(res.data.result)
-                setUser(res.data.result)
-                console.log(userInfo)
-            })
+        const result = await signIn("credentials", {
+            redirect: true,
+            phone_number: PhoneNumber
+        })
 
-        getCertCode()
+        if (!result?.error) {
+            alert('로그인 성공!')
+        } else {
+            alert(result.error)
+        }
     }
 
-    const getCertCode = async () => {
-        showCert(true)
-        const body = {
-            phoneNumber: PhoneNumber
-        }
-        await axios
-            .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
-            .then((res) => console.log(res))
-            .catch((err) => console.log(err))
+    // console.log(getAbsoluteURL() + `/api/users`)
+    // await axios
+    //     .get(getAbsoluteURL() + `/api/users`,
+    //         { params: { phoneNumber: PhoneNumber } })
+    //     .then((res) => {
+    //         console.log(res.data.message)
+    //         console.log(res.data.result)
+    //         setUser(res.data.result)
+    //         console.log(userInfo)
+    //     })
+
+    // getCertCode()
+
+
+    // const getCertCode = async () => {
+    //     showCert(true)
+    //     const body = {
+    //         phoneNumber: PhoneNumber
+    //     }
+    //     await axios
+    //         .post(getAbsoluteURL() + "/api/auth/verification-code/request", body)
+    //         .then((res) => console.log(res))
+    //         .catch((err) => console.log(err))
+    // }
+
+    const session = useSession()
+    const router = useRouter()
+
+    if (session.data?.user != null) {
+        return (
+            <Container>
+                <h1>로그인이 되었습니다.</h1>
+                <p>{session.data.user.phone_number} 회원님 안녕하세요.</p>
+                <p><Button onClick={() => signOut}>로그아웃</Button></p>
+                <p><Button onClick={() => router.push('/seller/menus')}>판매자 관리 페이지</Button></p>
+            </Container>
+        )
     }
 
     return (
@@ -53,7 +81,6 @@ export default ({ Login }) => {
             <Form>
                 <Form.Group className="mb-3" controlId="formBasicEmail">
                     <Form.Control type="tel" placeholder="01012345678" value={PhoneNumber} onChange={(e) => { getPhoneNumber(e.target.value) }}></Form.Control>
-
                     <Form.Text className="text-muted">
                         입력한 휴대폰 번호로 인증 코드가 발송됩니다.
                     </Form.Text>
