@@ -8,7 +8,6 @@ export default ({ Login }) => {
     const [code, getcode] = useState("")
     const [isCert, showCert] = useState(false)
     const [userInfo, setUser] = useState({})
-    console.log()
     const checkCertCode=async()=>{
         const body = {
             phoneNumber: PhoneNumber,
