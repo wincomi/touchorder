@@ -11,6 +11,7 @@ function create_verificationCode() {
 // 인증 번호 요청
 function request_verificationCode(phoneNumber) {
   const verificationCode = create_verificationCode();
+  console.log(verificationCode)
   SMS_Cache.del(phoneNumber);
   //send(phoneNumber, verificationCode);
   SMS_Cache.put(phoneNumber, verificationCode);
