@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next"
 import { PrismaClient } from "@prisma/client"
 
-export default async (req: NextApiRequest,res: NextApiResponse) => {
+export default async (req: NextApiRequest, res: NextApiResponse) => {
     const storeId: number = Number(req.body.store_id)
     const prisma = new PrismaClient()
 

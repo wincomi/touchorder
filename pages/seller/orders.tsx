@@ -84,7 +84,7 @@ export default ({ t_orders }: InferGetServerSidePropsType<typeof getServerSidePr
 
   return (
     <SellerLayout>
-      <HeaderTitle title ='주문' subtitle ='주문 통합 조회' />
+      <HeaderTitle title='주문' subtitle='주문 통합 조회' />
       <Table striped>
         <thead>
           <tr>
@@ -124,9 +124,9 @@ export async function getServerSideProps() {
   const res = await fetch(getAbsoluteURL() + `/api/orders`)
   const t_orders: t_order[] = await res.json()
 
-  if (t_orders == null){
+  if (t_orders == null) {
     console.log("값을 받아올 수 없습니다.")
-    
+
   } else {
     return {
       props: { t_orders }

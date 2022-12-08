@@ -41,7 +41,7 @@ export async function getServerSideProps() {
   const store_id = 1 // TODO
   const res = await fetch(getAbsoluteURL() + `/api/stores/${store_id}/tables/`)
   const items = await res.json()
-  
+
   return {
     props: { items }
   }

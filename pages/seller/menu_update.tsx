@@ -6,8 +6,9 @@ import priceFormat from "@utils/priceFormat"
 import getAbsoluteURL from "@utils/absoluteURL"
 import { InferGetServerSidePropsType } from "next"
 import { useRouter } from "next/router"
+import ImageUp from '../image-upload'
 
-//이미지 추가안함
+//이미지 Child=ImageUp(image-upload.tsx)
 export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>) => {
   const router = useRouter()
   const [update, setUpdate] = useState({
@@ -15,11 +16,36 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
     price: "",
     content: "",
   })
+  const [imgName, setImgName] = useState("")
   const [status, setStatus] = useState(item.status)
 
   useEffect(() => {
+    if (item.image_url) {
+      setImgName(item.image_url)
+    }
+  }, [])
+  useEffect(() => {
   }, [status])
-  const checkEmpty = (string: string) => {
+
+  const setImageNameDelete = () => { //이미지 업로드-삭제버튼
+    setImgName("")
+  }
+
+  const setImageName = async (string: string) => { //이미지 업로드-추가버튼
+    if (imgName != "") { //이미 이미지 속성이 있었다면 삭제
+      const result = await fetch(
+        getAbsoluteURL() + `/api/images?img=${imgName}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+          }
+        }
+      )
+    }
+    setImgName(string)
+  }
+  const checkEmpty = (string: string) => { //string이 비었다면 null값 반환
     if (string.length == 0) {
       return null
     } else {
@@ -34,11 +60,11 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
     }
   }
   const updateMenu = async (menu_id: number, store_id: number) => {
-    
     const query = {
       name: checkEmpty(update.name) ?? item.name,
       price: returnPrice(update.price),
       content: checkEmpty(update.content) ?? item.content,
+      image_url: checkEmpty(imgName) ?? "",
       status: status,
     }
     const result = await fetch(
@@ -55,6 +81,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
   }
   return (
     <>
+
       <SellerLayout>
         <HeaderTitle title="매장 관리" subtitle="상품 수정" />
         <Table striped>
@@ -65,6 +92,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
               <th>가격</th>
               <th>설명</th>
               <th>수정</th>
+              <th>사진</th>
             </tr>
           </thead>
           <tbody>
@@ -73,9 +101,9 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
               {/* <td>{item.image_url == null ? <span className="text-muted">없음</span> : <>TODO</>}</td> */}
               <td>
                 {
-                  status == 0 ? 
-                  (<Button variant="primary" size="sm" onClick={(e) => setStatus(1)}>판매 가능</Button>) : 
-                  (<Button variant="danger" size="sm" onClick={(e) => setStatus(0)}>판매 불가</Button>)
+                  status == 0 ?
+                    (<Button variant="primary" size="sm" onClick={(e) => setStatus(1)}>판매 가능</Button>) :
+                    (<Button variant="danger" size="sm" onClick={(e) => setStatus(0)}>판매 불가</Button>)
                 }
               </td>
               <td>
@@ -84,7 +112,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                     <Form.Control
                       type="text"
                       placeholder={item.name}
-                      value={null}
+                      value={""}
                       onChange={(e) => {
                         setUpdate({ ...update, name: e.target.value })
                       }}
@@ -98,7 +126,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                     <Form.Control
                       type="text"
                       placeholder={priceFormat(item.price)}
-                      value={null}
+                      value={""}
                       onChange={(e) => {
                         setUpdate({ ...update, price: e.target.value })
                       }}
@@ -112,7 +140,7 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                     <Form.Control
                       type="text"
                       placeholder={item.content}
-                      value={null}
+                      value={""}
                       onChange={(e) => {
                         setUpdate({ ...update, content: e.target.value })
                       }}
@@ -124,6 +152,9 @@ export default ({ item }: InferGetServerSidePropsType<typeof getServerSideProps>
                 <Button variant="warning" onClick={() => { updateMenu(item.menu_id, item.store_id) }} size="sm">
                   수정</Button>
                 {` `}
+              </td>
+              <td>
+                <ImageUp url={imgName} getImageName={setImageName} getImageNameDelete={setImageNameDelete} />
               </td>
             </tr>
           </tbody>
