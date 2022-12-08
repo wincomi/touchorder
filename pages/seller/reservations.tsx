@@ -21,7 +21,7 @@ export default ({ store_table }: InferGetServerSidePropsType<typeof getServerSid
     let tableId = e.currentTarget.getAttribute('data-table-id')
 
     router.push({
-      pathname: '/seller/order_detailed',
+      pathname: '/seller/reservation_time',
       query: { table_id: tableId },
     })
   }
