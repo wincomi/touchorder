@@ -89,7 +89,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
             onChange={(e) => setState({ ...state, content: e.target.value })}
           />
         </Form.Group>
-        <Form.Group className="mb-3" controlId="formBasicPassword">
+        {/*<Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>계좌-수정필요</Form.Label>
           <Form.Control
             type="text"
@@ -108,7 +108,7 @@ export default ({ store }: InferGetServerSidePropsType<typeof getServerSideProps
             value={null}
             onChange={(e) => setState({ ...state, image_url: e.target.value })}
           />
-        </Form.Group>
+        </Form.Group>*/}
         <Button variant="primary" type="submit" onClick={updateStore}>
           수정
         </Button>
