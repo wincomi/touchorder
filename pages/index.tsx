@@ -1,4 +1,4 @@
-import { Button, Form, Collapse } from 'react-bootstrap'
+import { Container, Button, Form, Collapse } from 'react-bootstrap'
 import { useState } from 'react'
 import axios from 'axios'
 import getAbsoluteURL from '@utils/absoluteURL'
@@ -8,7 +8,7 @@ export default ({ Login }) => {
     const [code, getcode] = useState("")
     const [isCert, showCert] = useState(false)
     const [userInfo, setUser] = useState({})
-    console.log()
+
     const checkCertCode = async () => {
         const body = {
             phoneNumber: PhoneNumber,
@@ -19,19 +19,22 @@ export default ({ Login }) => {
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
     }
+
     const isUser = async () => {
+        console.log(getAbsoluteURL() + `/api/users`)
         await axios
             .get(getAbsoluteURL() + `/api/users`,
-                { params: { phoneNumber: PhoneNumber } },
-                { withCredentials: true })
+                { params: { phoneNumber: PhoneNumber } })
             .then((res) => {
                 console.log(res.data.message)
                 console.log(res.data.result)
                 setUser(res.data.result)
                 console.log(userInfo)
             })
+
         getCertCode()
     }
+
     const getCertCode = async () => {
         showCert(true)
         const body = {
@@ -42,8 +45,9 @@ export default ({ Login }) => {
             .then((res) => console.log(res))
             .catch((err) => console.log(err))
     }
+
     return (
-        <>
+        <Container>
             <h1>휴대폰 번호를 입력해주세요</h1>
             <p>터치오더 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
             <Form>
@@ -72,6 +76,6 @@ export default ({ Login }) => {
                     <Button variant="primary" size="lg" onClick={isUser}>확인</Button>
                 </div>
             </Form>
-        </>
+        </Container>
     )
 }
