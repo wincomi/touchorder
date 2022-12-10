@@ -23,6 +23,7 @@ type Props = {
 }
 
 export default ({ reserve }) => {
+
   const router = useRouter()
 
   if( reserve == null ) {router.replace(router.asPath)}
@@ -32,9 +33,20 @@ export default ({ reserve }) => {
     router.back()
   }
 
+    // 예약 거절 버튼
+    const rejectReserve = async (e: MouseEvent<HTMLButtonElement>) => {
+      var reserveId = e.currentTarget.getAttribute('data-reserve-id')
+  
+      const result = await fetch(getAbsoluteURL() + `/api/reservations/${reserveId}`, {method: 'DELETE'})
+  
+      alert('예약을 거절하였습니다.')
+  
+      router.replace(router.asPath)
+    }
+
   return (
     <SellerLayout>
-      <HeaderTitle title="주문" subtitle="주문 상세" />
+      <HeaderTitle title="예약" subtitle="예약 시간" />
       <Table striped>
         <thead>
           <tr>
@@ -43,6 +55,7 @@ export default ({ reserve }) => {
             <th>예약테이블번호</th>
             <th>인원</th>
             <th>예약시간</th>
+            <th>예약 거절</th>
           </tr>
         </thead>
 
@@ -54,6 +67,8 @@ export default ({ reserve }) => {
               <td>{item.store_table_id}번</td>
               <td>{item.num_of_people}명</td>
               <td>{dateFormat(item.reserve_date)}</td>
+              {/*나중에 거절 사유 메시지 보내기 -캡스톤2 */}
+              <td><Button data-reserve-id={item.reserve_id} variant="danger" size="sm" onClick={rejectReserve}>거절</Button></td>
             </tr>
           ))}
         </tbody>
