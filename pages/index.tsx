@@ -120,7 +120,7 @@ export default () => {
                         />
                     </Form.Group>
                 </Collapse>}<br></br>
-                    <Button variant="warning" size="md" onClick={() => {if(!isCert)isUser(); else checkCertCode();}}>확인</Button>
+                    <Button variant="primary" size="md" onClick={() => {if(!isCert)isUser(); else checkCertCode();}}>확인</Button>
             </Form>
             </div>
         </Container>
