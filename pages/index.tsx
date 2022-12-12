@@ -99,7 +99,7 @@ export default () => {
     return (
         <Container className="mt-3">
             <h1>휴대폰 번호를 입력해주세요</h1>
-            <p>서비스 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
+            <p>터치오더 이용을 위해 최소한의 정보를 수집하고 있습니다.</p>
             <div className="d-grid">
             <Form>
                 <Form.Group className="mb-3 w-50" controlId="formBasicEmail">
